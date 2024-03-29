@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- White Top color -->
+    <item>
+
+        <shape  android:shape="rectangle">
+            <solid android:color="#D5E7B8" />
+            <corners android:topLeftRadius="@dimen/_12sdp"
+                android:topRightRadius="@dimen/_12sdp"
+                android:bottomLeftRadius="@dimen/_12sdp"/>
+        </shape>
+
+    </item>
+</layer-list>

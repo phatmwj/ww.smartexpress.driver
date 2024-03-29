@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="a"
+            type="ww.smartexpress.driver.ui.profile.edit.EditProfileActivity" />
+        <variable
+            name="vm"
+            type="ww.smartexpress.driver.ui.profile.edit.EditProfileViewModel" />
+        <import type="android.view.View" />
+        <import type="android.text.TextUtils" />
+
+    </data>
+    <FrameLayout
+        android:onClick="@{()->a.hideKeyboard()}"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_180sdp"
+            android:layout_gravity="top"
+            app:srcCompat="@drawable/driver_profile"
+
+            android:scaleType="centerCrop"/>
+        <ImageView
+            android:onClick="@{(v)->vm.back()}"
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginLeft="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="@drawable/background_oval_white"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/ic_icon_back" />
+
+        <LinearLayout
+            android:onClick="@{()->a.hideKeyboard()}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_140sdp"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageViewAva"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_gravity="center"
+                android:src="@{vm.avatar}" />
+            <TextView
+                style="@style/app_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_gravity="center"
+                android:text="@{vm.user.fullName}"
+                android:maxLines="1" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <RatingBar
+                    android:theme="@style/RatingBar"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:id="@+id/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:numStars="5"
+                    android:rating="@{Float.valueOf(String.valueOf(vm.user.averageRating))}"
+                    android:stepSize="0.1"
+                    android:progressTint="#FFDA19"/>
+
+                <TextView
+                    style="@style/app_text_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_2sdp"
+                    android:layout_weight="1"
+                    android:text="@{String.valueOf(vm.user.averageRating)}"/>
+            </LinearLayout>
+            <TextView
+                style="@style/app_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:text="@string/full_name"
+                android:maxLines="1" />
+            <EditText
+                android:id="@+id/edtEPFullName"
+                style="@style/AppEditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:hint="@string/input_name"
+                android:maxLines="1"
+                android:text="@={vm.fullName}"
+                android:enabled="false"/>
+            <TextView
+                style="@style/app_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:text="@string/email"
+                android:maxLines="1"
+                android:visibility="gone"/>
+            <EditText
+                style="@style/AppEditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:hint="@string/input_email"
+                android:maxLines="1"
+                android:text="@={vm.email}"
+                android:visibility="gone"/>
+            <TextView
+                style="@style/app_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:text="@string/phone"
+                android:maxLines="1" />
+            <EditText
+                style="@style/AppEditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:hint="@string/input_phone"
+                android:maxLines="1"
+                android:text="@={vm.user.phone}"
+                android:enabled="false">
+
+            </EditText>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/old_password"
+                    style="@style/app_text">
+
+                </TextView>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_25sdp"
+                android:visibility="gone">
+                <EditText
+                    android:id="@+id/edtOldPw"
+                    android:paddingRight="@dimen/_35sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/pw_input"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    style="@style/AppEditTextStyle"
+                    android:text="@={vm.oldPassword}">
+
+                </EditText>
+
+                <ImageView
+                    android:onClick="@{(v)->vm.setIsPwVisibility()}"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@{vm.isPwVisibility ? @drawable/ic_icon_visibility_off : @drawable/ic_icon_visibility}">
+
+                </ImageView>
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="bottom"
+            android:visibility="gone">
+            <Button
+                android:onClick="@{(v)->a.updateProfile()}"
+                style = "@style/MyAppButtonStyle"
+                android:id="@+id/bntNote"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:enabled="@{TextUtils.isEmpty(vm.oldPassword.trim()) || TextUtils.isEmpty(vm.fullName.trim()) || TextUtils.isEmpty(vm.phone.trim())? Boolean.FALSE : Boolean.TRUE }"
+                android:text="@string/update_profile"
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
+    </FrameLayout>
+</layout>

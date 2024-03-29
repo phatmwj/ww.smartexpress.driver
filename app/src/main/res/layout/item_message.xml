@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="ivm"
+            type="ww.smartexpress.driver.data.model.api.response.MessageChat" />
+        <variable
+            name="lastMessage"
+            type="ww.smartexpress.driver.data.model.api.response.MessageChat" />
+        <variable
+            name="userId"
+            type="java.lang.Long" />
+        <import type="ww.smartexpress.driver.utils.NumberUtils"></import>
+        <import type="ww.smartexpress.driver.utils.DateUtils"></import>
+        <import type="android.view.View"/>
+        <import type="ww.smartexpress.driver.R" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white">
+        <TextView
+            style="@style/app_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone"/>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="top"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:visibility="@{lastMessage.sender.equals(ivm.sender)? View.GONE:View.VISIBLE}"
+            />
+        <FrameLayout
+            android:id="@+id/flSender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:visibility="@{userId.equals(ivm.sender)?View.GONE:View.VISIBLE}">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:src="@{ivm.senderAvatar}"
+                android:visibility="@{lastMessage.sender.equals(ivm.sender)? View.GONE:View.VISIBLE}"/>
+            <TextView
+                style="@style/roboto_medium_79_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_40sdp"
+                android:layout_marginRight="@dimen/_70sdp"
+                android:layout_gravity="left|bottom"
+                android:paddingHorizontal="@dimen/_8sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                android:background="@drawable/background_message_sender"
+                android:text="@{ivm.msg}" />
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/flReceiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:visibility="@{userId.equals(ivm.sender)?View.VISIBLE:View.GONE}">
+            <TextView
+                style="@style/roboto_medium_79_gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_70sdp"
+                android:layout_gravity="right"
+                android:paddingHorizontal="@dimen/_8sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                android:background="@drawable/background_message_receiver"
+                android:text="@{ivm.msg}"/>
+        </FrameLayout>
+
+
+    </LinearLayout>
+</layout>

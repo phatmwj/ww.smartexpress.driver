@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="ww.smartexpress.driver">
+
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <uses-permission
+        android:name="android.permission.WRITE_SECURE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:name="ww.smartexpress.driver.MVVMApplication"
+        android:allowBackup="true"
+        android:banner="@mipmap/ic_launcher"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="adjustResize|stateHidden">
+
+        <activity
+            android:name="ww.smartexpress.driver.ui.password.renew.RenewPasswordActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/Welcome"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name="ww.smartexpress.driver.ui.chat.ChatActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/Welcome"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name="ww.smartexpress.driver.ui.password.otp.ForgetPasswordOTPActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/Welcome"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name="ww.smartexpress.driver.ui.password.forget.ForgetPasswordActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/Welcome"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name="ww.smartexpress.driver.ui.login.LoginActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/Welcome"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name="ww.smartexpress.driver.ui.achievement.AchievementActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/Welcome"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name="ww.smartexpress.driver.ui.history.TripHistoryActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/Welcome"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name="ww.smartexpress.driver.ui.home.HomeActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/Welcome"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name="ww.smartexpress.driver.ui.signup.SignUpActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/Welcome"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name="ww.smartexpress.driver.ui.welcome.WelcomeActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/Welcome"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name="ww.smartexpress.driver.ui.index.IndexActivity"
+            android:theme="@style/MyAppTheme"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:exported="true">
+        </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAQWUevZCTLaVd9a1Z2WEA2_e2gO9iW8rU" />
+        <activity
+            android:name="ww.smartexpress.driver.ui.profile.edit.EditProfileActivity"
+            android:exported="true"
+            android:theme="@style/MyAppTheme"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name="ww.smartexpress.driver.ui.allbike.AllBikeServiceActivity"
+            android:exported="true"
+            android:theme="@style/MyAppTheme">
+        </activity>
+        <activity
+            android:name="ww.smartexpress.driver.ui.statistic.StatisticActivity"
+            android:exported="true"
+            android:theme="@style/MyAppTheme">
+        </activity>
+        <activity
+            android:name="ww.smartexpress.driver.ui.fragment.income.details.IncomeDetailsActivity"
+            android:exported="true"
+            android:theme="@style/MyAppTheme">
+        </activity>
+        <activity
+            android:name="ww.smartexpress.driver.ui.award.AwardActivity"
+            android:exported="true"
+            android:theme="@style/MyAppTheme">
+        </activity>
+        <activity
+            android:name="ww.smartexpress.driver.ui.main.MainActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+
+        </activity>
+        <activity
+            android:name="ww.smartexpress.driver.ui.booking.details.BookingDetailsActivity"
+            android:exported="true"
+            android:theme="@style/MyAppTheme">
+        </activity>
+        <activity android:name="ww.smartexpress.driver.ui.splash.SplashActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/Welcome">
+            <intent-filter>
+                <!--Config app launcher-->
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_path" />
+        </provider>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+    </application>
+</manifest>

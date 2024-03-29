@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="a"
+            type="ww.smartexpress.driver.ui.statistic.StatisticActivity" />
+        <variable
+            name="vm"
+            type="ww.smartexpress.driver.ui.statistic.StatisticViewModel" />
+        <import type="android.view.View" />
+        <import type="android.text.TextUtils" />
+        <import type="ww.smartexpress.driver.R"/>
+
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/frameLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:padding="@dimen/_5sdp">
+
+                <ImageView
+                    android:id="@+id/imageView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:onClick="@{()->vm.back()}"
+                    android:paddingLeft="@dimen/_5ssp"
+                    android:paddingRight="@dimen/_20ssp"
+                    android:src="@drawable/ic_icon_back">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/textView10"
+                    style="@style/app_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/activity_rate" />
+            </FrameLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/background_corners_top"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:onClick="@{(v)->vm.statisticDate()}"
+                    style="@style/app_text_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10ssp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@{vm.statisticTime==0 ? @drawable/background_time_underline:null}"
+                    android:textColor="@{vm.statisticTime==0 ? @color/green_light_app:@color/app_text}"
+                    android:maxLines="1"
+                    android:text="@string/date_time" />
+                <TextView
+                    android:onClick="@{(v)->vm.statisticWeek()}"
+                    style="@style/app_text_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10ssp"
+                    android:background="@{vm.statisticTime==1 ? @drawable/background_time_underline:null}"
+                    android:textColor="@{vm.statisticTime==1 ? @color/green_light_app:@color/app_text}"
+                    android:maxLines="1"
+                    android:text="@string/week_time" />
+                <TextView
+                    android:onClick="@{(v)->vm.statisticMonth()}"
+                    style="@style/app_text_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10ssp"
+                    android:background="@{vm.statisticTime==2 ? @drawable/background_time_underline:null}"
+                    android:textColor="@{vm.statisticTime==2 ? @color/green_light_app:@color/app_text}"
+                    android:maxLines="1"
+                    android:text="@string/month_time" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/background_corners_bottom"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/app_text_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/background_text_gray"
+                    android:paddingHorizontal="@dimen/_30ssp"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:maxLines="1"
+                    android:text="@{vm.incomeDateString}" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:onClick="@{()->vm.doAfter()}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingRight="@dimen/_15sdp"
+                        android:paddingLeft="@dimen/_15sdp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_expand_right" />
+
+                    <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_15sdp"
+                        android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        style="@style/app_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/accept_rate" />
+                    <TextView
+                        style="@style/app_text_big"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@{vm.acceptRate+'%'}"
+                        android:textColor="@color/app_text"/>
+
+                </LinearLayout>
+                    <ImageView
+                        android:onClick="@{()->vm.doNext()}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingRight="@dimen/_15sdp"
+                        android:paddingLeft="@dimen/_15sdp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_expand" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:background="@drawable/background_underline" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_15sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        style="@style/app_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/cancel_rate" />
+                    <TextView
+                        style="@style/app_text_big"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@{vm.cancelRate+'%'}"
+                        android:textColor="#FF0000"/>
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:background="@drawable/background_underline" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_15sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        style="@style/app_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/complete_rate" />
+                    <TextView
+                        style="@style/app_text_big"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@{vm.completeRate+'%'}"
+                        android:textColor="#31C548"/>
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</layout>

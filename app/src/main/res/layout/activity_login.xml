@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="a"
+            type="ww.smartexpress.driver.ui.login.LoginActivity" />
+        <variable
+            name="vm"
+            type="ww.smartexpress.driver.ui.login.LoginViewModel" />
+        <import type="android.text.TextUtils"></import>
+        <import type="android.text.InputType"></import>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                style="@style/big_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/login_title">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_25sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone"
+                    style="@style/roboto_medium_gray_12ssp">
+
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/required_star"
+                    android:textColor="@color/red_color">
+
+                </TextView>
+
+            </LinearLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/bg_edt"
+                android:hint="@string/phone_hint"
+                android:maxLines="1"
+                android:text="@={vm.phone}"
+                android:textColorHint="@color/grey_text"
+                style="@style/information_edit_text"
+                android:inputType="number">
+
+            </EditText>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/password"
+                    style="@style/roboto_medium_gray_12ssp">
+
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/required_star"
+                    android:textColor="@color/red_color">
+
+                </TextView>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp">
+                <EditText
+                    android:paddingRight="@dimen/_35sdp"
+                    android:id="@+id/edtPw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edt"
+                    android:hint="@string/pw_input"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:textColorHint="@color/grey_text"
+                    style="@style/information_edit_text"
+                    android:text="@={vm.password}">
+
+                </EditText>
+
+                <ImageView
+                    android:onClick="@{(v)->vm.setIsVisibilityPassword()}"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@{vm.isVisibility ? @drawable/ic_icon_visibility_off : @drawable/ic_icon_visibility}">
+
+                </ImageView>
+            </FrameLayout>
+
+            <TextView
+                android:onClick="@{(v)->vm.forgetPw()}"
+                style="@style/title"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/forget_pw"
+                android:visibility="gone">
+
+            </TextView>
+
+            <Button
+                android:onClick="@{(v)->vm.doLogin()}"
+                android:id="@+id/button2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginBottom="@dimen/_50sdp"
+                android:text="@string/next"
+                style="@style/AppButtonStyle"
+                android:enabled="@{!TextUtils.isEmpty(vm.phone) &amp;&amp; !TextUtils.isEmpty(vm.password.trim())}" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="a"
+            type="ww.smartexpress.driver.ui.password.otp.ForgetPasswordOTPActivity" />
+
+        <variable
+            name="vm"
+            type="ww.smartexpress.driver.ui.password.otp.ForgetPasswordOTPViewModel" />
+        <import type="android.text.TextUtils"></import>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                style="@style/big_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:text="@string/otp_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+            </TextView>
+
+            <TableLayout
+                android:id="@+id/tableLayout2"
+                android:layout_width="@dimen/_180sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:stretchColumns="*"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9">
+
+                <TableRow>
+
+                    <EditText
+                        android:id="@+id/fpOTP1"
+                        style="@style/new_password_text"
+                        android:layout_width="@dimen/_20ssp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/_8sdp"
+                        android:background="@{!TextUtils.isEmpty(vm.fpOTP1) ? @drawable/bg_edt_otp_active : @drawable/bg_edt_otp}"
+                        android:maxLength="1"
+                        android:maxLines="1"
+                        android:text="@={vm.fpOTP1}"
+                        android:textAlignment="center">
+
+                    </EditText>
+
+                    <EditText
+                        android:id="@+id/fpOTP2"
+                        style="@style/new_password_text"
+                        android:layout_width="@dimen/_20ssp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/_8sdp"
+                        android:background="@{!TextUtils.isEmpty(vm.fpOTP2) ? @drawable/bg_edt_otp_active : @drawable/bg_edt_otp}"
+                        android:maxLength="1"
+                        android:maxLines="1"
+                        android:text="@={vm.fpOTP2}"
+                        android:textAlignment="center">
+
+                    </EditText>
+
+                    <EditText
+                        android:id="@+id/fpOTP3"
+                        style="@style/new_password_text"
+                        android:layout_width="@dimen/_20ssp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/_8sdp"
+                        android:background="@{!TextUtils.isEmpty(vm.fpOTP3) ? @drawable/bg_edt_otp_active : @drawable/bg_edt_otp}"
+                        android:maxLength="1"
+                        android:maxLines="1"
+                        android:text="@={vm.fpOTP3}"
+                        android:textAlignment="center">
+
+                    </EditText>
+
+                    <EditText
+                        android:id="@+id/fpOTP4"
+                        style="@style/new_password_text"
+                        android:layout_width="@dimen/_20ssp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/_8sdp"
+                        android:background="@{!TextUtils.isEmpty(vm.fpOTP4) ? @drawable/bg_edt_otp_active : @drawable/bg_edt_otp}"
+                        android:maxLength="1"
+                        android:maxLines="1"
+                        android:text="@={vm.fpOTP4}"
+                        android:textAlignment="center">
+
+                    </EditText>
+                </TableRow>
+
+
+            </TableLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/send_new_otp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="@string/send_otp_title"></TextView>
+
+                <TextView
+                    style="@style/send_new_otp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="@{vm.countdownOTP}">
+
+                </TextView>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="a"
+            type="ww.smartexpress.driver.ui.chat.ChatActivity" />
+        <variable
+            name="vm"
+            type="ww.smartexpress.driver.ui.chat.ChatViewModel" />
+        <import type="android.view.View" />
+        <import type="android.text.TextUtils" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            >
+
+            <FrameLayout
+                android:id="@+id/frameLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/background_card_app"
+                android:elevation="@dimen/_5sdp"
+                android:padding="@dimen/_5sdp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:onClick="@{()->vm.back()}"
+                    android:paddingLeft="@dimen/_5ssp"
+                    android:paddingRight="@dimen/_20ssp"
+                    android:src="@drawable/ic_icon_back"/>
+
+                <TextView
+                    style="@style/app_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@{vm.customerName}" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center"
+                    android:paddingLeft="@dimen/_5ssp"
+                    android:paddingRight="@dimen/_12ssp"
+                    android:src="@drawable/ic_icon_call"/>
+            </FrameLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcChat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingTop="@dimen/_12sdp"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:clipToPadding="false">
+            </androidx.recyclerview.widget.RecyclerView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/_8sdp"
+                android:background="@drawable/background_corners_top">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12ssp"
+                    android:paddingRight="@dimen/_10ssp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_icon_add_cart"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingRight="@dimen/_12sdp"
+                    android:src="@drawable/ic_icon_camera"/>
+
+                <EditText
+                    style="@style/information_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/background_edittext_chat"
+                    android:hint="Aa"
+                    android:inputType="text"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:textColorHint="@color/grey_text"
+                    android:text="@={vm.message}">
+
+                </EditText>
+
+                <ImageView
+                    android:onClick="@{()->vm.sendMessage()}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center"
+                    android:paddingLeft="@dimen/_12ssp"
+                    android:paddingRight="@dimen/_12ssp"
+                    android:src="@drawable/ic_icon_send_message" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </FrameLayout>
+</layout>

@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="f"
+            type="ww.smartexpress.driver.ui.fragment.income.IncomeFragment" />
+        <variable
+            name="vm"
+            type="ww.smartexpress.driver.ui.fragment.income.IncomeFragmentViewModel" />
+        <import type="android.view.View" />
+        <import type="android.text.TextUtils" />
+        <import type="ww.smartexpress.driver.utils.DateUtils"></import>
+        <import type="ww.smartexpress.driver.utils.NumberUtils"></import>
+
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/frameLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:padding="@dimen/_5sdp">
+
+                <TextView
+                    android:id="@+id/textView10"
+                    style="@style/app_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/income_fragment_title" />
+            </FrameLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/background_corners_top"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:onClick="@{(v)->vm.incomeDate()}"
+                    style="@style/app_text_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10ssp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@{vm.incomeTime==0 ? @drawable/background_time_underline:null}"
+                    android:textColor="@{vm.incomeTime==0 ? @color/green_light_app:@color/app_text}"
+                    android:maxLines="1"
+                    android:text="@string/date_time" />
+                <TextView
+                    android:onClick="@{(v)->vm.incomeWeek()}"
+                    style="@style/app_text_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10ssp"
+                    android:background="@{vm.incomeTime==1 ? @drawable/background_time_underline:null}"
+                    android:textColor="@{vm.incomeTime==1 ? @color/green_light_app:@color/app_text}"
+                    android:maxLines="1"
+                    android:text="@string/week_time" />
+                <TextView
+                    android:onClick="@{(v)->vm.incomeMonth()}"
+                    style="@style/app_text_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10ssp"
+                    android:background="@{vm.incomeTime==2 ? @drawable/background_time_underline:null}"
+                    android:textColor="@{vm.incomeTime==2 ? @color/green_light_app:@color/app_text}"
+                    android:maxLines="1"
+                    android:text="@string/month_time" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/background_corners_bottom"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/app_text_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/background_text_gray"
+                    android:paddingHorizontal="@dimen/_30ssp"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:maxLines="1"
+                    android:text="@{vm.incomeDateString}"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_15sdp"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:onClick="@{()->vm.doAfter()}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingRight="@dimen/_15sdp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_icon_expand_right" />
+
+                        <TextView
+                            android:onClick="@{(v)->vm.incomeDetails()}"
+                            style="@style/app_text_big"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="@{NumberUtils.formatCurrency(vm.income.totalMoney)}"
+                            android:textColor="#FF0000" />
+                        <ImageView
+                            android:onClick="@{()->vm.doNext()}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingLeft="@dimen/_15sdp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_icon_expand" />
+                    </LinearLayout>
+                    <TextView
+                        style="@style/app_text_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_gravity="center"
+                        android:maxLines="1"
+                        android:text="@string/income_description"
+                        android:textColor="#979696"/>
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:background="@drawable/background_underline" />
+
+                <TextView
+                    style="@style/app_text_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingVertical="@dimen/_15sdp"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:text="@{@string/completed +' '+ vm.income.totalBookingCancel+' '+@string/trip_count}"
+                    android:textColor="#D1424242"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_12sdp"
+                android:visibility="gone">
+                <LinearLayout
+                    android:id="@+id/layoutTotal"
+                    android:layout_width="@dimen/_125sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/background_card_app"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/app_text_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/total"
+                        android:textColor="#D1424242"/>
+                    <TextView
+                        style="@style/app_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/money_500"
+                        android:textColor="@color/green_light_app"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layout_pre_tax_fee"
+                    android:layout_width="@dimen/_125sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/background_card_app"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/app_text_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/pre_tax_fee"
+                        android:textColor="#D1424242"/>
+                    <TextView
+                        style="@style/app_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/discount"
+                        android:textColor="#CFFF0000"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="@dimen/_125sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/layout_pre_tax_fee"
+                    android:background="@drawable/background_card_app"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/app_text_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/tax"
+                        android:textColor="#D1424242"/>
+                    <TextView
+                        style="@style/app_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/money_10"
+                        android:textColor="#CFFF0000"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="@dimen/_125sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/layoutTotal"
+                    android:background="@drawable/background_card_app"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/app_text_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/discount_percent"
+                        android:textColor="#D1424242"/>
+                    <TextView
+                        style="@style/app_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/money_50"
+                        android:textColor="@color/green_light_app"/>
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </FrameLayout>
+</layout>
