@@ -66,6 +66,7 @@ import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.constant.Constants;
 import ww.smartexpress.driver.data.model.api.request.DriverStateRequest;
 import ww.smartexpress.driver.databinding.DialogCancelBinding;
+import ww.smartexpress.driver.databinding.DialogOrderDetailsBinding;
 import ww.smartexpress.driver.databinding.FragmentHomeBinding;
 import ww.smartexpress.driver.di.component.FragmentComponent;
 import ww.smartexpress.driver.ui.base.fragment.BaseFragment;
@@ -247,6 +248,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
             }
         });
 
+        binding.orderDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                orderDetailsDialog();
+            }
+        });
+
         binding.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -376,6 +384,25 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
         dialog.show();
     }
 
+    public void orderDetailsDialog(){
+        Dialog dialog = new Dialog(getActivity());
+        DialogOrderDetailsBinding dialogOrderDetailsBinding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()), R.layout.dialog_order_details, null, false);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(dialogOrderDetailsBinding.getRoot());
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+        dialog.setCanceledOnTouchOutside(true);
+        dialogOrderDetailsBinding.imgClose.setOnClickListener(v->{
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
+
     @Override
     public void onStop() {
         super.onStop();
@@ -401,6 +428,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
             binding.switchState.setClickable(true);
         }
     }
+
+
 
     @Override
     public void onLocationChanged(@NonNull Location location) {

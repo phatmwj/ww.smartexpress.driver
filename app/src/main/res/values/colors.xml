@@ -14,11 +14,11 @@
     <color name="tertiary_color">#F5F5F5</color>
     <color name="app_text">#424242</color>
     <color name="gray_app">#C0C0C0</color>
-    <color name="green_light_app">#7EA567</color>
+    <color name="green_light_app">#6C94FC</color>
     <!-- -->
     <color name="welcome_color">#0F3663</color>
     <color name="grey_light">#C0C0C0</color>
-    <color name="green_light">#7EA567</color>
+    <color name="green_light">#6C94FC</color>
 
     <color name="grey_text">#969696</color>
     <color name="red_color">#F44336</color>
@@ -31,10 +31,10 @@
     <color name="star_grey">#D9D9D9</color>
     <color name="yellow">#FDDA23</color>
     <color name="red_light">#FFD3D3</color>
-    <color name="green">#0FA958</color>
+    <color name="green">#0D72FF</color>
     <color name="gray">#C9424242</color>
     <color name="hint_gray">#9F9696</color>
-    <color name="active_green">#31C548</color>
+    <color name="active_green">#0D72FF</color>
     <color name="bar_chart">#CEDDB9</color>
     <color name="bar_chart_label">#D1424242</color>
     <color name="unchecked_rating_star_color">#9B9B9B</color>
