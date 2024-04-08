@@ -36,36 +36,84 @@
                 android:paddingHorizontal="@dimen/_12sdp"
                 android:paddingTop="@dimen/_15sdp">
 
-                <TextView
-                    style="@style/app_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/logout" />
 
                 <TextView
+                    android:id="@+id/title"
                     style="@style/app_text_b"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
                     android:text="@string/logout_description" />
 
-<!--                <ImageView-->
-<!--                    android:visibility="@{image != null &amp;&amp; !image.isEmpty() ? View.GONE: View.VISIBLE}"-->
-<!--                    android:id="@+id/imgShipping"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_width="@dimen/_100sdp"-->
-<!--                    android:layout_height="@dimen/_100sdp"-->
-<!--                    android:src="@{image}">-->
-<!--                </ImageView>-->
 
-                <ImageView
-                    android:id="@+id/imgCamera"
-                    android:layout_gravity="center"
-                    android:layout_width="@dimen/_100sdp"
-                    android:layout_height="@dimen/_100sdp"
-                    android:src="@drawable/ic_icon_camera">
-                </ImageView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/imgCamera"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_marginRight="@dimen/_15sdp"
+                        android:src="@drawable/ic_icon_package">
+                    </ImageView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:id="@+id/take_photo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="@dimen/_15sdp"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                app:srcCompat="@drawable/ic_icon_camera" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Take Photo"
+                                style="@style/roboto_medium_79_gray"/>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/fromLib"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/imgMessage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                app:srcCompat="@drawable/baseline_photo_library_24"
+                                app:tint = "@color/green_light_app"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Choose from Gallery"
+                                style="@style/roboto_medium_79_gray"/>
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -91,7 +139,7 @@
                         android:layout_width="@dimen/_100sdp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:background="@drawable/background_button_solid_green"
+                        android:background="@drawable/background_button_app"
                         android:gravity="center"
                         android:maxLines="1"
                         android:text="Xác nhận"

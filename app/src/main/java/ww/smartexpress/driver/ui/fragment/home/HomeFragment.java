@@ -713,6 +713,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
                 photo = BitmapFactory.decodeStream(imageStream);
                 dialogBinding.imgCamera.setImageBitmap(photo);
                 updatedAvatar = photo;
+                dialogBinding.btnConfirm.setEnabled(true);
             }
         }
 
@@ -782,6 +783,17 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
                     ViewGroup.LayoutParams.WRAP_CONTENT);
         }
         dialog.setCanceledOnTouchOutside(true);
+        if(updatedAvatar != null){
+            dialogBinding.btnConfirm.setEnabled(true);
+        }{
+            dialogBinding.btnConfirm.setEnabled(false);
+        }
+
+        if(viewModel.status.get() == Constants.BOOKING_ACCEPTED){
+            dialogBinding.title.setText("Xác nhận lấy hàng");
+        }else {
+            dialogBinding.title.setText("Xác nhận trả hàng");
+        }
 
         dialogBinding.btnConfirm.setOnClickListener(view -> {
             BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
@@ -808,7 +820,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
                         destinationMarker.setVisible(true);
                     }
                     viewModel.isShowDirection.set(false);
-//                        BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
                     if (destinationMarker == null) {
                         destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation).title(viewModel.booking.getValue().getDestinationAddress()).icon(desIc));
                     } else {
@@ -825,8 +836,25 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
             dialog.dismiss();
         });
         dialogBinding.imgCamera.setOnClickListener(a -> {
-            getNewAvatar();
+//            getNewAvatar();
         });
+        dialogBinding.takePhoto.setOnClickListener(a -> {
+//            getNewAvatar();
+            if (!checkCameraPermission()) {
+                requestCameraPermission();
+            } else {
+                takeFromCamera();
+            }
+        });
+        dialogBinding.fromLib.setOnClickListener(a -> {
+//            getNewAvatar();
+            if (!checkStoragePermission()) {
+                requestStoragePermission();
+            } else {
+                takeFromGallery();
+            }
+        });
+
 
         dialogBinding.btnCancel.setOnClickListener(b -> {
             dialog.dismiss();

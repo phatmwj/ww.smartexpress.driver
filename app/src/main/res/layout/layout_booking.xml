@@ -152,7 +152,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingRight="@dimen/_10sdp"
-                                android:src="@drawable/ic_icon_destination">
+                                android:src="@drawable/ic_icon_my_location">
 
                             </ImageView>
 
@@ -209,7 +209,7 @@
                                 android:layout_width="@dimen/_21sdp"
                                 android:layout_height="@dimen/_21sdp"
                                 android:layout_marginRight="@dimen/_5sdp"
-                                android:src="@drawable/location_flag">
+                                android:src="@drawable/ic_icon_search_location">
 
                             </ImageView>
 
@@ -331,7 +331,7 @@
                                             android:maxLines="1"
                                             android:ellipsize="end"
                                             style="@style/roboto_regular_bold_green_11ssp"
-                                            android:textSize="@dimen/_6sdp"
+                                            android:textSize="@dimen/_8sdp"
                                             android:textAlignment="textStart">
                                         </TextView>
                                     </LinearLayout>

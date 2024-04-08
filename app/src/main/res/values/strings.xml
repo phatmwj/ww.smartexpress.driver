@@ -89,13 +89,13 @@
     <string name="confirm_password">Xác nhận mật khẩu</string>
     <string name="send_message">Nhắn tin</string>
     <string name="call_customer">Gọi khách hàng</string>
-    <string name="cancel_trip">Hủy cuốc</string>
-    <string name="accept_trip">Nhận cuốc</string>
-    <string name="end_trip">Kết thúc chuyến đi</string>
-    <string name="ended_trip">Chuyến đi hoàn tất</string>
+    <string name="cancel_trip">Hủy đơn</string>
+    <string name="accept_trip">Nhận đơn</string>
+    <string name="end_trip">Trả hàng</string>
+    <string name="ended_trip">Đã hoàn tất giao hàng</string>
     <string name="completed_trip">Chuyến đi hoàn tất</string>
     <string name="canceled_trip">Hủy thành công</string>
-    <string name="cancel_trip_dialog">Bạn muốn hủy chuyến?</string>
+    <string name="cancel_trip_dialog">Bạn muốn hủy đơn?</string>
     <string name="back">Quay lại</string>
     <string name="confirm">Xác nhận</string>
     <string name="empty_note">Không có ghi chú</string>
@@ -141,7 +141,7 @@
     <string name="change_password_success">Đổi mật khẩu thành công!</string>
     <string name="processing">Đang xử lí</string>
     <string name="trip_count">chuyến đi</string>
-    <string name="pickup">Đã lấy hàng</string>
+    <string name="pickup">Lấy hàng</string>
     <string name="customer_cancel_booking">Khách hàng đã hủy</string>
     <string name="trip_information">Thông tin đơn hàng</string>
     <string name="payment">Thanh toán</string>
