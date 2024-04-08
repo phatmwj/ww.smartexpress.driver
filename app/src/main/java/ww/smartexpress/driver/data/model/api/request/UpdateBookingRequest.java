@@ -12,4 +12,6 @@ public class UpdateBookingRequest {
     private Long id;
     private String note;
     private int state;
+    private String pickupImage;
+    private String deliveryImage;
 }

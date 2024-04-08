@@ -3,18 +3,24 @@ package ww.smartexpress.driver.ui.fragment.home;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +38,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
@@ -56,17 +63,28 @@ import com.google.android.gms.tasks.Task;
 import com.google.gson.JsonArray;
 import com.google.maps.android.PolyUtil;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.CompletableOnSubscribe;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import ww.smartexpress.driver.BR;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.constant.Constants;
+import ww.smartexpress.driver.data.model.api.ResponseGeneric;
 import ww.smartexpress.driver.data.model.api.request.DriverStateRequest;
+import ww.smartexpress.driver.data.model.api.request.UpdateProfileRequest;
 import ww.smartexpress.driver.databinding.DialogCancelBinding;
 import ww.smartexpress.driver.databinding.DialogOrderDetailsBinding;
+import ww.smartexpress.driver.databinding.DialogShippingImgBinding;
 import ww.smartexpress.driver.databinding.FragmentHomeBinding;
 import ww.smartexpress.driver.di.component.FragmentComponent;
 import ww.smartexpress.driver.ui.base.fragment.BaseFragment;
@@ -87,6 +105,15 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
     private Runnable runnable;
     final int durationInSeconds = 30;
     final int updateInterval = 1000;
+
+    //
+    private Bitmap updatedAvatar;
+    private static final int CAMERA_REQUEST = 100;
+    private static final int STORAGE_REQUEST = 200;
+    String cameraPermission[];
+    String storagePermission[];
+    Bitmap photo;
+    DialogShippingImgBinding dialogBinding;
     private final ActivityResultLauncher<IntentSenderRequest> locationSettingsLauncher =
             registerForActivityResult(new ActivityResultContracts.StartIntentSenderForResult(), result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
@@ -132,6 +159,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
 
         super.onViewCreated(view, savedInstanceState);
         binding.setLifecycleOwner(this);
+
+        cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -214,24 +244,25 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
                         updateLocationUpdatesInterval(10000);
                         break;
                     case Constants.BOOKING_ACCEPTED:
-                        viewModel.updateStateBooking(Constants.BOOKING_STATE_PICKUP_SUCCESS);
-                        if (polyline != null) {
-                            polyline.remove();
-                        }
-                        if (destinationMarker != null) {
-                            destinationMarker.setVisible(true);
-                        }
-                        viewModel.isShowDirection.set(false);
-//                        BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
-                        if (destinationMarker == null) {
-                            destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation).title(viewModel.booking.getValue().getDestinationAddress()).icon(desIc));
-                        } else {
-                            destinationMarker.setPosition(destinationLocation);
-                        }
-                        if (currentLocation != null) {
-                            loadMapDirection(currentLocation, destinationLocation);
-                            viewModel.isShowDirection.set(true);
-                        }
+//                        viewModel.updateStateBooking(Constants.BOOKING_STATE_PICKUP_SUCCESS);
+//                        if (polyline != null) {
+//                            polyline.remove();
+//                        }
+//                        if (destinationMarker != null) {
+//                            destinationMarker.setVisible(true);
+//                        }
+//                        viewModel.isShowDirection.set(false);
+////                        BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
+//                        if (destinationMarker == null) {
+//                            destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation).title(viewModel.booking.getValue().getDestinationAddress()).icon(desIc));
+//                        } else {
+//                            destinationMarker.setPosition(destinationLocation);
+//                        }
+//                        if (currentLocation != null) {
+//                            loadMapDirection(currentLocation, destinationLocation);
+//                            viewModel.isShowDirection.set(true);
+//                        }
+                        imageBookingDialog();
                         break;
                     default:
                         break;
@@ -261,17 +292,18 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
                 Log.d("alo", "onClick: " + viewModel.status.get());
                 switch (viewModel.status.get()) {
                     case Constants.BOOKING_PICKUP:
-                        viewModel.updateStateBooking(Constants.BOOKING_STATE_DONE);
-                        viewModel.getApplication().setCurrentBookingId(null);
-                        if (polyline != null) {
-                            polyline.remove();
-                        }
-                        if (destinationMarker != null) {
-                            destinationMarker.setVisible(false);
-//                            destinationMarker.remove();
-                        }
-                        viewModel.isShowDirection.set(false);
-                        updateLocationUpdatesInterval(60000);
+//                        viewModel.updateStateBooking(Constants.BOOKING_STATE_DONE);
+//                        viewModel.getApplication().setCurrentBookingId(null);
+//                        if (polyline != null) {
+//                            polyline.remove();
+//                        }
+//                        if (destinationMarker != null) {
+//                            destinationMarker.setVisible(false);
+////                            destinationMarker.remove();
+//                        }
+//                        viewModel.isShowDirection.set(false);
+//                        updateLocationUpdatesInterval(60000);
+                        imageBookingDialog();
                         break;
                     case Constants.BOOKING_SUCCESS:
                         viewModel.getApplication().setCurrentBookingId(null);
@@ -612,4 +644,233 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
                 });
     }
 
+    //picker Image
+
+    public void getNewAvatar() {
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Add Photo!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo")) {
+                    if (!checkCameraPermission()) {
+                        requestCameraPermission();
+                    } else {
+                        takeFromCamera();
+                    }
+                } else if (options[item].equals("Choose from Gallery")) {
+                    if (!checkStoragePermission()) {
+                        requestStoragePermission();
+                    } else {
+                        takeFromGallery();
+                    }
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void takeFromCamera() {
+        ImagePicker.with(this)
+                .cameraOnly()
+                .cropSquare()
+                .start();
+    }
+
+    private void takeFromGallery() {
+        ImagePicker.with(this)
+                .galleryOnly()
+                .cropSquare()
+                .start();
+    }
+
+    public Uri getUriFromBitmap(Context context, Bitmap bitmap) {
+        Uri uri = null;
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
+        uri = Uri.parse(path);
+        return uri;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ImagePicker.REQUEST_CODE) {
+            if (resultCode == getActivity().RESULT_OK && data != null) {
+                Uri resultUri = data.getData();
+                if(resultUri == null) return;
+                final InputStream imageStream;
+                try {
+                    imageStream = getActivity().getContentResolver().openInputStream(resultUri);
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                photo = BitmapFactory.decodeStream(imageStream);
+                dialogBinding.imgCamera.setImageBitmap(photo);
+                updatedAvatar = photo;
+            }
+        }
+
+    }
+
+    private void requestStoragePermission() {
+        requestPermissions(storagePermission, STORAGE_REQUEST);
+    }
+
+    private void requestCameraPermission() {
+        requestPermissions(cameraPermission, CAMERA_REQUEST);
+    }
+
+    // checking storage permissions
+    private Boolean checkStoragePermission() {
+        boolean result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+        return result;
+    }
+
+    // checking camera permissions
+    private Boolean checkCameraPermission() {
+        boolean result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
+        boolean result1 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+        return result && result1;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case CAMERA_REQUEST: {
+                if (grantResults.length > 0) {
+                    boolean camera_accepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean writeStorageaccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    if (camera_accepted && writeStorageaccepted) {
+                        takeFromCamera();
+                    } else {
+                        viewModel.showErrorMessage("Please Enable Camera and Storage Permissions");
+                    }
+                }
+            }
+            break;
+            case STORAGE_REQUEST: {
+                if (grantResults.length > 0) {
+                    boolean writeStorageaccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    if (writeStorageaccepted) {
+                        takeFromGallery();
+                    } else {
+                        viewModel.showErrorMessage("Please Enable Storage Permissions");
+                    }
+                }
+            }
+            break;
+        }
+    }
+
+    public void imageBookingDialog() {
+        Dialog dialog = new Dialog(getActivity());
+        dialogBinding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()), R.layout.dialog_shipping_img, null, false);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(dialogBinding.getRoot());
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+        dialog.setCanceledOnTouchOutside(true);
+
+        dialogBinding.btnConfirm.setOnClickListener(view -> {
+            BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
+            switch (viewModel.status.get()) {
+                case Constants.BOOKING_PICKUP:
+                    updateBooking(Constants.BOOKING_STATE_DONE);
+                    viewModel.getApplication().setCurrentBookingId(null);
+                    if (polyline != null) {
+                        polyline.remove();
+                    }
+                    if (destinationMarker != null) {
+                        destinationMarker.setVisible(false);
+//                            destinationMarker.remove();
+                    }
+                    viewModel.isShowDirection.set(false);
+                    updateLocationUpdatesInterval(60000);
+                    break;
+                case Constants.BOOKING_ACCEPTED:
+                    updateBooking(Constants.BOOKING_STATE_PICKUP_SUCCESS);
+                    if (polyline != null) {
+                        polyline.remove();
+                    }
+                    if (destinationMarker != null) {
+                        destinationMarker.setVisible(true);
+                    }
+                    viewModel.isShowDirection.set(false);
+//                        BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
+                    if (destinationMarker == null) {
+                        destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation).title(viewModel.booking.getValue().getDestinationAddress()).icon(desIc));
+                    } else {
+                        destinationMarker.setPosition(destinationLocation);
+                    }
+                    if (currentLocation != null) {
+                        loadMapDirection(currentLocation, destinationLocation);
+                        viewModel.isShowDirection.set(true);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            dialog.dismiss();
+        });
+        dialogBinding.imgCamera.setOnClickListener(a -> {
+            getNewAvatar();
+        });
+
+        dialogBinding.btnCancel.setOnClickListener(b -> {
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+    public void updateBooking(int state) {
+
+        viewModel.showLoading();
+        // Upload image if necessary
+        if (updatedAvatar != null) {
+            // Upload avatar then update profile
+
+            // Convert the Bitmap to a byte array
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            updatedAvatar.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byte[] imageByteArray = byteArrayOutputStream.toByteArray();
+
+            // Create a request body for the image
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageByteArray);
+
+            // Create a multipart request builder
+            MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM);
+            requestBodyBuilder.addFormDataPart("file", "image.jpg", requestFile);
+            requestBodyBuilder.addFormDataPart("type", Constants.FILE_TYPE_AVATAR);
+
+            viewModel.compositeDisposable.add(viewModel.uploadAvatar(requestBodyBuilder.build())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(uploadResponse -> {
+                        if (uploadResponse.isResult() && uploadResponse.getData().getFilePath() != null) {
+                            viewModel.image.set(uploadResponse.getData().getFilePath());
+                            viewModel.updateStateBooking(state);
+                            viewModel.hideLoading();
+                        }
+                        viewModel.hideLoading();
+                    })
+            );
+
+        }else {
+            viewModel.showErrorMessage("Vui lòng cập nhật hình ảnh");
+            viewModel.hideLoading();
+        }
+    }
 }

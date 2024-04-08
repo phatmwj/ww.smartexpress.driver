@@ -286,7 +286,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_weight="3"
                                             android:layout_marginRight="@dimen/_8sdp"
-                                            android:text='@{vm.booking.service.size+"kg"}'
+                                            android:text='@{vm.size +"  "+vm.booking.service.weight+"kg"}'
                                             android:maxLines="1"
                                             android:ellipsize="end"
                                             style="@style/roboto_medium_light_gray_11ssp"
@@ -304,6 +304,17 @@
                                             android:textAlignment="textEnd">
                                         </TextView>
                                     </LinearLayout>
+                                    <TextView
+                                        android:visibility="@{vm.booking.isCod? View.VISIBLE : View.GONE}"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="3"
+                                        android:layout_marginRight="@dimen/_8sdp"
+                                        android:text='@{"Thu hộ: "+NumberUtils.formatCurrency(vm.booking.codPrice)}'
+                                        android:maxLines="1"
+                                        android:ellipsize="end"
+                                        style="@style/roboto_medium_light_gray_11ssp"
+                                        android:textAlignment="textStart"/>
 
 
                                     <LinearLayout
@@ -320,19 +331,8 @@
                                             android:maxLines="1"
                                             android:ellipsize="end"
                                             style="@style/roboto_regular_bold_green_11ssp"
-                                            android:textSize="@dimen/_9sdp"
+                                            android:textSize="@dimen/_6sdp"
                                             android:textAlignment="textStart">
-                                        </TextView>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="2"
-                                            android:text=''
-                                            android:maxLines="1"
-                                            android:ellipsize="end"
-                                            style="@style/roboto_medium_light_gray_11ssp"
-                                            android:textAlignment="textEnd">
                                         </TextView>
                                     </LinearLayout>
 
@@ -342,7 +342,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_icon_expand">
+                                    android:src="@drawable/ic_icon_expand"
+                                    android:visibility="gone">
 
                                 </ImageView>
                             </LinearLayout>

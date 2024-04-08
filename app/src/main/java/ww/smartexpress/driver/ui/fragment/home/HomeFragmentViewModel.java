@@ -20,11 +20,13 @@ import java.util.Date;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.RequestBody;
 import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.constant.Constants;
 import ww.smartexpress.driver.data.Repository;
 import ww.smartexpress.driver.data.model.api.ApiModelUtils;
+import ww.smartexpress.driver.data.model.api.ResponseWrapper;
 import ww.smartexpress.driver.data.model.api.request.CancelBookingRequest;
 import ww.smartexpress.driver.data.model.api.request.DriverStateRequest;
 import ww.smartexpress.driver.data.model.api.request.EventBookingRequest;
@@ -33,6 +35,7 @@ import ww.smartexpress.driver.data.model.api.request.UpdateBookingRequest;
 import ww.smartexpress.driver.data.model.api.response.CurrentBooking;
 import ww.smartexpress.driver.data.model.api.response.ProfileResponse;
 import ww.smartexpress.driver.data.model.api.response.Size;
+import ww.smartexpress.driver.data.model.api.response.UploadFileResponse;
 import ww.smartexpress.driver.data.model.room.UserEntity;
 import ww.smartexpress.driver.ui.base.fragment.BaseFragmentViewModel;
 import ww.smartexpress.driver.ui.chat.ChatActivity;
@@ -52,6 +55,10 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
     public MutableLiveData<String> currentBookingId = new MutableLiveData<>();
     public MutableLiveData<CurrentBooking> booking = new MutableLiveData<>();
     public ObservableField<Boolean> isShowDirection = new ObservableField<>(false);
+
+    public ObservableField<String> size = new ObservableField<>("");
+
+    public ObservableField<String> image = new ObservableField<>(null);
 
     public HomeFragmentViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
@@ -226,6 +233,7 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
                     if(response.isResult()){
 //                        application.setCurrentBookingId(String.valueOf(response.getData().getId()));
                         currentBookingId.setValue(String.valueOf(response.getData().getId()));
+                        size.set(getSize(response.getData().getService().getSize()));
                         if(response.getData().getState()==Constants.BOOKING_STATE_DRIVER_ACCEPT){
                             status.set(Constants.BOOKING_ACCEPTED);
                             repository.getSharedPreferences().setLong(Constants.ROOM_ID,response.getData().getRoom().getId());
@@ -257,6 +265,7 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
                 .subscribe(response -> {
                     if(response.isResult()){
                         booking.setValue(response.getData());
+                        size.set(getSize(response.getData().getService().getSize()));
                         currentBookingId.setValue(String.valueOf(booking.getValue().getId()));
                         status.set(Constants.BOOKING_VISIBLE);
                         showSuccessMessage(response.getMessage());
@@ -284,6 +293,11 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
         request.setId(Long.valueOf(currentBookingId.getValue()));
         request.setNote(null);
         request.setState(state);
+        if(state==Constants.BOOKING_STATE_PICKUP_SUCCESS){
+            request.setPickupImage(image.get());
+        }else if(state == Constants.BOOKING_STATE_DONE){
+            request.setDeliveryImage(image.get());
+        }
         showLoading();
         compositeDisposable.add(repository.getApiService().updateStateBooking(request)
                 .subscribeOn(Schedulers.io())
@@ -358,7 +372,11 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
 
     public String getSize(String sizeJson){
         Size size = ApiModelUtils.fromJson( sizeJson,Size.class);
-        return size.toString();
+        return size.formatSize();
+    }
+
+    public Observable<ResponseWrapper<UploadFileResponse>> uploadAvatar(RequestBody requestBody){
+        return repository.getApiService().uploadFile(requestBody);
     }
 
 
