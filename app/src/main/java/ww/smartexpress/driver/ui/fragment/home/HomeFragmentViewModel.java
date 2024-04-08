@@ -24,6 +24,7 @@ import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.constant.Constants;
 import ww.smartexpress.driver.data.Repository;
+import ww.smartexpress.driver.data.model.api.ApiModelUtils;
 import ww.smartexpress.driver.data.model.api.request.CancelBookingRequest;
 import ww.smartexpress.driver.data.model.api.request.DriverStateRequest;
 import ww.smartexpress.driver.data.model.api.request.EventBookingRequest;
@@ -31,6 +32,7 @@ import ww.smartexpress.driver.data.model.api.request.PositionRequest;
 import ww.smartexpress.driver.data.model.api.request.UpdateBookingRequest;
 import ww.smartexpress.driver.data.model.api.response.CurrentBooking;
 import ww.smartexpress.driver.data.model.api.response.ProfileResponse;
+import ww.smartexpress.driver.data.model.api.response.Size;
 import ww.smartexpress.driver.data.model.room.UserEntity;
 import ww.smartexpress.driver.ui.base.fragment.BaseFragmentViewModel;
 import ww.smartexpress.driver.ui.chat.ChatActivity;
@@ -353,5 +355,11 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
                         })
         );
     }
+
+    public String getSize(String sizeJson){
+        Size size = ApiModelUtils.fromJson( sizeJson,Size.class);
+        return size.toString();
+    }
+
 
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -97,528 +98,534 @@
 
             </ImageView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvBooking"
-                android:visibility="@{vm.status != 0 ? View.VISIBLE : View.GONE}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_15sdp"
-                app:cardCornerRadius="@dimen/_10sdp"
-                app:cardElevation="@dimen/_5sdp">
+            <include
+                android:id="@+id/card_booking"
+                layout="@layout/layout_booking"
+                bind:vm = "@{vm}"
+                bind:f = "@{f}"/>
 
-                <LinearLayout
-                    android:id="@+id/llBooking"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_marginVertical="@dimen/_8sdp"
-                        android:layout_marginHorizontal="@dimen/_15sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:visibility="@{vm.status == 1 ? View.VISIBLE : View.GONE}"
-                            android:layout_marginBottom="@dimen/_10sdp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text='@{"Chào " + vm.user.fullName + "!" + " Bạn có muốn chở tôi không?"}'
-                            style="@style/roboto_regular_bold_green_11ssp"
-                            android:maxLines="1"
-                            android:ellipsize="end">
-                        </TextView>
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/cvBooking"-->
+<!--                android:visibility="@{vm.status != 0 ? View.VISIBLE : View.GONE}"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="@dimen/_15sdp"-->
+<!--                android:layout_marginBottom="@dimen/_15sdp"-->
+<!--                app:cardCornerRadius="@dimen/_10sdp"-->
+<!--                app:cardElevation="@dimen/_5sdp">-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginBottom="@dimen/_10sdp"
-                            android:layout_marginTop="@dimen/_5sdp">
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="@dimen/_10sdp"
-                                app:cardCornerRadius="@dimen/_4sdp"
-                                app:cardElevation="0dp">
-                                <ImageView
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_width="@dimen/_40sdp"
-                                    android:layout_height="@dimen/_40sdp"
-                                    android:src="@{vm.booking.customer.avatar}">
-                                </ImageView>
-                            </androidx.cardview.widget.CardView>
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/llBooking"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical">-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_marginVertical="@dimen/_8sdp"-->
+<!--                        android:layout_marginHorizontal="@dimen/_15sdp"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical">-->
+<!--                        <TextView-->
+<!--                            android:visibility="@{vm.status == 1 ? View.VISIBLE : View.GONE}"-->
+<!--                            android:layout_marginBottom="@dimen/_10sdp"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text='@{"Chào " + vm.user.fullName + "!" + " Bạn có muốn chở tôi không?"}'-->
+<!--                            style="@style/roboto_regular_bold_green_11ssp"-->
+<!--                            android:maxLines="1"-->
+<!--                            android:ellipsize="end">-->
+<!--                        </TextView>-->
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="@dimen/_5sdp"
-                                    android:weightSum="5">
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="3"
-                                        android:layout_marginRight="@dimen/_8sdp"
-                                        android:text="@{vm.booking.customer.name}"
-                                        android:maxLines="1"
-                                        android:ellipsize="end"
-                                        style="@style/title"
-                                        android:textAlignment="textStart">
-                                    </TextView>
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="2"
-                                        android:text='@{NumberUtils.formatCurrency(vm.booking.money)}'
-                                        android:maxLines="1"
-                                        android:ellipsize="end"
-                                        style="@style/title"
-                                        android:textAlignment="textEnd">
-                                    </TextView>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:text="@{vm.paymentMethod}"
-                                        android:maxLines="1"
-                                        android:ellipsize="end"
-                                        style="@style/roboto_regular_bold_green_11ssp"
-                                        android:textAlignment="textStart">
-                                    </TextView>
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:text='@{NumberUtils.formatDistance(vm.booking.distance)}'
-                                        android:maxLines="1"
-                                        android:ellipsize="end"
-                                        style="@style/roboto_medium_gray_12ssp"
-                                        android:textAlignment="textEnd">
-                                    </TextView>
-                                </LinearLayout>
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/llAddress"
-                            android:visibility="@{vm.status == -1 || vm.status == 4 ? View.GONE : View.VISIBLE}"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_marginTop="@dimen/_5sdp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:paddingRight="@dimen/_10sdp"
-                                    android:src="@drawable/ic_icon_destination">
-
-                                </ImageView>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        style="@style/roboto_medium_light_gray_8ssp"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:background="@color/white"
-                                        android:maxLines="1"
-                                        android:text="Điểm lấy hàng" />
-
-                                    <TextView
-                                        style="@style/roboto_medium_light_gray_11ssp"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:background="@color/white"
-                                        android:maxLines="1"
-                                        android:ellipsize="end"
-                                        android:text="@{vm.booking.pickupAddress}" />
-                                </LinearLayout>
-
-                            </LinearLayout>
-
-                            <FrameLayout
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_15sdp"
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:background="@drawable/line_dashed_border">
-
-                            </FrameLayout>
-
-                            <LinearLayout
-                                android:layout_marginBottom="@dimen/_10sdp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="@dimen/_21sdp"
-                                    android:layout_height="@dimen/_21sdp"
-                                    android:layout_marginRight="@dimen/_5sdp"
-                                    android:src="@drawable/location_flag">
-
-                                </ImageView>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical">
-                                    <TextView
-                                        style="@style/roboto_medium_light_gray_8ssp"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:background="@color/white"
-                                        android:maxLines="1"
-                                        android:text="Giao hàng đến" />
-
-                                    <TextView
-                                        style="@style/roboto_medium_light_gray_11ssp"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:background="@color/white"
-                                        android:maxLines="1"
-                                        android:ellipsize="end"
-                                        android:text="@{vm.booking.destinationAddress}" />
-
-                                </LinearLayout>
-
-                            </LinearLayout>
-                            <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_1sdp"
-                                android:background="#EEF2F5" />
-
-                            <LinearLayout
-                                android:id="@+id/orderDetails"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                android:layout_marginVertical="@dimen/_5sdp">
-
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:paddingRight="@dimen/_10sdp"
-                                    android:src="@drawable/ic_icon_package">
-
-                                </ImageView>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="vertical"
-                                        android:layout_weight="1">
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:weightSum="5">
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_weight="3"
-                                                android:layout_marginRight="@dimen/_8sdp"
-                                                android:text="Loại hàng: Quần áo"
-                                                android:maxLines="1"
-                                                android:ellipsize="end"
-                                                style="@style/roboto_medium_light_gray_11ssp"
-                                                android:textAlignment="textStart">
-                                            </TextView>
-
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_weight="2"
-                                                android:text=''
-                                                android:maxLines="1"
-                                                android:ellipsize="end"
-                                                style="@style/roboto_medium_light_gray_11ssp"
-                                                android:textAlignment="textEnd">
-                                            </TextView>
-                                        </LinearLayout>
-
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginBottom="@dimen/_5sdp"
-                                            android:weightSum="5">
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_weight="3"
-                                                android:layout_marginRight="@dimen/_8sdp"
-                                                android:text="Xem chi tiết hàng hóa"
-                                                android:maxLines="1"
-                                                android:ellipsize="end"
-                                                style="@style/roboto_regular_bold_green_11ssp"
-                                                android:textSize="@dimen/_9sdp"
-                                                android:textAlignment="textStart">
-                                            </TextView>
-
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_weight="2"
-                                                android:text=''
-                                                android:maxLines="1"
-                                                android:ellipsize="end"
-                                                style="@style/roboto_medium_light_gray_11ssp"
-                                                android:textAlignment="textEnd">
-                                            </TextView>
-                                        </LinearLayout>
-
-                                    </LinearLayout>
-
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/ic_icon_expand">
-
-                                    </ImageView>
-                                </LinearLayout>
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_1sdp"
-                                android:layout_below="@+id/linearLayout1"
-                                android:background="#EEF2F5" />
-
-                            <LinearLayout
-                                android:visibility="@{(vm.status == 2) ? View.VISIBLE : View.GONE}"
-                                android:paddingVertical="@dimen/_15sdp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-                                <LinearLayout
-                                    android:onClick="@{(v)->vm.openChat()}"
-                                    android:id="@+id/sendMessage"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:orientation="horizontal"
-                                    android:layout_weight="1">
-
-                                    <ImageView
-                                        android:id="@+id/imgMessage"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginRight="@dimen/_10sdp"
-                                        app:srcCompat="@drawable/ic_icon_message" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/send_message"
-                                        style="@style/roboto_medium_79_gray"/>
-
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:onClick="@{(v)->vm.callCustomer()}"
-                                    android:id="@+id/callDriver"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:gravity="center"
-                                    android:orientation="horizontal"
-                                    android:layout_weight="1">
-
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginRight="@dimen/_10sdp"
-                                        app:srcCompat="@drawable/ic_icon_call" />
-
-                                    <TextView
-                                        style="@style/roboto_medium_79_gray"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/call_customer" />
-
-                                </LinearLayout>
-                            </LinearLayout>
-                            <FrameLayout
-                                android:visibility="@{(vm.status == 2) ? View.VISIBLE : View.GONE}"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_1sdp"
-                                android:background="#EEF2F5" />
-
-                            <LinearLayout
-                                android:visibility="@{vm.status != 4 &amp;&amp; vm.status != -1 ? View.VISIBLE : View.GONE}"
-                                android:paddingTop="@dimen/_15sdp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-                                <ImageView
-                                    android:layout_width="@dimen/_12sdp"
-                                    android:layout_height="@dimen/_12sdp"
-                                    android:src="@drawable/note"
-                                    android:layout_gravity="center"
-                                    android:layout_marginRight="@dimen/_10sdp">
-                                </ImageView>
-
-                                <TextView
-                                    style="@style/roboto_medium_79_gray"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="@{!TextUtils.isEmpty(vm.booking.customerNote) ? vm.booking.customerNote : @string/empty_note}"
-                                    android:textColor='@{!TextUtils.isEmpty(vm.booking.customerNote) ? @color/red_color : @color/gray}'
-                                    android:maxLines="2"
-                                    android:ellipsize="end">
-                                </TextView>
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-                        <RelativeLayout
-                            android:id="@+id/progress_layout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            android:layout_gravity="center"
-                            android:visibility="@{vm.status == 1 ? View.VISIBLE : View.GONE}">
-
-                            <!--progress bar implementation-->
-                            <ProgressBar
-                                android:id="@+id/progress_bar"
-                                style="?android:attr/progressBarStyleHorizontal"
-                                android:layout_width="@dimen/_60sdp"
-                                android:layout_height="@dimen/_60sdp"
-                                android:background="@drawable/circular_shape"
-                                android:indeterminate="false"
-                                android:progressDrawable="@drawable/circular_progress_bar"
-                                android:textAlignment="center"
-                                />
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_centerInParent="true">
-
-                            <!--Text implementation in center of the progress bar-->
-                            <TextView
-                                style="@style/roboto_medium"
-                                android:id="@+id/progress_text"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="30"
-                                android:textSize="@dimen/_18ssp"/>
-<!--                            <TextView-->
-<!--                                style="@style/roboto_medium"-->
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="horizontal"-->
+<!--                            android:layout_marginBottom="@dimen/_10sdp"-->
+<!--                            android:layout_marginTop="@dimen/_5sdp">-->
+<!--                            <androidx.cardview.widget.CardView-->
 <!--                                android:layout_width="wrap_content"-->
 <!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginRight="@dimen/_10sdp"-->
+<!--                                app:cardCornerRadius="@dimen/_4sdp"-->
+<!--                                app:cardElevation="0dp">-->
+<!--                                <ImageView-->
+<!--                                    android:layout_gravity="center_vertical"-->
+<!--                                    android:layout_width="@dimen/_40sdp"-->
+<!--                                    android:layout_height="@dimen/_40sdp"-->
+<!--                                    android:src="@{vm.booking.customer.avatar}">-->
+<!--                                </ImageView>-->
+<!--                            </androidx.cardview.widget.CardView>-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="vertical">-->
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_marginBottom="@dimen/_5sdp"-->
+<!--                                    android:weightSum="5">-->
+<!--                                    <TextView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_weight="3"-->
+<!--                                        android:layout_marginRight="@dimen/_8sdp"-->
+<!--                                        android:text="@{vm.booking.customer.name}"-->
+<!--                                        android:maxLines="1"-->
+<!--                                        android:ellipsize="end"-->
+<!--                                        style="@style/title"-->
+<!--                                        android:textAlignment="textStart">-->
+<!--                                    </TextView>-->
+
+<!--                                    <TextView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_weight="2"-->
+<!--                                        android:text='@{NumberUtils.formatCurrency(vm.booking.money)}'-->
+<!--                                        android:maxLines="1"-->
+<!--                                        android:ellipsize="end"-->
+<!--                                        style="@style/title"-->
+<!--                                        android:textAlignment="textEnd">-->
+<!--                                    </TextView>-->
+<!--                                </LinearLayout>-->
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content">-->
+<!--                                    <TextView-->
+<!--                                        android:layout_width="match_parent"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:text="@{vm.paymentMethod}"-->
+<!--                                        android:maxLines="1"-->
+<!--                                        android:ellipsize="end"-->
+<!--                                        style="@style/roboto_regular_bold_green_11ssp"-->
+<!--                                        android:textAlignment="textStart">-->
+<!--                                    </TextView>-->
+
+<!--                                    <TextView-->
+<!--                                        android:layout_width="match_parent"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:text='@{NumberUtils.formatDistance(vm.booking.distance)}'-->
+<!--                                        android:maxLines="1"-->
+<!--                                        android:ellipsize="end"-->
+<!--                                        style="@style/roboto_medium_gray_12ssp"-->
+<!--                                        android:textAlignment="textEnd">-->
+<!--                                    </TextView>-->
+<!--                                </LinearLayout>-->
+<!--                            </LinearLayout>-->
+
+<!--                        </LinearLayout>-->
+
+<!--                        <LinearLayout-->
+<!--                            android:id="@+id/llAddress"-->
+<!--                            android:visibility="@{vm.status == -1 || vm.status == 4 ? View.GONE : View.VISIBLE}"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="vertical">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_marginTop="@dimen/_5sdp"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:gravity="center_vertical"-->
+<!--                                android:orientation="horizontal">-->
+
+<!--                                <ImageView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:paddingRight="@dimen/_10sdp"-->
+<!--                                    android:src="@drawable/ic_icon_destination">-->
+
+<!--                                </ImageView>-->
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:orientation="vertical">-->
+
+<!--                                    <TextView-->
+<!--                                        style="@style/roboto_medium_light_gray_8ssp"-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="match_parent"-->
+<!--                                        android:background="@color/white"-->
+<!--                                        android:maxLines="1"-->
+<!--                                        android:text="Điểm lấy hàng" />-->
+
+<!--                                    <TextView-->
+<!--                                        style="@style/roboto_medium_light_gray_11ssp"-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="match_parent"-->
+<!--                                        android:background="@color/white"-->
+<!--                                        android:maxLines="1"-->
+<!--                                        android:ellipsize="end"-->
+<!--                                        android:text="@{vm.booking.pickupAddress}" />-->
+<!--                                </LinearLayout>-->
+
+<!--                            </LinearLayout>-->
+
+<!--                            <FrameLayout-->
+<!--                                android:layout_width="@dimen/_5sdp"-->
+<!--                                android:layout_height="@dimen/_15sdp"-->
+<!--                                android:layout_marginLeft="@dimen/_10sdp"-->
+<!--                                android:background="@drawable/line_dashed_border">-->
+
+<!--                            </FrameLayout>-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_marginBottom="@dimen/_10sdp"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:gravity="center_vertical"-->
+<!--                                android:orientation="horizontal">-->
+
+<!--                                <ImageView-->
+<!--                                    android:layout_width="@dimen/_21sdp"-->
+<!--                                    android:layout_height="@dimen/_21sdp"-->
+<!--                                    android:layout_marginRight="@dimen/_5sdp"-->
+<!--                                    android:src="@drawable/location_flag">-->
+
+<!--                                </ImageView>-->
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:orientation="vertical">-->
+<!--                                    <TextView-->
+<!--                                        style="@style/roboto_medium_light_gray_8ssp"-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="match_parent"-->
+<!--                                        android:background="@color/white"-->
+<!--                                        android:maxLines="1"-->
+<!--                                        android:text="Giao hàng đến" />-->
+
+<!--                                    <TextView-->
+<!--                                        style="@style/roboto_medium_light_gray_11ssp"-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="match_parent"-->
+<!--                                        android:background="@color/white"-->
+<!--                                        android:maxLines="1"-->
+<!--                                        android:ellipsize="end"-->
+<!--                                        android:text="@{vm.booking.destinationAddress}" />-->
+
+<!--                                </LinearLayout>-->
+
+<!--                            </LinearLayout>-->
+<!--                            <FrameLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_1sdp"-->
+<!--                                android:background="#EEF2F5" />-->
+
+<!--                            <LinearLayout-->
+<!--                                android:id="@+id/orderDetails"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:gravity="center_vertical"-->
+<!--                                android:orientation="horizontal"-->
+<!--                                android:layout_marginVertical="@dimen/_5sdp">-->
+
+
+<!--                                <ImageView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:paddingRight="@dimen/_10sdp"-->
+<!--                                    android:src="@drawable/ic_icon_package">-->
+
+<!--                                </ImageView>-->
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:orientation="horizontal">-->
+<!--                                    <LinearLayout-->
+<!--                                        android:layout_width="match_parent"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:orientation="vertical"-->
+<!--                                        android:layout_weight="1">-->
+
+<!--                                        <LinearLayout-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:weightSum="5">-->
+<!--                                            <TextView-->
+<!--                                                android:layout_width="wrap_content"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_weight="3"-->
+<!--                                                android:layout_marginRight="@dimen/_8sdp"-->
+<!--                                                android:text="Loại hàng: Quần áo"-->
+<!--                                                android:maxLines="1"-->
+<!--                                                android:ellipsize="end"-->
+<!--                                                style="@style/roboto_medium_light_gray_11ssp"-->
+<!--                                                android:textAlignment="textStart">-->
+<!--                                            </TextView>-->
+
+<!--                                            <TextView-->
+<!--                                                android:layout_width="wrap_content"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_weight="2"-->
+<!--                                                android:text=''-->
+<!--                                                android:maxLines="1"-->
+<!--                                                android:ellipsize="end"-->
+<!--                                                style="@style/roboto_medium_light_gray_11ssp"-->
+<!--                                                android:textAlignment="textEnd">-->
+<!--                                            </TextView>-->
+<!--                                        </LinearLayout>-->
+
+
+<!--                                        <LinearLayout-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:layout_marginBottom="@dimen/_5sdp"-->
+<!--                                            android:weightSum="5">-->
+<!--                                            <TextView-->
+<!--                                                android:layout_width="wrap_content"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_weight="3"-->
+<!--                                                android:layout_marginRight="@dimen/_8sdp"-->
+<!--                                                android:text="Xem chi tiết hàng hóa"-->
+<!--                                                android:maxLines="1"-->
+<!--                                                android:ellipsize="end"-->
+<!--                                                style="@style/roboto_regular_bold_green_11ssp"-->
+<!--                                                android:textSize="@dimen/_9sdp"-->
+<!--                                                android:textAlignment="textStart">-->
+<!--                                            </TextView>-->
+
+<!--                                            <TextView-->
+<!--                                                android:layout_width="wrap_content"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_weight="2"-->
+<!--                                                android:text=''-->
+<!--                                                android:maxLines="1"-->
+<!--                                                android:ellipsize="end"-->
+<!--                                                style="@style/roboto_medium_light_gray_11ssp"-->
+<!--                                                android:textAlignment="textEnd">-->
+<!--                                            </TextView>-->
+<!--                                        </LinearLayout>-->
+
+<!--                                    </LinearLayout>-->
+
+<!--                                    <ImageView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_gravity="center"-->
+<!--                                        android:src="@drawable/ic_icon_expand">-->
+
+<!--                                    </ImageView>-->
+<!--                                </LinearLayout>-->
+<!--                            </LinearLayout>-->
+
+<!--                        </LinearLayout>-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="vertical">-->
+
+<!--                            <FrameLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_1sdp"-->
+<!--                                android:layout_below="@+id/linearLayout1"-->
+<!--                                android:background="#EEF2F5" />-->
+
+<!--                            <LinearLayout-->
+<!--                                android:visibility="@{(vm.status == 2) ? View.VISIBLE : View.GONE}"-->
+<!--                                android:paddingVertical="@dimen/_15sdp"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="horizontal">-->
+<!--                                <LinearLayout-->
+<!--                                    android:onClick="@{(v)->vm.openChat()}"-->
+<!--                                    android:id="@+id/sendMessage"-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:orientation="horizontal"-->
+<!--                                    android:layout_weight="1">-->
+
+<!--                                    <ImageView-->
+<!--                                        android:id="@+id/imgMessage"-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_marginRight="@dimen/_10sdp"-->
+<!--                                        app:srcCompat="@drawable/ic_icon_message" />-->
+
+<!--                                    <TextView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:text="@string/send_message"-->
+<!--                                        style="@style/roboto_medium_79_gray"/>-->
+
+
+<!--                                </LinearLayout>-->
+
+<!--                                <LinearLayout-->
+<!--                                    android:onClick="@{(v)->vm.callCustomer()}"-->
+<!--                                    android:id="@+id/callDriver"-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_alignParentRight="true"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:orientation="horizontal"-->
+<!--                                    android:layout_weight="1">-->
+
+<!--                                    <ImageView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_marginRight="@dimen/_10sdp"-->
+<!--                                        app:srcCompat="@drawable/ic_icon_call" />-->
+
+<!--                                    <TextView-->
+<!--                                        style="@style/roboto_medium_79_gray"-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:text="@string/call_customer" />-->
+
+<!--                                </LinearLayout>-->
+<!--                            </LinearLayout>-->
+<!--                            <FrameLayout-->
+<!--                                android:visibility="@{(vm.status == 2) ? View.VISIBLE : View.GONE}"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_1sdp"-->
+<!--                                android:background="#EEF2F5" />-->
+
+<!--                            <LinearLayout-->
+<!--                                android:visibility="@{vm.status != 4 &amp;&amp; vm.status != -1 ? View.VISIBLE : View.GONE}"-->
+<!--                                android:paddingTop="@dimen/_15sdp"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="horizontal">-->
+<!--                                <ImageView-->
+<!--                                    android:layout_width="@dimen/_12sdp"-->
+<!--                                    android:layout_height="@dimen/_12sdp"-->
+<!--                                    android:src="@drawable/note"-->
+<!--                                    android:layout_gravity="center"-->
+<!--                                    android:layout_marginRight="@dimen/_10sdp">-->
+<!--                                </ImageView>-->
+
+<!--                                <TextView-->
+<!--                                    style="@style/roboto_medium_79_gray"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="@{!TextUtils.isEmpty(vm.booking.customerNote) ? vm.booking.customerNote : @string/empty_note}"-->
+<!--                                    android:textColor='@{!TextUtils.isEmpty(vm.booking.customerNote) ? @color/red_color : @color/gray}'-->
+<!--                                    android:maxLines="2"-->
+<!--                                    android:ellipsize="end">-->
+<!--                                </TextView>-->
+
+<!--                            </LinearLayout>-->
+
+<!--                        </LinearLayout>-->
+<!--                        <RelativeLayout-->
+<!--                            android:id="@+id/progress_layout"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="@dimen/_8sdp"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:visibility="@{vm.status == 1 ? View.VISIBLE : View.GONE}">-->
+
+<!--                            &lt;!&ndash;progress bar implementation&ndash;&gt;-->
+<!--                            <ProgressBar-->
+<!--                                android:id="@+id/progress_bar"-->
+<!--                                style="?android:attr/progressBarStyleHorizontal"-->
+<!--                                android:layout_width="@dimen/_60sdp"-->
+<!--                                android:layout_height="@dimen/_60sdp"-->
+<!--                                android:background="@drawable/circular_shape"-->
+<!--                                android:indeterminate="false"-->
+<!--                                android:progressDrawable="@drawable/circular_progress_bar"-->
+<!--                                android:textAlignment="center"-->
+<!--                                />-->
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:layout_centerInParent="true">-->
+
+<!--                            &lt;!&ndash;Text implementation in center of the progress bar&ndash;&gt;-->
+<!--                            <TextView-->
+<!--                                style="@style/roboto_medium"-->
+<!--                                android:id="@+id/progress_text"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
 <!--                                android:gravity="center"-->
-<!--                                android:text="second"-->
-<!--                                android:textSize="@dimen/_10ssp"/>-->
-                            </LinearLayout>
-                        </RelativeLayout>
+<!--                                android:text="30"-->
+<!--                                android:textSize="@dimen/_18ssp"/>-->
+<!--&lt;!&ndash;                            <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                                style="@style/roboto_medium"&ndash;&gt;-->
+<!--&lt;!&ndash;                                android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                                android:gravity="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                                android:text="second"&ndash;&gt;-->
+<!--&lt;!&ndash;                                android:textSize="@dimen/_10ssp"/>&ndash;&gt;-->
+<!--                            </LinearLayout>-->
+<!--                        </RelativeLayout>-->
 
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
-                    <LinearLayout
-                        android:visibility="@{vm.status == 1 || vm.status == 2 ? View.VISIBLE : View.GONE}"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingVertical="@dimen/_5sdp">
+<!--                    <LinearLayout-->
+<!--                        android:visibility="@{vm.status == 1 || vm.status == 2 ? View.VISIBLE : View.GONE}"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:paddingVertical="@dimen/_5sdp">-->
 
-                        <TextView
-                            android:id="@+id/btnCancel"
-                            android:layout_marginHorizontal="@dimen/_15sdp"
-                            android:layout_marginBottom="@dimen/_5sdp"
-                            android:background="@drawable/background_button_stroke_green"
-                            android:gravity="center"
-                            android:textAllCaps="false"
-                            android:textColor="@color/green_light_app"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/cancel_trip"
-                            style="@style/app_text_b">
+<!--                        <TextView-->
+<!--                            android:id="@+id/btnCancel"-->
+<!--                            android:layout_marginHorizontal="@dimen/_15sdp"-->
+<!--                            android:layout_marginBottom="@dimen/_5sdp"-->
+<!--                            android:background="@drawable/background_button_stroke_green"-->
+<!--                            android:gravity="center"-->
+<!--                            android:textAllCaps="false"-->
+<!--                            android:textColor="@color/green_light_app"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:text="@string/cancel_trip"-->
+<!--                            style="@style/app_text_b">-->
 
-                        </TextView>
+<!--                        </TextView>-->
 
-                        <TextView
-                            android:id="@+id/btnAccept"
-                            android:layout_marginHorizontal="@dimen/_15sdp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@{vm.status==1? @string/accept_trip : @string/pickup}"
-                            android:background="@drawable/background_button_solid_green"
-                            android:gravity="center"
-                            android:maxLines="1"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            style="@style/app_text_b">
+<!--                        <TextView-->
+<!--                            android:id="@+id/btnAccept"-->
+<!--                            android:layout_marginHorizontal="@dimen/_15sdp"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:text="@{vm.status==1? @string/accept_trip : @string/pickup}"-->
+<!--                            android:background="@drawable/background_button_solid_green"-->
+<!--                            android:gravity="center"-->
+<!--                            android:maxLines="1"-->
+<!--                            android:textAllCaps="false"-->
+<!--                            android:textColor="@color/white"-->
+<!--                            style="@style/app_text_b">-->
 
-                        </TextView>
-                    </LinearLayout>
+<!--                        </TextView>-->
+<!--                    </LinearLayout>-->
 
-                    <LinearLayout
-                        android:visibility="@{vm.status != 1 &amp;&amp; vm.status != 2? View.VISIBLE : View.GONE}"
-                        android:layout_marginHorizontal="@dimen/_15sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:id="@+id/btnConfirm"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_15sdp"
-                            android:text="@{vm.status == 4 ? @string/ended_trip : vm.status == -1 ? @string/canceled_trip : vm.status == -2 ? @string/customer_cancel_booking:@string/end_trip}"
+<!--                    <LinearLayout-->
+<!--                        android:visibility="@{vm.status != 1 &amp;&amp; vm.status != 2? View.VISIBLE : View.GONE}"-->
+<!--                        android:layout_marginHorizontal="@dimen/_15sdp"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content">-->
+<!--                        <Button-->
+<!--                            android:id="@+id/btnConfirm"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginBottom="@dimen/_15sdp"-->
+<!--                            android:text="@{vm.status == 4 ? @string/ended_trip : vm.status == -1 ? @string/canceled_trip : vm.status == -2 ? @string/customer_cancel_booking:@string/end_trip}"-->
 
-                            android:gravity="center"
-                            android:maxLines="1"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            style="@style/AppButtonStyle"
-                            android:textSize="@dimen/_11ssp"
-                            />
-                    </LinearLayout>
-                </LinearLayout>
+<!--                            android:gravity="center"-->
+<!--                            android:maxLines="1"-->
+<!--                            android:textAllCaps="false"-->
+<!--                            android:textColor="@color/white"-->
+<!--                            style="@style/AppButtonStyle"-->
+<!--                            android:textSize="@dimen/_11ssp"-->
+<!--                            />-->
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
 
-            </androidx.cardview.widget.CardView>
+<!--            </androidx.cardview.widget.CardView>-->
         </LinearLayout>
 
     </FrameLayout>

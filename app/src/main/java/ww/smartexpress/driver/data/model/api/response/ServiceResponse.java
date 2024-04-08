@@ -18,4 +18,8 @@ public class ServiceResponse {
     private Integer kind;
 
     private CategoryResponse category;
+
+    private String weight;
+
+    private String size;
 }

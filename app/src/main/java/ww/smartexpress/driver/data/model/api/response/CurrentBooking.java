@@ -34,4 +34,13 @@ public class CurrentBooking {
     private String note;
     private String customerNote;
     private Rating rating;
+
+    private Double codPrice;
+    private String consigneeName;
+    private String consigneePhone;
+    private Boolean isCod;
+
+    private String deliveryImage;
+    private String senderName;
+    private String senderPhone;
 }

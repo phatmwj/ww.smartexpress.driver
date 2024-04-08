@@ -187,7 +187,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
             updateLocationUpdatesInterval(10000);
         });
 
-        binding.btnAccept.setOnClickListener(new View.OnClickListener() {
+        binding.cardBooking.btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
@@ -197,8 +197,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
 //                        BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
                         viewModel.isShowDirection.set(false);
                         handler.removeCallbacks(runnable);
-                        binding.progressText.setText(String.valueOf(durationInSeconds));
-                        binding.progressBar.setProgress(0);
+                        binding.cardBooking.progressText.setText(String.valueOf(durationInSeconds));
+                        binding.cardBooking.progressBar.setProgress(0);
                         if (destinationMarker != null) {
                             destinationMarker.setVisible(true);
                         }
@@ -241,21 +241,21 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
             }
         });
 
-        binding.btnCancel.setOnClickListener(new View.OnClickListener() {
+        binding.cardBooking.btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cancel();
             }
         });
 
-        binding.orderDetails.setOnClickListener(new View.OnClickListener() {
+        binding.cardBooking.orderDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 orderDetailsDialog();
             }
         });
 
-        binding.btnConfirm.setOnClickListener(new View.OnClickListener() {
+        binding.cardBooking.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("alo", "onClick: " + viewModel.status.get());
@@ -318,22 +318,23 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
         }
     }
 
+    // progress bar countdown
     private void startCountdown(){
         handler.postDelayed(runnable = new Runnable() {
             private int remainingTime = durationInSeconds;
             @Override
             public void run() {
                 if (remainingTime >= 0) {
-                    binding.progressText.setText(String.valueOf(remainingTime));
-                    binding.progressBar.setProgress((durationInSeconds - remainingTime) * 100 / durationInSeconds);
+                    binding.cardBooking.progressText.setText(String.valueOf(remainingTime));
+                    binding.cardBooking.progressBar.setProgress((durationInSeconds - remainingTime) * 100 / durationInSeconds);
 
                     remainingTime--;
                     handler.postDelayed(this, updateInterval);
                 } else {
                     // Nếu hết thời gian, thực hiện các công việc sau khi đếm ngược kết thúc
                     viewModel.rejectBooking();
-                    binding.progressText.setText(String.valueOf(durationInSeconds));
-                    binding.progressBar.setProgress(0);
+                    binding.cardBooking.progressText.setText(String.valueOf(durationInSeconds));
+                    binding.cardBooking.progressBar.setProgress(0);
                 }
             }
         }, updateInterval);
@@ -363,8 +364,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
                 case Constants.BOOKING_VISIBLE:
                     viewModel.rejectBooking();
                     handler.removeCallbacks(runnable);
-                    binding.progressText.setText(String.valueOf(durationInSeconds));
-                    binding.progressBar.setProgress(0);
+                    binding.cardBooking.progressText.setText(String.valueOf(durationInSeconds));
+                    binding.cardBooking.progressBar.setProgress(0);
                     dialog.dismiss();
                     break;
                 case Constants.BOOKING_ACCEPTED:
@@ -518,6 +519,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
         });
     }
 
+    // gg maps polyline
     public void loadMapDirection(LatLng origin, LatLng des) {
         viewModel.compositeDisposable.add(viewModel.getMapDirection(origin, des)
                 .subscribeOn(Schedulers.io())
@@ -559,10 +561,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
                         polyline = mMap.addPolyline(polylineOptions);
                         Log.d("TAG", "loadMapDirection: ");
 
-                        LatLngBounds bounds = new LatLngBounds.Builder().include(origin).include(des).build();
-                        Point point = new Point();
-                        getActivity().getWindowManager().getDefaultDisplay().getSize(point);
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, point.x, 150, 30));
+//                        LatLngBounds bounds = new LatLngBounds.Builder().include(origin).include(des).build();
+//                        Point point = new Point();
+//                        getActivity().getWindowManager().getDefaultDisplay().getSize(point);
+//                        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, point.x, 150, 30));
+//                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16));
 
                     }
 
