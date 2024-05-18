@@ -44,7 +44,7 @@ public class ChatViewModel extends BaseViewModel {
             return;
         }
         ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setCodeBooking(application.getWebSocketLiveData().getCodeBooking());
+        chatMessage.setCodeBooking("000000");
         chatMessage.setMessage(message.get());
         chatMessage.setMessageId(String.valueOf((new Date()).getTime()));
 

@@ -9,6 +9,7 @@
             type="ww.smartexpress.driver.data.model.api.response.Booking" />
         <import type="ww.smartexpress.driver.utils.NumberUtils"></import>
         <import type="ww.smartexpress.driver.utils.DateUtils"></import>
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -108,7 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="@dimen/_10sdp"
-                    android:src="@drawable/ic_icon_destination">
+                    android:src="@drawable/ic_icon_my_location">
 
                 </ImageView>
 
@@ -148,7 +149,7 @@
                     android:layout_width="@dimen/_21sdp"
                     android:layout_height="@dimen/_21sdp"
                     android:layout_marginRight="@dimen/_5sdp"
-                    android:src="@drawable/location_flag">
+                    android:src="@drawable/ic_icon_search_location">
 
                 </ImageView>
 
@@ -169,11 +170,11 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/orderDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:layout_marginVertical="@dimen/_5sdp">
+                android:orientation="horizontal">
 
 
                 <ImageView
@@ -197,14 +198,13 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_5sdp"
                             android:weightSum="5">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:layout_marginRight="@dimen/_8sdp"
-                                android:text="Loại hàng: Quần áo"
+                                android:text='@{NumberUtils.getSize(ivm.service.size) +"  "+ivm.service.weight+"Kg"}'
                                 android:maxLines="1"
                                 android:ellipsize="end"
                                 style="@style/roboto_medium_gray_11ssp"
@@ -218,50 +218,30 @@
                                 android:text=''
                                 android:maxLines="1"
                                 android:ellipsize="end"
-                                style="@style/roboto_medium_gray_11ssp"
+                                style="@style/roboto_medium_light_gray_11ssp"
                                 android:textAlignment="textEnd">
                             </TextView>
                         </LinearLayout>
-
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:visibility="@{ivm.isCod? View.VISIBLE : View.GONE}"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_5sdp"
-                            android:weightSum="5">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:layout_marginRight="@dimen/_8sdp"
-                                android:text="Người nhận: Phát"
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                style="@style/roboto_medium_gray_11ssp"
-                                android:textAlignment="textStart">
-                            </TextView>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:text='Sdt: 0365817754'
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                style="@style/roboto_medium_gray_11ssp"
-                                android:textAlignment="textEnd">
-                            </TextView>
-                        </LinearLayout>
+                            android:layout_weight="3"
+                            android:layout_marginRight="@dimen/_8sdp"
+                            android:text='@{"Thu hộ: "+NumberUtils.formatCurrency(ivm.codPrice)}'
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            style="@style/roboto_medium_gray_11ssp"
+                            android:textAlignment="textStart"/>
 
                     </LinearLayout>
 
                     <ImageView
-                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_icon_expand">
+                        android:src="@drawable/ic_icon_expand"
+                        android:visibility="gone">
 
                     </ImageView>
                 </LinearLayout>

@@ -4,6 +4,8 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
 import ww.smartexpress.driver.constant.Constants;
+import ww.smartexpress.driver.data.model.api.ApiModelUtils;
+import ww.smartexpress.driver.data.model.api.response.Size;
 
 public class NumberUtils {
     static DecimalFormatSymbols symbols = new DecimalFormatSymbols();
@@ -54,5 +56,13 @@ public class NumberUtils {
         decimalFormat.setMinimumFractionDigits(1);
 
         return decimalFormat.format(d) ;
+    }
+
+    public static String getSize(String sizeJson){
+        if(sizeJson == null || sizeJson.isEmpty()){
+            return "";
+        }
+        Size size = ApiModelUtils.fromJson( sizeJson,Size.class);
+        return size.formatSize();
     }
 }

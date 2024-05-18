@@ -62,7 +62,7 @@ public class HomeViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
                     if(response.isResult()){
-                        application.setCurrentBookingId(String.valueOf(response.getData().getId()));
+//                        application.setCurrentBookingId(String.valueOf(response.getData().getId()));
                         showSuccessMessage(response.getMessage());
                     }else {
                         showErrorMessage(response.getMessage());

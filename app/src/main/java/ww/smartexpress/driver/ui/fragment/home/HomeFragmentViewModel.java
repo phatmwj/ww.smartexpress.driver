@@ -15,7 +15,9 @@ import java.text.SimpleDateFormat;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
@@ -59,6 +61,8 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
     public ObservableField<String> size = new ObservableField<>("");
 
     public ObservableField<String> image = new ObservableField<>(null);
+
+    public MutableLiveData<List<CurrentBooking>> bookingList = new MutableLiveData<>(new ArrayList<>());
 
     public HomeFragmentViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
@@ -207,7 +211,7 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
                 .subscribe(response -> {
                     if(response.isResult()){
                         Log.d("TAG", "acceptBooking: "+booking.getValue().getCode());
-                        application.getWebSocketLiveData().setCodeBooking(booking.getValue().getCode());
+                        application.getWebSocketLiveData().getCodeBooking().add(booking.getValue().getCode());
                         application.getWebSocketLiveData().sendPing();
                         status.set(Constants.BOOKING_ACCEPTED);
 //                        getCurrentBooking();
@@ -232,17 +236,21 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
                 .subscribe(response -> {
                     if(response.isResult()){
 //                        application.setCurrentBookingId(String.valueOf(response.getData().getId()));
-                        currentBookingId.setValue(String.valueOf(response.getData().getId()));
-                        size.set(getSize(response.getData().getService().getSize()));
-                        if(response.getData().getState()==Constants.BOOKING_STATE_DRIVER_ACCEPT){
-                            status.set(Constants.BOOKING_ACCEPTED);
-                            repository.getSharedPreferences().setLong(Constants.ROOM_ID,response.getData().getRoom().getId());
-                        }else if(response.getData().getState() == Constants.BOOKING_STATE_PICKUP_SUCCESS){
-                            status.set(Constants.BOOKING_PICKUP);
-                            repository.getSharedPreferences().setLong(Constants.ROOM_ID,response.getData().getRoom().getId());
+//                        currentBookingId.setValue(String.valueOf(response.getData().getId()));
+//                        size.set(getSize(response.getData().getService().getSize()));
+//                        if(response.getData().getState()==Constants.BOOKING_STATE_DRIVER_ACCEPT){
+//                            status.set(Constants.BOOKING_ACCEPTED);
+//                            repository.getSharedPreferences().setLong(Constants.ROOM_ID,response.getData().getRoom().getId());
+//                        }else if(response.getData().getState() == Constants.BOOKING_STATE_PICKUP_SUCCESS){
+//                            status.set(Constants.BOOKING_PICKUP);
+//                            repository.getSharedPreferences().setLong(Constants.ROOM_ID,response.getData().getRoom().getId());
+//                        }
+//                        booking.setValue(response.getData());
+                        bookingList.setValue(response.getData().getContent());
+                        for (CurrentBooking booking: bookingList.getValue()
+                             ) {
+                            application.getWebSocketLiveData().getCodeBooking().add(booking.getCode());
                         }
-                        booking.setValue(response.getData());
-                        application.getWebSocketLiveData().setCodeBooking(booking.getValue().getCode());
                         application.getWebSocketLiveData().sendPing();
                         showSuccessMessage(response.getMessage());
                     }else {

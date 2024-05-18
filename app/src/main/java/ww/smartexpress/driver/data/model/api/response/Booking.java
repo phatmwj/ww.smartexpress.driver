@@ -26,4 +26,14 @@ public class Booking {
     private int ratioShare;
     private Rating rating;
     private Double distance;
+
+    private Double codPrice;
+    private String consigneeName;
+    private String consigneePhone;
+    private Boolean isCod;
+
+    private String pickupImage;
+    private String deliveryImage;
+    private String senderName;
+    private String senderPhone;
 }

@@ -110,7 +110,7 @@ public interface ApiService {
     @PUT("/v1/booking/cancel")
     Observable<ResponseGeneric> cancelBooking(@Body CancelBookingRequest request);
     @GET("/v1/booking/my-current-booking")
-    Observable<ResponseWrapper<CurrentBooking>> getCurrentBooking();
+    Observable<ResponseWrapper<ResponseListObj<CurrentBooking>>> getCurrentBooking();
     @GET("/directions/json")
     @Headers({"isSearchLocation:1"})
     Observable<JsonObject> getMapDirection(@Query("destination") String destination, @Query("mode") String mode,

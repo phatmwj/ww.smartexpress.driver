@@ -21,9 +21,9 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/_50sdp"
             android:layout_marginVertical="0dp"
-            android:src="@drawable/allwin_logo" />
+            android:src="@drawable/smartexpress_splash_logo" />
     </RelativeLayout>
 </layout>
