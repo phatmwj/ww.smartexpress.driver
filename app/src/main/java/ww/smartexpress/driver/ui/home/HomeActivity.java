@@ -17,6 +17,7 @@ import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.databinding.ActivityHomeBinding;
 import ww.smartexpress.driver.di.component.ActivityComponent;
 import ww.smartexpress.driver.ui.base.activity.BaseActivity;
+import ww.smartexpress.driver.ui.fragment.activity.ActivityFragment;
 import ww.smartexpress.driver.ui.fragment.home.HomeFragment;
 import ww.smartexpress.driver.ui.fragment.income.IncomeFragment;
 import ww.smartexpress.driver.ui.fragment.notification.NotificationFragment;
@@ -29,6 +30,8 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
     private IncomeFragment incomeFragment;
     private ProfileFragment profileFragment;
     private NotificationFragment notificationFragment;
+
+    private ActivityFragment activityFragment;
 
     @Override
     public int getLayoutId() {
@@ -54,7 +57,8 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
         if(fm != null && fm == "home fragment"){
             Log.d("TAG", "onCreate: go Home");
             viewBinding.navigationView.setSelectedItemId(R.id.home);
-            replaceFragmentHome();
+//            replaceFragmentHome();
+            replaceFragmentActivity();
         }else {
             viewBinding.navigationView.setSelectedItemId(R.id.home);
         }
@@ -65,7 +69,8 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.home:
-                replaceFragmentHome();
+//                replaceFragmentHome();
+                replaceFragmentActivity();
                 return true;
             case R.id.account:
                 replaceFragmentProfile();
@@ -91,6 +96,19 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
             transaction.hide(activeFragment).show(homeFragment).commit();
         }
         activeFragment = homeFragment;
+    }
+
+    public void replaceFragmentActivity(){
+        if(activityFragment == null){
+            activityFragment = new ActivityFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.frameLayout, activityFragment, "activity fragment").hide(activeFragment).commit();
+        }
+        else{
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.hide(activeFragment).show(activityFragment).commit();
+        }
+        activeFragment = activityFragment;
     }
     public void replaceFragmentProfile(){
         if(profileFragment == null){
@@ -145,11 +163,12 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
         if(intent == null){
             return;
         }
-        String fm = intent.getStringExtra("homefragment");
-        if(fm != null && fm == "home fragment"){
+        String fm = intent.getStringExtra("activityfragment");
+        if(fm != null && fm == "activity fragment"){
             Log.d("TAG", "onCreate: go Home");
             viewBinding.navigationView.setSelectedItemId(R.id.home);
-            replaceFragmentHome();
+//            replaceFragmentHome();
+            replaceFragmentActivity();
         }else {
             viewBinding.navigationView.setSelectedItemId(R.id.home);
         }

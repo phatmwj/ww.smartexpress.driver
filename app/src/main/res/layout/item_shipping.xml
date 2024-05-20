@@ -5,11 +5,12 @@
 
     <data>
         <variable
-            name="a"
-            type="ww.smartexpress.driver.ui.shipping.ShippingActivity" />
+            name="booking"
+            type="ww.smartexpress.driver.data.model.api.response.CurrentBooking" />
         <variable
-            name="vm"
-            type="ww.smartexpress.driver.ui.shipping.ShippingViewModel" />
+            name="size"
+            type="ww.smartexpress.driver.data.model.api.response.CurrentBooking" />
+        <import type="ww.smartexpress.driver.constant.Constants"/>
         <import type="android.view.View" />
         <import type="android.text.TextUtils" />
         <import type="android.view.Gravity" />
@@ -22,7 +23,6 @@
         android:layout_height="wrap_content">
         <androidx.cardview.widget.CardView
             android:id="@+id/cvBooking"
-            android:visibility="@{vm.status != 0 ? View.VISIBLE : View.GONE}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
@@ -41,23 +41,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <TextView
-                        android:visibility="@{vm.status == 1 ? View.VISIBLE : View.GONE}"
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text='@{"Chào " + vm.user.fullName + "!" + " Bạn có muốn chở tôi không?"}'
-                        style="@style/roboto_regular_bold_green_11ssp"
-                        android:maxLines="1"
-                        android:ellipsize="end">
-                    </TextView>
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bạn có muốn chở tôi không?"
+                            style="@style/roboto_regular_bold_green_11ssp"
+                            android:maxLines="1"
+                            android:layout_weight="1"
+                            android:ellipsize="end">
+                        </TextView>
 
+                        <TextView
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{booking.code }"
+                            style="@style/roboto_medium_light_gray_11ssp"
+                            android:maxLines="1"
+                            android:ellipsize="end">
+                        </TextView>
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_5sdp">
+                        android:layout_marginBottom="@dimen/_10sdp">
                         <androidx.cardview.widget.CardView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -66,9 +79,9 @@
                             app:cardElevation="0dp">
                             <ImageView
                                 android:layout_gravity="center_vertical"
-                                android:layout_width="@dimen/_40sdp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:src="@{vm.booking.customer.avatar}">
+                                android:layout_width="@dimen/_35sdp"
+                                android:layout_height="@dimen/_35sdp"
+                                android:src="@{booking.customer.avatar}">
                             </ImageView>
                         </androidx.cardview.widget.CardView>
 
@@ -86,7 +99,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="3"
                                     android:layout_marginRight="@dimen/_8sdp"
-                                    android:text="@{vm.booking.customer.name}"
+                                    android:text="@{booking.customer.name}"
                                     android:maxLines="1"
                                     android:ellipsize="end"
                                     style="@style/title"
@@ -97,7 +110,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
-                                    android:text='@{NumberUtils.formatCurrency(vm.booking.money)}'
+                                    android:text='@{NumberUtils.formatCurrency(booking.money)}'
                                     android:maxLines="1"
                                     android:ellipsize="end"
                                     style="@style/title"
@@ -112,7 +125,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="@{vm.paymentMethod}"
+                                    android:text="Tiền mặt"
                                     android:maxLines="1"
                                     android:ellipsize="end"
                                     style="@style/roboto_regular_bold_green_11ssp"
@@ -123,7 +136,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text='@{NumberUtils.formatDistance(vm.booking.distance)}'
+                                    android:text='@{NumberUtils.formatDistance(booking.distance)}'
                                     android:maxLines="1"
                                     android:ellipsize="end"
                                     style="@style/roboto_medium_gray_12ssp"
@@ -136,13 +149,11 @@
 
                     <LinearLayout
                         android:id="@+id/llAddress"
-                        android:visibility="@{vm.status == -1 || vm.status == 4 ? View.GONE : View.VISIBLE}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <LinearLayout
-                            android:layout_marginTop="@dimen/_5sdp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
@@ -176,23 +187,23 @@
                                     android:background="@color/white"
                                     android:maxLines="1"
                                     android:ellipsize="end"
-                                    android:text="@{vm.booking.pickupAddress}" />
+                                    android:text="@{booking.pickupAddress}" />
 
-                                <TextView
-                                    style="@style/roboto_medium_light_gray_11ssp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/white"
-                                    android:maxLines="1"
-                                    android:ellipsize="end"
-                                    android:text='@{vm.booking.senderName+" - "+vm.booking.senderPhone}' />
+<!--                                <TextView-->
+<!--                                    style="@style/roboto_medium_light_gray_11ssp"-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:background="@color/white"-->
+<!--                                    android:maxLines="1"-->
+<!--                                    android:ellipsize="end"-->
+<!--                                    android:text='@{booking.senderName+" - "+booking.senderPhone}' />-->
                             </LinearLayout>
 
                         </LinearLayout>
 
                         <FrameLayout
                             android:layout_width="@dimen/_5sdp"
-                            android:layout_height="@dimen/_15sdp"
+                            android:layout_height="@dimen/_10sdp"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:background="@drawable/line_dashed_border">
 
@@ -232,31 +243,27 @@
                                     android:background="@color/white"
                                     android:maxLines="1"
                                     android:ellipsize="end"
-                                    android:text="@{vm.booking.destinationAddress}" />
-                                <TextView
-                                    style="@style/roboto_medium_light_gray_11ssp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/white"
-                                    android:maxLines="1"
-                                    android:ellipsize="end"
-                                    android:text='@{vm.booking.consigneeName+" - "+vm.booking.consigneePhone}' />
+                                    android:text="@{booking.destinationAddress}" />
+<!--                                <TextView-->
+<!--                                    style="@style/roboto_medium_light_gray_11ssp"-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:background="@color/white"-->
+<!--                                    android:maxLines="1"-->
+<!--                                    android:ellipsize="end"-->
+<!--                                    android:text='@{booking.consigneeName+" - "+booking.consigneePhone}' />-->
 
                             </LinearLayout>
 
                         </LinearLayout>
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:background="#EEF2F5" />
 
                         <LinearLayout
                             android:id="@+id/orderDetails"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_5sdp"
                             android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:layout_marginVertical="@dimen/_5sdp">
+                            android:orientation="horizontal">
 
 
                             <ImageView
@@ -286,7 +293,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_weight="3"
                                             android:layout_marginRight="@dimen/_8sdp"
-                                            android:text='@{vm.size +"  "+vm.booking.service.weight+"kg"}'
+                                            android:text='@{size +"  "+booking.service.weight+"kg"}'
                                             android:maxLines="1"
                                             android:ellipsize="end"
                                             style="@style/roboto_medium_light_gray_11ssp"
@@ -305,36 +312,36 @@
                                         </TextView>
                                     </LinearLayout>
                                     <TextView
-                                        android:visibility="@{vm.booking.isCod? View.VISIBLE : View.GONE}"
+                                        android:visibility="@{booking.isCod? View.VISIBLE : View.GONE}"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="3"
                                         android:layout_marginRight="@dimen/_8sdp"
-                                        android:text='@{"Thu hộ: "+NumberUtils.formatCurrency(vm.booking.codPrice)}'
+                                        android:text='@{"Thu hộ: "+NumberUtils.formatCurrency(booking.codPrice)}'
                                         android:maxLines="1"
                                         android:ellipsize="end"
                                         style="@style/roboto_medium_light_gray_11ssp"
                                         android:textAlignment="textStart"/>
 
 
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginBottom="@dimen/_5sdp"
-                                        android:weightSum="5">
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="3"
-                                            android:layout_marginRight="@dimen/_8sdp"
-                                            android:text="Xem chi tiết hàng hóa"
-                                            android:maxLines="1"
-                                            android:ellipsize="end"
-                                            style="@style/roboto_regular_bold_green_11ssp"
-                                            android:textSize="@dimen/_8sdp"
-                                            android:textAlignment="textStart">
-                                        </TextView>
-                                    </LinearLayout>
+<!--                                    <LinearLayout-->
+<!--                                        android:layout_width="match_parent"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_marginBottom="@dimen/_5sdp"-->
+<!--                                        android:weightSum="5">-->
+<!--                                        <TextView-->
+<!--                                            android:layout_width="wrap_content"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:layout_weight="3"-->
+<!--                                            android:layout_marginRight="@dimen/_8sdp"-->
+<!--                                            android:text="Xem chi tiết hàng hóa"-->
+<!--                                            android:maxLines="1"-->
+<!--                                            android:ellipsize="end"-->
+<!--                                            style="@style/roboto_regular_bold_green_11ssp"-->
+<!--                                            android:textSize="@dimen/_8sdp"-->
+<!--                                            android:textAlignment="textStart">-->
+<!--                                        </TextView>-->
+<!--                                    </LinearLayout>-->
 
                                 </LinearLayout>
 
@@ -363,13 +370,12 @@
                             android:background="#EEF2F5" />
 
                         <LinearLayout
-                            android:visibility="@{(vm.status == 2) ? View.VISIBLE : View.GONE}"
-                            android:paddingVertical="@dimen/_15sdp"
+                            android:paddingVertical="@dimen/_10sdp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="@{booking.state == Constants.BOOKING_STATE_BOOKING?View.GONE:View.VISIBLE}">
                             <LinearLayout
-                                android:onClick="@{(v)->vm.openChat()}"
                                 android:id="@+id/sendMessage"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -394,7 +400,6 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:onClick="@{(v)->vm.callCustomer()}"
                                 android:id="@+id/callDriver"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -418,14 +423,12 @@
                             </LinearLayout>
                         </LinearLayout>
                         <FrameLayout
-                            android:visibility="@{(vm.status == 2) ? View.VISIBLE : View.GONE}"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_1sdp"
                             android:background="#EEF2F5" />
 
                         <LinearLayout
-                            android:visibility="@{vm.status != 4 &amp;&amp; vm.status != -1 ? View.VISIBLE : View.GONE}"
-                            android:paddingTop="@dimen/_15sdp"
+                            android:paddingTop="@dimen/_5sdp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
@@ -441,8 +444,8 @@
                                 style="@style/roboto_medium_79_gray"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@{!TextUtils.isEmpty(vm.booking.customerNote) ? vm.booking.customerNote : @string/empty_note}"
-                                android:textColor='@{!TextUtils.isEmpty(vm.booking.customerNote) ? @color/red_color : @color/gray}'
+                                android:text="@{!TextUtils.isEmpty(booking.customerNote) ? booking.customerNote : @string/empty_note}"
+                                android:textColor='@{!TextUtils.isEmpty(booking.customerNote) ? @color/red_color : @color/gray}'
                                 android:maxLines="2"
                                 android:ellipsize="end">
                             </TextView>
@@ -456,7 +459,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_gravity="center"
-                        android:visibility="@{vm.status == 1 ? View.VISIBLE : View.GONE}">
+                        android:visibility="@{booking.state == Constants.BOOKING_STATE_BOOKING?View.VISIBLE : View.GONE}">
 
                         <!--progress bar implementation-->
                         <ProgressBar
@@ -484,13 +487,6 @@
                                 android:gravity="center"
                                 android:text="30"
                                 android:textSize="@dimen/_18ssp"/>
-                            <!--                            <TextView-->
-                            <!--                                style="@style/roboto_medium"-->
-                            <!--                                android:layout_width="wrap_content"-->
-                            <!--                                android:layout_height="wrap_content"-->
-                            <!--                                android:gravity="center"-->
-                            <!--                                android:text="second"-->
-                            <!--                                android:textSize="@dimen/_10ssp"/>-->
                         </LinearLayout>
                     </RelativeLayout>
 
@@ -498,11 +494,10 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:visibility="@{vm.status == 1 || vm.status == 2 ? View.VISIBLE : View.GONE}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingVertical="@dimen/_5sdp">
+                    android:visibility="@{booking.state == Constants.BOOKING_STATE_BOOKING || booking.state == Constants.BOOKING_STATE_DRIVER_ACCEPT?View.VISIBLE:View.GONE}">
 
                     <TextView
                         android:id="@+id/btnCancel"
@@ -526,7 +521,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@{vm.status==1? @string/accept_trip : @string/pickup}"
+                        android:text="@{booking.state==Constants.BOOKING_STATE_BOOKING ? @string/accept_trip :@string/pickup}"
                         android:background="@drawable/background_button_solid_green"
                         android:gravity="center"
                         android:maxLines="1"
@@ -538,21 +533,20 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:visibility="@{vm.status != 1 &amp;&amp; vm.status != 2? View.VISIBLE : View.GONE}"
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="@{booking.state != Constants.BOOKING_STATE_BOOKING &amp;&amp; booking.state != Constants.BOOKING_STATE_DRIVER_ACCEPT?View.VISIBLE:View.GONE}">
                     <Button
                         android:id="@+id/btnConfirm"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_15sdp"
-                        android:text="@{vm.status == 4 ? @string/ended_trip : vm.status == -1 ? @string/canceled_trip : vm.status == -2 ? @string/customer_cancel_booking:@string/end_trip}"
-
                         android:gravity="center"
                         android:maxLines="1"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
+                        android:text="@{booking.state == Constants.BOOKING_STATE_PICKUP_SUCCESS ? @string/end_trip :booking.state == Constants.BOOKING_STATE_DONE ? @string/ended_trip : booking.state == Constants.BOOKING_STATE_CANCEL ? @string/customer_cancel_booking:@string/canceled_trip}"
                         style="@style/AppButtonStyle"
                         android:textSize="@dimen/_11ssp"
                         />

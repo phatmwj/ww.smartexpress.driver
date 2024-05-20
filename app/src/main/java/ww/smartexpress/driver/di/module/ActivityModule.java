@@ -26,6 +26,7 @@ import ww.smartexpress.driver.ui.password.forget.ForgetPasswordViewModel;
 import ww.smartexpress.driver.ui.password.otp.ForgetPasswordOTPViewModel;
 import ww.smartexpress.driver.ui.password.renew.RenewPasswordViewModel;
 import ww.smartexpress.driver.ui.profile.ProfileViewModel;
+import ww.smartexpress.driver.ui.shipping.ShippingViewModel;
 import ww.smartexpress.driver.ui.signup.SignUpViewModel;
 import ww.smartexpress.driver.ui.splash.SplashViewModel;
 import ww.smartexpress.driver.ui.welcome.WelcomeViewModel;
@@ -218,5 +219,13 @@ public class ActivityModule {
         Supplier<BookingDetailsViewModel> supplier = () -> new BookingDetailsViewModel(repository, (MVVMApplication) application);
         ViewModelProviderFactory<BookingDetailsViewModel> factory = new ViewModelProviderFactory<>(BookingDetailsViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(BookingDetailsViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    ShippingViewModel provideShippingViewModel(Repository repository, Context application) {
+        Supplier<ShippingViewModel> supplier = () -> new ShippingViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<ShippingViewModel> factory = new ViewModelProviderFactory<>(ShippingViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(ShippingViewModel.class);
     }
 }

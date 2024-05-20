@@ -15,6 +15,7 @@ import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
+import ww.smartexpress.driver.ui.fragment.activity.ActivityFragmentViewModel;
 import ww.smartexpress.driver.ui.fragment.home.HomeFragmentViewModel;
 import ww.smartexpress.driver.ui.fragment.income.IncomeFragmentViewModel;
 import ww.smartexpress.driver.ui.fragment.notification.NotificationFragmentViewModel;
@@ -66,6 +67,14 @@ public class FragmentModule {
         Supplier<NotificationFragmentViewModel> supplier = () -> new NotificationFragmentViewModel(repository, (MVVMApplication) application);
         ViewModelProviderFactory<NotificationFragmentViewModel> factory = new ViewModelProviderFactory<>(NotificationFragmentViewModel.class, supplier);
         return new ViewModelProvider(fragment, factory).get(NotificationFragmentViewModel.class);
+    }
+
+    @Provides
+    @FragmentScope
+    ActivityFragmentViewModel provideActivityFragmentViewModel(Repository repository, Context application){
+        Supplier<ActivityFragmentViewModel> supplier = () -> new ActivityFragmentViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<ActivityFragmentViewModel> factory = new ViewModelProviderFactory<>(ActivityFragmentViewModel.class, supplier);
+        return new ViewModelProvider(fragment, factory).get(ActivityFragmentViewModel.class);
     }
 
 }

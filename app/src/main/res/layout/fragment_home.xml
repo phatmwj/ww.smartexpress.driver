@@ -98,11 +98,11 @@
 
             </ImageView>
 
-            <include
-                android:id="@+id/card_booking"
-                layout="@layout/layout_booking"
-                bind:vm = "@{vm}"
-                bind:f = "@{f}"/>
+<!--            <include-->
+<!--                android:id="@+id/card_booking"-->
+<!--                layout="@layout/layout_booking"-->
+<!--                bind:vm = "@{vm}"-->
+<!--                bind:f = "@{f}"/>-->
 
 <!--            <androidx.cardview.widget.CardView-->
 <!--                android:id="@+id/cvBooking"-->

@@ -20,7 +20,7 @@ public class CurrentBooking {
     private ServiceResponse service;
     private Room room;
     private String code;
-    private int state;
+    private Integer state;
     private String pickupAddress;
     private double pickupLat;
     private double pickupLong;

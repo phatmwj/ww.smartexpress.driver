@@ -173,6 +173,13 @@
             android:exported="true"
             android:theme="@style/MyAppTheme">
         </activity>
+        <activity
+            android:name="ww.smartexpress.driver.ui.shipping.ShippingActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/Welcome"
+            android:exported="true">
+
+        </activity>
         <activity android:name="ww.smartexpress.driver.ui.splash.SplashActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:theme="@style/Welcome">

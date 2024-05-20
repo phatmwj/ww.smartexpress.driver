@@ -1,5 +1,6 @@
 package ww.smartexpress.driver.ui.chat;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -22,6 +23,8 @@ import ww.smartexpress.driver.ui.chat.adapter.MessageAdapter;
 public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewModel> {
 
     MessageAdapter messageAdapter;
+    private Long roomId;
+    private String codeBooking;
 
     @Override
     public int getLayoutId() {
@@ -41,6 +44,15 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewMode
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if (intent.getLongExtra("roomId",0)!=0){
+            roomId = intent.getLongExtra("roomId",0);
+        }
+        if (intent.getStringExtra("codeBooking")!= null){
+            codeBooking = intent.getStringExtra("codeBooking");
+            viewModel.codeBooking.set(codeBooking);
+        }
+
         messageAdapter = new MessageAdapter();
         messageAdapter.currentUserId = viewModel.getUserId();
         loadChatDetails();
@@ -69,7 +81,7 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewMode
 
     public void loadChatDetails(){
         viewModel.showLoading();
-        viewModel.compositeDisposable.add(viewModel.getRoomChat()
+        viewModel.compositeDisposable.add(viewModel.getRoomChat(roomId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {

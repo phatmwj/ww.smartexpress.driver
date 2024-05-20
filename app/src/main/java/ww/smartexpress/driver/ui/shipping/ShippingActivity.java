@@ -1,7 +1,6 @@
-package ww.smartexpress.driver.ui.fragment.home;
+package ww.smartexpress.driver.ui.shipping;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,13 +11,11 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -26,7 +23,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -49,11 +45,9 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -70,8 +64,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.CompletableOnSubscribe;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -79,17 +71,16 @@ import okhttp3.RequestBody;
 import ww.smartexpress.driver.BR;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.constant.Constants;
-import ww.smartexpress.driver.data.model.api.ResponseGeneric;
 import ww.smartexpress.driver.data.model.api.request.DriverStateRequest;
-import ww.smartexpress.driver.data.model.api.request.UpdateProfileRequest;
+import ww.smartexpress.driver.databinding.ActivityShippingBinding;
 import ww.smartexpress.driver.databinding.DialogCancelBinding;
 import ww.smartexpress.driver.databinding.DialogOrderDetailsBinding;
 import ww.smartexpress.driver.databinding.DialogShippingImgBinding;
-import ww.smartexpress.driver.databinding.FragmentHomeBinding;
-import ww.smartexpress.driver.di.component.FragmentComponent;
-import ww.smartexpress.driver.ui.base.fragment.BaseFragment;
+import ww.smartexpress.driver.di.component.ActivityComponent;
+import ww.smartexpress.driver.ui.base.activity.BaseActivity;
 
-public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragmentViewModel> implements OnMapReadyCallback, LocationListener {
+public class ShippingActivity extends BaseActivity<ActivityShippingBinding, ShippingViewModel> implements OnMapReadyCallback, LocationListener {
+
     private GoogleMap mMap;
     private LocationRequest locationRequest;
     private Marker currentLocationMarker;
@@ -118,9 +109,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
             registerForActivityResult(new ActivityResultContracts.StartIntentSenderForResult(), result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
                 } else {
-                    Toast.makeText(getContext(), R.string.notify_disabled_gps, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.notify_disabled_gps, Toast.LENGTH_SHORT).show();
                 }
             });
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_shipping;
+    }
 
     @Override
     public int getBindingVariable() {
@@ -128,341 +123,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_home;
-    }
-
-    @Override
-    protected void performDataBinding() {
-        binding.setLifecycleOwner(this);
-    }
-
-    @Override
-    protected void performDependencyInjection(FragmentComponent buildComponent) {
+    public void performDependencyInjection(ActivityComponent buildComponent) {
         buildComponent.inject(this);
     }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Intent intent = getActivity().getIntent();
-        isLogin = intent.getBooleanExtra("isLogin", false);
-//        if(isLogin && viewModel.state.get()==0){
-//            viewModel.state.set(1);
-//            viewModel.changeDriverState(new DriverStateRequest(viewModel.state.get()));
-//        }
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-        super.onViewCreated(view, savedInstanceState);
-        binding.setLifecycleOwner(this);
-
-        cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
-        binding.switchState.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (viewModel.state.get() == 1 && b) {
-                    return;
-                }
-                if (b) {
-                    viewModel.state.set(1);
-                    binding.switchState.setThumbDrawable(ContextCompat.getDrawable(getContext(), R.drawable.thumb_on));
-                } else {
-                    viewModel.state.set(0);
-                    binding.switchState.setThumbDrawable(ContextCompat.getDrawable(getContext(), R.drawable.thumb_off));
-                }
-                viewModel.changeDriverState(new DriverStateRequest(viewModel.state.get()));
-            }
-        });
-
-//        loadBooking();
-        if (viewModel.getApplication().getCurrentBookingId() != null) {
-            viewModel.loadBooking();
-            viewModel.status.set(Constants.BOOKING_VISIBLE);
-            if (viewModel.status.get() == Constants.BOOKING_ACCEPTED && !viewModel.isShowDirection.get()) {
-                loadMapDirection(currentLocation, customerLocation);
-                viewModel.isShowDirection.set(true);
-            }
-        }
-
-
-    }
-
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        mMap = googleMap;
-
-        getCurrentLocation();
-
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, this);
-
-        viewModel.booking.observe(this, currentBooking -> {
-            customerLocation = new LatLng(currentBooking.getPickupLat(), currentBooking.getPickupLong());
-            destinationLocation = new LatLng(currentBooking.getDestinationLat(), currentBooking.getDestinationLong());
-        });
-        viewModel.currentBookingId.observe(this, id -> {
-            binding.switchState.setClickable(false);
-            updateLocationUpdatesInterval(10000);
-        });
-
-//        binding.cardBooking.btnAccept.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
-//                switch (viewModel.status.get()) {
-//                    case Constants.BOOKING_VISIBLE:
-//                        viewModel.acceptBooking();
-////                        BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
-//                        viewModel.isShowDirection.set(false);
-//                        handler.removeCallbacks(runnable);
-////                        binding.cardBooking.progressText.setText(String.valueOf(durationInSeconds));
-////                        binding.cardBooking.progressBar.setProgress(0);
-//                        if (destinationMarker != null) {
-//                            destinationMarker.setVisible(true);
-//                        }
-//                        if (destinationMarker == null) {
-//                            destinationMarker = mMap.addMarker(new MarkerOptions().position(customerLocation).title(viewModel.booking.getValue().getPickupAddress()).icon(desIc));
-//                        } else {
-//                            destinationMarker.setPosition(customerLocation);
-//                        }
-//                        if (currentLocation != null) {
-//                            loadMapDirection(currentLocation, customerLocation);
-//                            viewModel.isShowDirection.set(true);
-//                        }
-//                        updateLocationUpdatesInterval(10000);
-//                        break;
-//                    case Constants.BOOKING_ACCEPTED:
-////                        viewModel.updateStateBooking(Constants.BOOKING_STATE_PICKUP_SUCCESS);
-////                        if (polyline != null) {
-////                            polyline.remove();
-////                        }
-////                        if (destinationMarker != null) {
-////                            destinationMarker.setVisible(true);
-////                        }
-////                        viewModel.isShowDirection.set(false);
-//////                        BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
-////                        if (destinationMarker == null) {
-////                            destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation).title(viewModel.booking.getValue().getDestinationAddress()).icon(desIc));
-////                        } else {
-////                            destinationMarker.setPosition(destinationLocation);
-////                        }
-////                        if (currentLocation != null) {
-////                            loadMapDirection(currentLocation, destinationLocation);
-////                            viewModel.isShowDirection.set(true);
-////                        }
-//                        imageBookingDialog();
-//                        break;
-//                    default:
-//                        break;
-//                }
-//
-//
-//            }
-//        });
-
-//        binding.cardBooking.btnCancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                cancel();
-//            }
-//        });
-//
-//        binding.cardBooking.orderDetails.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                orderDetailsDialog();
-//            }
-//        });
-//
-//        binding.cardBooking.btnConfirm.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.d("alo", "onClick: " + viewModel.status.get());
-//                switch (viewModel.status.get()) {
-//                    case Constants.BOOKING_PICKUP:
-////                        viewModel.updateStateBooking(Constants.BOOKING_STATE_DONE);
-////                        viewModel.getApplication().setCurrentBookingId(null);
-////                        if (polyline != null) {
-////                            polyline.remove();
-////                        }
-////                        if (destinationMarker != null) {
-////                            destinationMarker.setVisible(false);
-//////                            destinationMarker.remove();
-////                        }
-////                        viewModel.isShowDirection.set(false);
-////                        updateLocationUpdatesInterval(60000);
-//                        imageBookingDialog();
-//                        break;
-//                    case Constants.BOOKING_SUCCESS:
-//                        viewModel.getApplication().setCurrentBookingId(null);
-//                        viewModel.isShowDirection.set(false);
-//                        viewModel.status.set(Constants.BOOKING_NONE);
-//                        binding.switchState.setClickable(true);
-//                        break;
-//                    case Constants.BOOKING_CANCELED:
-//                    case Constants.BOOKING_CUSTOMER_CANCEL:
-//                        viewModel.status.set(Constants.BOOKING_NONE);
-//                        if (polyline != null) {
-//                            polyline.remove();
-//                        }
-//                        if (destinationMarker != null) {
-//                            destinationMarker.setVisible(false);
-//                        }
-//                        binding.switchState.setClickable(true);
-//                        updateLocationUpdatesInterval(60000);
-//                        break;
-//                    default:
-//                        if (polyline != null) {
-//                            polyline.remove();
-//                        }
-//                        if (destinationMarker != null) {
-//                            destinationMarker.setVisible(false);
-//                        }
-//                        binding.switchState.setClickable(true);
-//                        updateLocationUpdatesInterval(60000);
-//                        break;
-//                }
-//            }
-//        });
-
-    }
-
-    private void updateLocationUpdatesInterval(long timeUpdate) {
-        if (locationManager != null) {
-            locationManager.removeUpdates(this);
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, timeUpdate, 0, this);
-            Log.d("TAG", "updateLocationUpdatesInterval: "+ timeUpdate);
-        }
-    }
-
-    // progress bar countdown
-    private void startCountdown(){
-        handler.postDelayed(runnable = new Runnable() {
-            private int remainingTime = durationInSeconds;
-            @Override
-            public void run() {
-                if (remainingTime >= 0) {
-//                    binding.cardBooking.progressText.setText(String.valueOf(remainingTime));
-//                    binding.cardBooking.progressBar.setProgress((durationInSeconds - remainingTime) * 100 / durationInSeconds);
-
-                    remainingTime--;
-                    handler.postDelayed(this, updateInterval);
-                } else {
-                    // Nếu hết thời gian, thực hiện các công việc sau khi đếm ngược kết thúc
-                    viewModel.rejectBooking();
-//                    binding.cardBooking.progressText.setText(String.valueOf(durationInSeconds));
-//                    binding.cardBooking.progressBar.setProgress(0);
-                }
-            }
-        }, updateInterval);
-    }
-
-    public void cancel() {
-        cancelDialog();
-    }
-
-
-    public void cancelDialog() {
-        Dialog dialog = new Dialog(getActivity());
-        DialogCancelBinding dialogCancelBinding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()), R.layout.dialog_cancel, null, false);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(true);
-        dialog.setContentView(dialogCancelBinding.getRoot());
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.getWindow().setLayout(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-        dialog.setCanceledOnTouchOutside(true);
-
-        dialogCancelBinding.btnConfirm.setOnClickListener(view -> {
-            switch (viewModel.status.get()) {
-                case Constants.BOOKING_VISIBLE:
-                    viewModel.rejectBooking();
-                    handler.removeCallbacks(runnable);
-//                    binding.cardBooking.progressText.setText(String.valueOf(durationInSeconds));
-//                    binding.cardBooking.progressBar.setProgress(0);
-                    dialog.dismiss();
-                    break;
-                case Constants.BOOKING_ACCEPTED:
-                    viewModel.cancelBooking();
-                    updateLocationUpdatesInterval(60000);
-                    break;
-                default:
-                    break;
-            }
-            viewModel.status.set(Constants.BOOKING_CANCELED);
-            dialog.dismiss();
-        });
-
-        dialogCancelBinding.btnCancel.setOnClickListener(view -> {
-            dialog.dismiss();
-        });
-        dialog.show();
-    }
-
-    public void orderDetailsDialog(){
-        Dialog dialog = new Dialog(getActivity());
-        DialogOrderDetailsBinding dialogOrderDetailsBinding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()), R.layout.dialog_order_details, null, false);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(true);
-        dialog.setContentView(dialogOrderDetailsBinding.getRoot());
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.getWindow().setLayout(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-        dialog.setCanceledOnTouchOutside(true);
-        dialogOrderDetailsBinding.imgClose.setOnClickListener(v->{
-            dialog.dismiss();
-        });
-        dialog.show();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("TAG", "onResume: ");
-        if (viewModel.getApplication().getCurrentBookingId() != null) {
-            if (viewModel.status.get() != Constants.BOOKING_VISIBLE) {
-                viewModel.loadBooking();
-                viewModel.status.set(Constants.BOOKING_VISIBLE);
-                startCountdown();
-                viewModel.getApplication().setCurrentBookingId(null);
-                binding.switchState.setClickable(false);
-                Log.d("TAG", "onResume1: ");
-            }
-        }
-        if (viewModel.getApplication().getCustomerCancelBooking()) {
-            viewModel.status.set(Constants.BOOKING_CUSTOMER_CANCEL);
-            viewModel.getApplication().setCustomerCancelBooking(false);
-            binding.switchState.setClickable(true);
-        }
-    }
-
-
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
@@ -513,20 +176,245 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
     }
 
     @Override
-    public void onProviderDisabled(@NonNull String provider) {
-//        LocationListener.super.onProviderDisabled(provider);
-        displayLocationSettingsRequest();
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+
+        getCurrentLocation();
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, this);
+
+        viewModel.booking.observe(this, currentBooking -> {
+            customerLocation = new LatLng(currentBooking.getPickupLat(), currentBooking.getPickupLong());
+            destinationLocation = new LatLng(currentBooking.getDestinationLat(), currentBooking.getDestinationLong());
+        });
+        viewModel.currentBookingId.observe(this, id -> {
+            viewBinding.switchState.setClickable(false);
+            updateLocationUpdatesInterval(10000);
+        });
+
+        viewBinding.cardBooking.btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
+                switch (viewModel.status.get()) {
+                    case Constants.BOOKING_VISIBLE:
+                        viewModel.acceptBooking();
+//                        BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
+                        viewModel.isShowDirection.set(false);
+                        handler.removeCallbacks(runnable);
+                        viewBinding.cardBooking.progressText.setText(String.valueOf(durationInSeconds));
+                        viewBinding.cardBooking.progressBar.setProgress(0);
+                        if (destinationMarker != null) {
+                            destinationMarker.setVisible(true);
+                        }
+                        if (destinationMarker == null) {
+                            destinationMarker = mMap.addMarker(new MarkerOptions().position(customerLocation).title(viewModel.booking.getValue().getPickupAddress()).icon(desIc));
+                        } else {
+                            destinationMarker.setPosition(customerLocation);
+                        }
+                        if (currentLocation != null) {
+                            loadMapDirection(currentLocation, customerLocation);
+                            viewModel.isShowDirection.set(true);
+                        }
+                        updateLocationUpdatesInterval(10000);
+                        break;
+                    case Constants.BOOKING_ACCEPTED:
+//                        viewModel.updateStateBooking(Constants.BOOKING_STATE_PICKUP_SUCCESS);
+//                        if (polyline != null) {
+//                            polyline.remove();
+//                        }
+//                        if (destinationMarker != null) {
+//                            destinationMarker.setVisible(true);
+//                        }
+//                        viewModel.isShowDirection.set(false);
+////                        BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
+//                        if (destinationMarker == null) {
+//                            destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation).title(viewModel.booking.getValue().getDestinationAddress()).icon(desIc));
+//                        } else {
+//                            destinationMarker.setPosition(destinationLocation);
+//                        }
+//                        if (currentLocation != null) {
+//                            loadMapDirection(currentLocation, destinationLocation);
+//                            viewModel.isShowDirection.set(true);
+//                        }
+                        imageBookingDialog();
+                        break;
+                    default:
+                        break;
+                }
+
+
+            }
+        });
+
+        viewBinding.cardBooking.btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancel();
+            }
+        });
+
+        viewBinding.cardBooking.orderDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                orderDetailsDialog();
+            }
+        });
+
+        viewBinding.cardBooking.btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("alo", "onClick: " + viewModel.status.get());
+                switch (viewModel.status.get()) {
+                    case Constants.BOOKING_PICKUP:
+//                        viewModel.updateStateBooking(Constants.BOOKING_STATE_DONE);
+//                        viewModel.getApplication().setCurrentBookingId(null);
+//                        if (polyline != null) {
+//                            polyline.remove();
+//                        }
+//                        if (destinationMarker != null) {
+//                            destinationMarker.setVisible(false);
+////                            destinationMarker.remove();
+//                        }
+//                        viewModel.isShowDirection.set(false);
+//                        updateLocationUpdatesInterval(60000);
+                        imageBookingDialog();
+                        break;
+                    case Constants.BOOKING_SUCCESS:
+                        viewModel.getApplication().setCurrentBookingId(null);
+                        viewModel.isShowDirection.set(false);
+                        viewModel.status.set(Constants.BOOKING_NONE);
+                        viewBinding.switchState.setClickable(true);
+                        break;
+                    case Constants.BOOKING_CANCELED:
+                    case Constants.BOOKING_CUSTOMER_CANCEL:
+                        viewModel.status.set(Constants.BOOKING_NONE);
+                        if (polyline != null) {
+                            polyline.remove();
+                        }
+                        if (destinationMarker != null) {
+                            destinationMarker.setVisible(false);
+                        }
+                        viewBinding.switchState.setClickable(true);
+                        updateLocationUpdatesInterval(60000);
+                        break;
+                    default:
+                        if (polyline != null) {
+                            polyline.remove();
+                        }
+                        if (destinationMarker != null) {
+                            destinationMarker.setVisible(false);
+                        }
+                        viewBinding.switchState.setClickable(true);
+                        updateLocationUpdatesInterval(60000);
+                        break;
+                }
+            }
+        });
     }
 
-    @Override
-    public void onProviderEnabled(@NonNull String provider) {
-//        LocationListener.super.onProviderEnabled(provider);
+
+    private void updateLocationUpdatesInterval(long timeUpdate) {
+        if (locationManager != null) {
+            locationManager.removeUpdates(this);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, timeUpdate, 0, this);
+            Log.d("TAG", "updateLocationUpdatesInterval: "+ timeUpdate);
+        }
     }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-//        LocationListener.super.onStatusChanged(provider, status, extras);
+    // progress bar countdown
+    private void startCountdown(){
+        handler.postDelayed(runnable = new Runnable() {
+            private int remainingTime = durationInSeconds;
+            @Override
+            public void run() {
+                if (remainingTime >= 0) {
+                    viewBinding.cardBooking.progressText.setText(String.valueOf(remainingTime));
+                    viewBinding.cardBooking.progressBar.setProgress((durationInSeconds - remainingTime) * 100 / durationInSeconds);
+
+                    remainingTime--;
+                    handler.postDelayed(this, updateInterval);
+                } else {
+                    // Nếu hết thời gian, thực hiện các công việc sau khi đếm ngược kết thúc
+                    viewModel.rejectBooking();
+                    viewBinding.cardBooking.progressText.setText(String.valueOf(durationInSeconds));
+                    viewBinding.cardBooking.progressBar.setProgress(0);
+                }
+            }
+        }, updateInterval);
     }
+
+    public void cancel() {
+        cancelDialog();
+    }
+
+
+    public void cancelDialog() {
+        Dialog dialog = new Dialog(this);
+        DialogCancelBinding dialogCancelBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_cancel, null, false);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(dialogCancelBinding.getRoot());
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+        dialog.setCanceledOnTouchOutside(true);
+
+        dialogCancelBinding.btnConfirm.setOnClickListener(view -> {
+            switch (viewModel.status.get()) {
+                case Constants.BOOKING_VISIBLE:
+                    viewModel.rejectBooking();
+                    handler.removeCallbacks(runnable);
+                    viewBinding.cardBooking.progressText.setText(String.valueOf(durationInSeconds));
+                    viewBinding.cardBooking.progressBar.setProgress(0);
+                    dialog.dismiss();
+                    break;
+                case Constants.BOOKING_ACCEPTED:
+                    viewModel.cancelBooking();
+                    updateLocationUpdatesInterval(60000);
+                    break;
+                default:
+                    break;
+            }
+            viewModel.status.set(Constants.BOOKING_CANCELED);
+            dialog.dismiss();
+        });
+
+        dialogCancelBinding.btnCancel.setOnClickListener(view -> {
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
+
+    public void orderDetailsDialog(){
+        Dialog dialog = new Dialog(this);
+        DialogOrderDetailsBinding dialogOrderDetailsBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_order_details, null, false);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(dialogOrderDetailsBinding.getRoot());
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+        dialog.setCanceledOnTouchOutside(true);
+        dialogOrderDetailsBinding.imgClose.setOnClickListener(v->{
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
+
 
     private void displayLocationSettingsRequest() {
         locationRequest = LocationRequest.create();
@@ -535,7 +423,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
                 .addLocationRequest(locationRequest);
         builder.setAlwaysShow(true);
 
-        SettingsClient settingsClient = LocationServices.getSettingsClient(getContext());
+        SettingsClient settingsClient = LocationServices.getSettingsClient(this);
         Task<LocationSettingsResponse> task = settingsClient.checkLocationSettings(builder.build());
         task.addOnSuccessListener(locationSettingsResponse -> {
             // Vị trí đã được bật, thực hiện các công việc cần thiết
@@ -586,7 +474,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
 
                             polylineOptions.addAll(points);
                             polylineOptions.width(10);
-                            polylineOptions.color(ContextCompat.getColor(getContext(), R.color.item_background));
+                            polylineOptions.color(ContextCompat.getColor(this, R.color.item_background));
                             polylineOptions.geodesic(true);
                         }
 
@@ -609,12 +497,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
 
     private void getCurrentLocation() {
         FusedLocationProviderClient mFusedLocationClient =
-                LocationServices.getFusedLocationProviderClient(getContext());
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
                         if (location == null) {
@@ -648,7 +536,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
 
     public void getNewAvatar() {
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add Photo!");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
@@ -701,12 +589,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ImagePicker.REQUEST_CODE) {
-            if (resultCode == getActivity().RESULT_OK && data != null) {
+            if (resultCode == this.RESULT_OK && data != null) {
                 Uri resultUri = data.getData();
                 if(resultUri == null) return;
                 final InputStream imageStream;
                 try {
-                    imageStream = getActivity().getContentResolver().openInputStream(resultUri);
+                    imageStream = this.getContentResolver().openInputStream(resultUri);
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
@@ -729,14 +617,14 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
 
     // checking storage permissions
     private Boolean checkStoragePermission() {
-        boolean result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
         return result;
     }
 
     // checking camera permissions
     private Boolean checkCameraPermission() {
-        boolean result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
-        boolean result1 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
+        boolean result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
         return result && result1;
     }
 
@@ -771,8 +659,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
     }
 
     public void imageBookingDialog() {
-        Dialog dialog = new Dialog(getActivity());
-        dialogBinding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()), R.layout.dialog_shipping_img, null, false);
+        Dialog dialog = new Dialog(this);
+        dialogBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_shipping_img, null, false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(dialogBinding.getRoot());

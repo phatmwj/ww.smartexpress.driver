@@ -26,11 +26,11 @@ public class Constants {
     public static final int BOOKING_CUSTOMER_CANCEL = -2;
     public static final String GEO_API_KEY = "AIzaSyAQWUevZCTLaVd9a1Z2WEA2_e2gO9iW8rU";
 
-    public static final Integer BOOKING_STATE_CANCEL = -100;
-    public static final Integer BOOKING_STATE_BOOKING = 0;
-    public static final Integer BOOKING_STATE_DRIVER_ACCEPT = 100 ;
-    public static final Integer BOOKING_STATE_PICKUP_SUCCESS = 200 ;
-    public static final Integer BOOKING_STATE_DONE = 300 ;
+    public static final int BOOKING_STATE_CANCEL = -100;
+    public static final int BOOKING_STATE_BOOKING = 0;
+    public static final int BOOKING_STATE_DRIVER_ACCEPT = 100 ;
+    public static final int BOOKING_STATE_PICKUP_SUCCESS = 200 ;
+    public static final int BOOKING_STATE_DONE = 300 ;
 
     private Constants() {
 

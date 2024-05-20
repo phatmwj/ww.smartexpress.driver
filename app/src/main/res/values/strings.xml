@@ -154,4 +154,6 @@
     <string name="code">Mã</string>
     <string name="empty_activity">Bạn chưa có chuyến đi nào ở đây</string>
     <string name="show_more">Xem thêm</string>
+    <string name="fg_activity">Hoạt động</string>
+    <string name="current_order">Đơn hàng</string>
 </resources>

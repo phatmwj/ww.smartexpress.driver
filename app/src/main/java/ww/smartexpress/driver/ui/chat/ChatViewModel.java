@@ -24,6 +24,7 @@ public class ChatViewModel extends BaseViewModel {
     public ObservableField<Long> customerId = new ObservableField<>(0L);
     public ObservableField<String> customerAvatar = new ObservableField<>();
     public ObservableField<String> customerName = new ObservableField<>();
+    public ObservableField<String> codeBooking = new ObservableField<>();
     public MutableLiveData<MessageChat> messageChat = new MutableLiveData<>(null);
     public ObservableField<List<MessageChat>> messageChatList = new ObservableField<>();
 
@@ -44,7 +45,7 @@ public class ChatViewModel extends BaseViewModel {
             return;
         }
         ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setCodeBooking("000000");
+        chatMessage.setCodeBooking(codeBooking.get());
         chatMessage.setMessage(message.get());
         chatMessage.setMessageId(String.valueOf((new Date()).getTime()));
 
@@ -67,8 +68,8 @@ public class ChatViewModel extends BaseViewModel {
         messageChat.setValue(messageChat1);
     }
 
-    public Observable<ResponseWrapper<RoomResponse>> getRoomChat(){
-        return repository.getApiService().getRoomChat(repository.getSharedPreferences().getLongVal(Constants.ROOM_ID))
+    public Observable<ResponseWrapper<RoomResponse>> getRoomChat(Long roomId){
+        return repository.getApiService().getRoomChat(roomId)
                 .doOnNext(res ->{
                     messageChatList.set(res.getData().getChatDetails());
                 });

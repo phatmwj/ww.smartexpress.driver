@@ -56,6 +56,10 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
     @Getter
     @Setter
     private String currentBookingId;
+
+    @Getter
+    @Setter
+    private String cancelBookingId;
     @Getter
     @Setter
     private Boolean customerCancelBooking = false;
@@ -151,7 +155,7 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
                         navigateToBooking(socketEventModel);
                         break;
                     case Command.CM_SEND_MESSAGE:
-                        navigateToChat(socketEventModel);
+//                        navigateToChat(socketEventModel);
                         break;
                     case Command.CM_CUSTOMER_CANCEL_BOOKING:
                         handleCancelBooking(socketEventModel);
@@ -160,18 +164,24 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
                         break;
                 }
             }else {
-                handleCancelBooking(socketEventModel);
+//                handleCancelBooking(socketEventModel);
             }
         }
 
     }
     public void navigateToBooking(SocketEventModel socketEventModel){
-        Message message = socketEventModel.getMessage();
-        currentBookingId = message.getDataObject(BookingId.class).getBookingId();
-        Intent intent = new Intent(currentActivity,HomeActivity.class);
-        intent.putExtra("homefragment", "home fragment");
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        currentActivity.startActivity(intent);
+            Message message = socketEventModel.getMessage();
+            currentBookingId = message.getDataObject(BookingId.class).getBookingId();
+            Intent intent = new Intent(currentActivity,HomeActivity.class);
+            intent.putExtra("activityfragment", "activity fragment");
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            currentActivity.startActivity(intent);
+//        Message message = socketEventModel.getMessage();
+//        currentBookingId = message.getDataObject(BookingId.class).getBookingId();
+//        Intent intent = new Intent(currentActivity,HomeActivity.class);
+//        intent.putExtra("homefragment", "home fragment");
+//        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//        currentActivity.startActivity(intent);
     }
 
     public void navigateToChat(SocketEventModel socketEventModel){
@@ -183,9 +193,10 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
     }
 
     public void handleCancelBooking(SocketEventModel socketEventModel){
-        customerCancelBooking = true;
+        Message message = socketEventModel.getMessage();
+        cancelBookingId = message.getDataObject(BookingId.class).getBookingId();
         Intent intent = new Intent(currentActivity,HomeActivity.class);
-        intent.putExtra("homefragment", "home fragment");
+        intent.putExtra("activityfragment", "activity fragment");
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         currentActivity.startActivity(intent);
     }
