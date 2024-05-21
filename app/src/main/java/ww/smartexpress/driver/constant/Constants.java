@@ -24,7 +24,7 @@ public class Constants {
     public static final int BOOKING_SUCCESS = 4;
     public static final int BOOKING_PICKUP = 3;
     public static final int BOOKING_CUSTOMER_CANCEL = -2;
-    public static final String GEO_API_KEY = "AIzaSyAQWUevZCTLaVd9a1Z2WEA2_e2gO9iW8rU";
+    public static final String GEO_API_KEY = "AIzaSyDQFJ-AGut2GL97rVRvf2q1SJLwABJjWOU";
 
     public static final int BOOKING_STATE_CANCEL = -100;
     public static final int BOOKING_STATE_BOOKING = 0;

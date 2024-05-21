@@ -16,6 +16,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -45,6 +46,7 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -90,8 +92,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
     private LatLng destinationLocation;
     private Marker destinationMarker;
     private Polyline polyline;
-
-    private Boolean isLogin;
     private Handler handler = new Handler();
     private Runnable runnable;
     final int durationInSeconds = 30;
@@ -128,14 +128,29 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
     }
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if(intent.getLongExtra("bookingId",0) != 0){
+            viewModel.currentBookingId.postValue(intent.getLongExtra("bookingId",0));
+        }
+
+        cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+        viewModel.currentBookingId.observe(this, id ->{
+            viewModel.loadBooking(id);
+        });
+
+    }
+
+    @Override
     public void onLocationChanged(@NonNull Location location) {
         if (location == null) {
             return;
-        }
-        if (viewModel.state.get() == 1) {
-            viewModel.latitude.set(String.valueOf(location.getLatitude()));
-            viewModel.longitude.set(String.valueOf(location.getLongitude()));
-            viewModel.updatePosition();
         }
         currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
         if (currentLocationMarker == null) {
@@ -150,7 +165,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                 destinationMarker.setVisible(true);
             }
             if (destinationMarker == null) {
-                destinationMarker = mMap.addMarker(new MarkerOptions().position(customerLocation).title(viewModel.booking.getValue().getPickupAddress()).icon(desIc));
+                destinationMarker = mMap.addMarker(new MarkerOptions().position(customerLocation).title(viewModel.booking.get().getPickupAddress()).icon(desIc));
             } else {
                 destinationMarker.setPosition(customerLocation);
             }
@@ -166,7 +181,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
             }
             BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
             if (destinationMarker == null) {
-                destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation).title(viewModel.booking.getValue().getDestinationAddress()).icon(desIc));
+                destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation).title(viewModel.booking.get().getDestinationAddress()).icon(desIc));
             } else {
                 destinationMarker.setPosition(destinationLocation);
             }
@@ -178,22 +193,17 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-
         getCurrentLocation();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
 
-        viewModel.booking.observe(this, currentBooking -> {
+        viewModel.bookingValue.observe(this, currentBooking -> {
             customerLocation = new LatLng(currentBooking.getPickupLat(), currentBooking.getPickupLong());
             destinationLocation = new LatLng(currentBooking.getDestinationLat(), currentBooking.getDestinationLong());
-        });
-        viewModel.currentBookingId.observe(this, id -> {
-            viewBinding.switchState.setClickable(false);
-            updateLocationUpdatesInterval(10000);
         });
 
         viewBinding.cardBooking.btnAccept.setOnClickListener(new View.OnClickListener() {
@@ -212,7 +222,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                             destinationMarker.setVisible(true);
                         }
                         if (destinationMarker == null) {
-                            destinationMarker = mMap.addMarker(new MarkerOptions().position(customerLocation).title(viewModel.booking.getValue().getPickupAddress()).icon(desIc));
+                            destinationMarker = mMap.addMarker(new MarkerOptions().position(customerLocation).title(viewModel.booking.get().getPickupAddress()).icon(desIc));
                         } else {
                             destinationMarker.setPosition(customerLocation);
                         }
@@ -223,24 +233,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                         updateLocationUpdatesInterval(10000);
                         break;
                     case Constants.BOOKING_ACCEPTED:
-//                        viewModel.updateStateBooking(Constants.BOOKING_STATE_PICKUP_SUCCESS);
-//                        if (polyline != null) {
-//                            polyline.remove();
-//                        }
-//                        if (destinationMarker != null) {
-//                            destinationMarker.setVisible(true);
-//                        }
-//                        viewModel.isShowDirection.set(false);
-////                        BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
-//                        if (destinationMarker == null) {
-//                            destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation).title(viewModel.booking.getValue().getDestinationAddress()).icon(desIc));
-//                        } else {
-//                            destinationMarker.setPosition(destinationLocation);
-//                        }
-//                        if (currentLocation != null) {
-//                            loadMapDirection(currentLocation, destinationLocation);
-//                            viewModel.isShowDirection.set(true);
-//                        }
                         imageBookingDialog();
                         break;
                     default:
@@ -258,37 +250,18 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
             }
         });
 
-        viewBinding.cardBooking.orderDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                orderDetailsDialog();
-            }
-        });
-
         viewBinding.cardBooking.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("alo", "onClick: " + viewModel.status.get());
                 switch (viewModel.status.get()) {
                     case Constants.BOOKING_PICKUP:
-//                        viewModel.updateStateBooking(Constants.BOOKING_STATE_DONE);
-//                        viewModel.getApplication().setCurrentBookingId(null);
-//                        if (polyline != null) {
-//                            polyline.remove();
-//                        }
-//                        if (destinationMarker != null) {
-//                            destinationMarker.setVisible(false);
-////                            destinationMarker.remove();
-//                        }
-//                        viewModel.isShowDirection.set(false);
-//                        updateLocationUpdatesInterval(60000);
                         imageBookingDialog();
                         break;
                     case Constants.BOOKING_SUCCESS:
                         viewModel.getApplication().setCurrentBookingId(null);
                         viewModel.isShowDirection.set(false);
                         viewModel.status.set(Constants.BOOKING_NONE);
-                        viewBinding.switchState.setClickable(true);
                         break;
                     case Constants.BOOKING_CANCELED:
                     case Constants.BOOKING_CUSTOMER_CANCEL:
@@ -299,7 +272,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                         if (destinationMarker != null) {
                             destinationMarker.setVisible(false);
                         }
-                        viewBinding.switchState.setClickable(true);
                         updateLocationUpdatesInterval(60000);
                         break;
                     default:
@@ -309,7 +281,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                         if (destinationMarker != null) {
                             destinationMarker.setVisible(false);
                         }
-                        viewBinding.switchState.setClickable(true);
                         updateLocationUpdatesInterval(60000);
                         break;
                 }
@@ -481,12 +452,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                         polyline = mMap.addPolyline(polylineOptions);
                         Log.d("TAG", "loadMapDirection: ");
 
-//                        LatLngBounds bounds = new LatLngBounds.Builder().include(origin).include(des).build();
-//                        Point point = new Point();
-//                        getActivity().getWindowManager().getDefaultDisplay().getSize(point);
-//                        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, point.x, 150, 30));
-//                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16));
-
                     }
 
                 }, err -> {
@@ -508,20 +473,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                         if (location == null) {
                             return;
                         }
-                        viewModel.latitude.set(String.valueOf(location.getLatitude()));
-                        viewModel.longitude.set(String.valueOf(location.getLongitude()));
-                        currentLocation =
-                                new LatLng(location.getLatitude(), location.getLongitude());
-//                        if(viewModel.state.get()==1){
-//                            viewModel.updatePosition();
-//                        }
-                        Log.d("TAG", "onSuccess: "+isLogin);
-                        if(isLogin){
-                            viewModel.state.set(1);
-                            viewModel.changeDriverState(new DriverStateRequest(viewModel.state.get()));
-                        }else {
-                            viewModel.getStateDriver();
-                        }
+                        currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
                         if (currentLocationMarker == null) {
                             currentLocationMarker = mMap.addMarker(new MarkerOptions().position(currentLocation).title("Driver current location"));
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16));
@@ -530,35 +482,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                         }
                     }
                 });
-    }
-
-    //picker Image
-
-    public void getNewAvatar() {
-        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Add Photo!");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo")) {
-                    if (!checkCameraPermission()) {
-                        requestCameraPermission();
-                    } else {
-                        takeFromCamera();
-                    }
-                } else if (options[item].equals("Choose from Gallery")) {
-                    if (!checkStoragePermission()) {
-                        requestStoragePermission();
-                    } else {
-                        takeFromGallery();
-                    }
-                } else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
     }
 
     private void takeFromCamera() {
@@ -709,7 +632,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                     }
                     viewModel.isShowDirection.set(false);
                     if (destinationMarker == null) {
-                        destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation).title(viewModel.booking.getValue().getDestinationAddress()).icon(desIc));
+                        destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation).title(viewModel.booking.get().getDestinationAddress()).icon(desIc));
                     } else {
                         destinationMarker.setPosition(destinationLocation);
                     }
@@ -724,10 +647,9 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
             dialog.dismiss();
         });
         dialogBinding.imgCamera.setOnClickListener(a -> {
-//            getNewAvatar();
         });
         dialogBinding.takePhoto.setOnClickListener(a -> {
-//            getNewAvatar();
+
             if (!checkCameraPermission()) {
                 requestCameraPermission();
             } else {
@@ -735,7 +657,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
             }
         });
         dialogBinding.fromLib.setOnClickListener(a -> {
-//            getNewAvatar();
             if (!checkStoragePermission()) {
                 requestStoragePermission();
             } else {
@@ -788,5 +709,18 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
             viewModel.showErrorMessage("Vui lòng cập nhật hình ảnh");
             viewModel.hideLoading();
         }
+    }
+
+    @Override
+    public void onProviderDisabled(@NonNull String provider) {
+        displayLocationSettingsRequest();
+    }
+
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
     }
 }

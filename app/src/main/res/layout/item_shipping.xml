@@ -9,7 +9,7 @@
             type="ww.smartexpress.driver.data.model.api.response.CurrentBooking" />
         <variable
             name="size"
-            type="ww.smartexpress.driver.data.model.api.response.CurrentBooking" />
+            type="java.lang.String" />
         <import type="ww.smartexpress.driver.constant.Constants"/>
         <import type="android.view.View" />
         <import type="android.text.TextUtils" />
@@ -537,7 +537,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="@{booking.state != Constants.BOOKING_STATE_BOOKING &amp;&amp; booking.state != Constants.BOOKING_STATE_DRIVER_ACCEPT?View.VISIBLE:View.GONE}">
-                    <Button
+                    <TextView
                         android:id="@+id/btnConfirm"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -547,8 +547,9 @@
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:text="@{booking.state == Constants.BOOKING_STATE_PICKUP_SUCCESS ? @string/end_trip :booking.state == Constants.BOOKING_STATE_DONE ? @string/ended_trip : booking.state == Constants.BOOKING_STATE_CANCEL ? @string/customer_cancel_booking:@string/canceled_trip}"
-                        style="@style/AppButtonStyle"
+                        style="@style/app_text_b"
                         android:textSize="@dimen/_11ssp"
+                        android:background="@drawable/background_button_solid_green"
                         />
                 </LinearLayout>
             </LinearLayout>

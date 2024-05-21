@@ -65,6 +65,7 @@ import ww.smartexpress.driver.databinding.FragmentShippingBinding;
 import ww.smartexpress.driver.di.component.FragmentComponent;
 import ww.smartexpress.driver.ui.base.fragment.BaseFragment;
 import ww.smartexpress.driver.ui.fragment.activity.adapter.ShippingAdapter;
+import ww.smartexpress.driver.ui.shipping.ShippingActivity;
 
 public class ActivityFragment extends BaseFragment<FragmentShippingBinding, ActivityFragmentViewModel> implements LocationListener {
 
@@ -133,6 +134,7 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         getCurrentLocation();
+
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -183,7 +185,9 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
         shippingAdapter.setOnItemClickListener(new ShippingAdapter.OnItemClickListener() {
             @Override
             public void itemClick(int position) {
-
+                Intent intent = new Intent(getActivity(), ShippingActivity.class);
+                intent.putExtra("bookingId",shippingAdapter.getBookingList().get(position).getId() );
+                startActivity(intent);
             }
 
             @Override
@@ -503,9 +507,7 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
                         }
                         viewModel.latitude.set(String.valueOf(location.getLatitude()));
                         viewModel.longitude.set(String.valueOf(location.getLongitude()));
-//                        if(viewModel.state.get()==1){
-//                            viewModel.updatePosition();
-//                        }
+
                         Log.d("TAG", "onSuccess: "+isLogin);
                         if(isLogin){
                             viewModel.state.set(1);

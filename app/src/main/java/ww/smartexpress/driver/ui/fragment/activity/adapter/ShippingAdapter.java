@@ -17,7 +17,9 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import ww.smartexpress.driver.constant.Constants;
+import ww.smartexpress.driver.data.model.api.ApiModelUtils;
 import ww.smartexpress.driver.data.model.api.response.CurrentBooking;
+import ww.smartexpress.driver.data.model.api.response.Size;
 import ww.smartexpress.driver.databinding.ItemShippingBinding;
 
 public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.ShippingViewHolder> {
@@ -89,6 +91,9 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
         void onBind(int position){
             this.position = position;
             mBinding.setBooking(bookingList.get(position));
+            if(bookingList.get(position)!= null && bookingList.get(position).getService()!=null && bookingList.get(position).getService().getSize()!= null){
+                mBinding.setSize(getSize(bookingList.get(position).getService().getSize()));
+            }
 
             mBinding.sendMessage.setOnClickListener(view -> {
                 this.onItemClickListener.navigate_chat(position);
@@ -157,24 +162,6 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
                 }
             };
             handler.postDelayed(runnable, updateInterval);
-
-//            countDownTimer = new CountDownTimer(durationInSeconds * 1000, updateInterval) {
-//                private int remainingTime = durationInSeconds;
-//
-//                @Override
-//                public void onTick(long millisUntilFinished) {
-//                    remainingTime--;
-//                    mBinding.progressText.setText(String.valueOf(remainingTime));
-//                    mBinding.progressBar.setProgress((durationInSeconds - remainingTime) * 100 / durationInSeconds);
-//                }
-//
-//                @Override
-//                public void onFinish() {
-//                    mBinding.progressText.setText(String.valueOf(durationInSeconds));
-//                    mBinding.progressBar.setProgress(0);
-//                    onItemClickListener.countdown_end(position);
-//                }
-//            }.start();
         }
 
         @Override
@@ -198,5 +185,10 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener){
         this.onItemClickListener = onItemClickListener;
+    }
+
+    public String getSize(String sizeJson){
+        Size size = ApiModelUtils.fromJson( sizeJson,Size.class);
+        return size.formatSize();
     }
 }
