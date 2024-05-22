@@ -26,6 +26,7 @@ import ww.smartexpress.driver.ui.password.forget.ForgetPasswordViewModel;
 import ww.smartexpress.driver.ui.password.otp.ForgetPasswordOTPViewModel;
 import ww.smartexpress.driver.ui.password.renew.RenewPasswordViewModel;
 import ww.smartexpress.driver.ui.profile.ProfileViewModel;
+import ww.smartexpress.driver.ui.qrcode.QrcodeViewModel;
 import ww.smartexpress.driver.ui.shipping.ShippingViewModel;
 import ww.smartexpress.driver.ui.signup.SignUpViewModel;
 import ww.smartexpress.driver.ui.splash.SplashViewModel;
@@ -227,5 +228,13 @@ public class ActivityModule {
         Supplier<ShippingViewModel> supplier = () -> new ShippingViewModel(repository, (MVVMApplication) application);
         ViewModelProviderFactory<ShippingViewModel> factory = new ViewModelProviderFactory<>(ShippingViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(ShippingViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    QrcodeViewModel provideQrcodeViewModel(Repository repository, Context application) {
+        Supplier<QrcodeViewModel> supplier = () -> new QrcodeViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<QrcodeViewModel> factory = new ViewModelProviderFactory<>(QrcodeViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(QrcodeViewModel.class);
     }
 }

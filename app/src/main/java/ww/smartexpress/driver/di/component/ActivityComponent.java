@@ -19,6 +19,7 @@ import ww.smartexpress.driver.ui.password.forget.ForgetPasswordActivity;
 import ww.smartexpress.driver.ui.password.otp.ForgetPasswordOTPActivity;
 import ww.smartexpress.driver.ui.password.renew.RenewPasswordActivity;
 import ww.smartexpress.driver.ui.profile.edit.EditProfileActivity;
+import ww.smartexpress.driver.ui.qrcode.QrcodeActivity;
 import ww.smartexpress.driver.ui.shipping.ShippingActivity;
 import ww.smartexpress.driver.ui.shipping.ShippingViewModel;
 import ww.smartexpress.driver.ui.statistic.StatisticActivity;
@@ -67,5 +68,7 @@ public interface ActivityComponent {
 
     void inject(BookingDetailsActivity bookingDetailsActivity);
     void inject(ShippingActivity shippingActivity);
+
+    void inject(QrcodeActivity qrcodeActivity);
 }
 

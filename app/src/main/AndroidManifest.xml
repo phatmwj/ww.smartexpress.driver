@@ -50,6 +50,14 @@
         android:windowSoftInputMode="adjustResize|stateHidden">
 
         <activity
+            android:name="ww.smartexpress.driver.ui.qrcode.QrcodeActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/Welcome"
+            android:exported="true">
+
+        </activity>
+
+        <activity
             android:name="ww.smartexpress.driver.ui.password.renew.RenewPasswordActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:theme="@style/Welcome"
