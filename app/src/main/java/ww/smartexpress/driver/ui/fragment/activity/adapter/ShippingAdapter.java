@@ -12,10 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import lombok.Getter;
 import lombok.Setter;
+import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.constant.Constants;
 import ww.smartexpress.driver.data.model.api.ApiModelUtils;
 import ww.smartexpress.driver.data.model.api.response.CurrentBooking;
@@ -29,6 +32,10 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
     private List<CurrentBooking> bookingList = new ArrayList<>();
     private Context context;
     private OnItemClickListener onItemClickListener;
+
+    @Getter
+    @Setter
+    private int positionSelected;
 
     public ShippingAdapter(Context context){
         this.context = context;
@@ -79,13 +86,13 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
         final int updateInterval = 1000;
         private Runnable runnable;
         private Handler handler = new Handler();
-        private CountDownTimer countDownTimer;
 
         public ShippingViewHolder(@NonNull ItemShippingBinding mBinding, OnItemClickListener onItemClickListener) {
             super(mBinding.getRoot());
             this.mBinding = mBinding;
             this.onItemClickListener = onItemClickListener;
             mBinding.getRoot().setOnClickListener(this);
+            Long a = ((MVVMApplication) context.getApplicationContext()).getDeleteBookingId();
         }
 
         void onBind(int position){
@@ -135,7 +142,7 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
 
             if(bookingList.get(position).getState()!= null && bookingList.get(position).getState() == Constants.BOOKING_STATE_BOOKING){
                 Log.d("TAG", "onBind: sao m chạy");
-                startCountdown();
+                startCountdown(position);
             }else {
                 handler.removeCallbacks(runnable);
             }
@@ -143,16 +150,16 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
             mBinding.executePendingBindings();
         }
 
-        private void startCountdown() {
+        private void startCountdown(int position) {
             runnable = new Runnable() {
-                private int remainingTime = durationInSeconds;
-
+                private int remainingTime = ((MVVMApplication) context.getApplicationContext()).getCountDownTime().get(bookingList.get(position).getId());
                 @Override
                 public void run() {
                     if (remainingTime >= 0) {
                         mBinding.progressText.setText(String.valueOf(remainingTime));
                         mBinding.progressBar.setProgress((durationInSeconds - remainingTime) * 100 / durationInSeconds);
                         remainingTime--;
+                        ((MVVMApplication) context.getApplicationContext()).getCountDownTime().put(bookingList.get(position).getId(), remainingTime);
                         handler.postDelayed(runnable, updateInterval);
                     } else {
                         onItemClickListener.countdown_end(position);
@@ -166,6 +173,9 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
 
         @Override
         public void onClick(View view) {
+            if(bookingList.get(position).getState() == Constants.BOOKING_STATE_BOOKING){
+                handler.removeCallbacks(runnable);
+            }
             this.onItemClickListener.itemClick(position);
 
         }

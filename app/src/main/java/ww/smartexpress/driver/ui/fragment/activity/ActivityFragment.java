@@ -606,4 +606,5 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
         viewModel.positionUpdate.set(null);
     }
 
+
 }

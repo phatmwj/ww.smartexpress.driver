@@ -243,7 +243,8 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(response -> {
                             if(response.isResult()){
-                                positionUpdate.set(application.getWebSocketLiveData().getCodeBooking().indexOf(response.getData())+1);
+                                positionUpdate.set(0);
+                                Log.d("TAG", "loadCancelBooking: "+application.getWebSocketLiveData().getCodeBooking().indexOf(response.getData())+1);
                                 bookingUpdate.setValue(response.getData());
 //                        showSuccessMessage(response.getMessage());
                             }else {

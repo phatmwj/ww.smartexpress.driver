@@ -31,6 +31,7 @@
             app:cardElevation="@dimen/_5sdp">
 
             <LinearLayout
+                android:background="@{booking.state == Constants.BOOKING_STATE_BOOKING ? @drawable/bg_state_new : booking.state == Constants.BOOKING_STATE_DONE ? @drawable/bg_state_done : booking.state == Constants.BOOKING_STATE_CANCEL?@drawable/bg_state_cancel: @drawable/bg_state_processing}"
                 android:id="@+id/llBooking"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,7 +50,7 @@
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Bạn có muốn chở tôi không?"
+                            android:text="@{booking.state == Constants.BOOKING_STATE_BOOKING ? @string/ship_state_new : booking.state == Constants.BOOKING_STATE_DONE ? @string/ship_state_done : booking.state == Constants.BOOKING_STATE_DRIVER_ACCEPT ? @string/ship_state_accept: booking.state == Constants.BOOKING_STATE_PICKUP_SUCCESS ? @string/ship_state_pickup: @string/customer_cancel_booking}"
                             style="@style/roboto_regular_bold_green_11ssp"
                             android:maxLines="1"
                             android:layout_weight="1"
@@ -374,7 +375,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:visibility="@{booking.state == Constants.BOOKING_STATE_BOOKING?View.GONE:View.VISIBLE}">
+                            android:visibility="@{booking.state == Constants.BOOKING_STATE_BOOKING || booking.state == Constants.BOOKING_STATE_DONE || booking.state == Constants.BOOKING_STATE_CANCEL?View.GONE:View.VISIBLE}">
                             <LinearLayout
                                 android:id="@+id/sendMessage"
                                 android:layout_width="wrap_content"
@@ -425,13 +426,16 @@
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_1sdp"
-                            android:background="#EEF2F5" />
+                            android:background="#EEF2F5"
+                            android:visibility="@{booking.state == Constants.BOOKING_STATE_DONE?View.GONE:View.VISIBLE}"/>
 
                         <LinearLayout
                             android:paddingTop="@dimen/_5sdp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="@{booking.state == Constants.BOOKING_STATE_DONE?View.GONE:View.VISIBLE}"
+                            >
                             <ImageView
                                 android:layout_width="@dimen/_12sdp"
                                 android:layout_height="@dimen/_12sdp"
@@ -485,7 +489,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="30"
                                 android:textSize="@dimen/_18ssp"/>
                         </LinearLayout>
                     </RelativeLayout>
@@ -502,7 +505,7 @@
                     <TextView
                         android:id="@+id/btnCancel"
                         android:layout_marginHorizontal="@dimen/_15sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         android:background="@drawable/background_button_stroke_green"
                         android:gravity="center"
                         android:textAllCaps="false"
@@ -546,7 +549,7 @@
                         android:maxLines="1"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:text="@{booking.state == Constants.BOOKING_STATE_PICKUP_SUCCESS ? @string/end_trip :booking.state == Constants.BOOKING_STATE_DONE ? @string/ended_trip : booking.state == Constants.BOOKING_STATE_CANCEL ? @string/customer_cancel_booking:@string/canceled_trip}"
+                        android:text="@{booking.state == Constants.BOOKING_STATE_CANCEL ? @string/customer_cancel_booking:booking.state == Constants.BOOKING_STATE_PICKUP_SUCCESS ? @string/end_trip :booking.state == Constants.BOOKING_STATE_DONE ? @string/ended_trip : @string/canceled_trip}"
                         style="@style/app_text_b"
                         android:textSize="@dimen/_11ssp"
                         android:background="@drawable/background_button_solid_green"

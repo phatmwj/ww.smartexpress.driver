@@ -156,4 +156,8 @@
     <string name="show_more">Xem thêm</string>
     <string name="fg_activity">Hoạt động</string>
     <string name="current_order">Đơn hàng</string>
+    <string name="ship_state_done">Bạn đã hoàn thành đơn này!</string>
+    <string name="ship_state_accept">Đi lấy hàng nào!</string>
+    <string name="ship_state_pickup">Đi giao hàng nào!</string>
+    <string name="ship_state_new">Bạn có muốn nhận đơn này!</string>
 </resources>

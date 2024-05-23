@@ -41,16 +41,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <TextView
-                        android:visibility="@{vm.status == 1 ? View.VISIBLE : View.GONE}"
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text='@{"Chào " + vm.user.fullName + "!" + " Bạn có muốn chở tôi không?"}'
-                        style="@style/roboto_regular_bold_green_11ssp"
-                        android:maxLines="1"
-                        android:ellipsize="end">
-                    </TextView>
+<!--                    <TextView-->
+<!--                        android:visibility="@{vm.status == 1 ? View.VISIBLE : View.GONE}"-->
+<!--                        android:layout_marginBottom="@dimen/_10sdp"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text='@{"Chào " + vm.user.fullName + "!" + " Bạn có muốn chở tôi không?"}'-->
+<!--                        style="@style/roboto_regular_bold_green_11ssp"-->
+<!--                        android:maxLines="1"-->
+<!--                        android:ellipsize="end">-->
+<!--                    </TextView>-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -316,26 +316,6 @@
                                         style="@style/roboto_medium_light_gray_11ssp"
                                         android:textAlignment="textStart"/>
 
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginBottom="@dimen/_5sdp"
-                                        android:weightSum="5">
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="3"
-                                            android:layout_marginRight="@dimen/_8sdp"
-                                            android:text="Xem chi tiết hàng hóa"
-                                            android:maxLines="1"
-                                            android:ellipsize="end"
-                                            style="@style/roboto_regular_bold_green_11ssp"
-                                            android:textSize="@dimen/_8sdp"
-                                            android:textAlignment="textStart">
-                                        </TextView>
-                                    </LinearLayout>
-
                                 </LinearLayout>
 
                                 <ImageView
@@ -363,7 +343,7 @@
                             android:background="#EEF2F5" />
 
                         <LinearLayout
-                            android:visibility="@{(vm.status == 2) ? View.VISIBLE : View.GONE}"
+                            android:visibility="@{vm.status == 2 || vm.status == 3? View.VISIBLE : View.GONE}"
                             android:paddingVertical="@dimen/_15sdp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -482,7 +462,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="30"
                                 android:textSize="@dimen/_18ssp"/>
                             <!--                            <TextView-->
                             <!--                                style="@style/roboto_medium"-->

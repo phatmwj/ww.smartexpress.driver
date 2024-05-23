@@ -91,8 +91,6 @@ public class ShippingViewModel extends BaseViewModel {
                         .subscribe(response -> {
                             if(response.isResult()){
                                 Log.d("TAG", "acceptBooking: "+booking.get().getCode());
-                                application.getWebSocketLiveData().getCodeBooking().add(booking.get().getCode());
-                                application.getWebSocketLiveData().sendPing();
                                 status.set(Constants.BOOKING_ACCEPTED);
 //                        getCurrentBooking();
                                 repository.getSharedPreferences().setLong(Constants.ROOM_ID,response.getData().getRoom().getId());

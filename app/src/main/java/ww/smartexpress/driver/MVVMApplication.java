@@ -12,6 +12,8 @@ import androidx.lifecycle.ProcessLifecycleOwner;
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import ww.smartexpress.driver.constant.Constants;
@@ -66,6 +68,9 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
     @Getter
     @Setter
     private Long deleteBookingId;
+    @Getter
+    @Setter
+    private Map<Long, Integer> countDownTime = new HashMap<>();
     @Getter
     @Setter
     private ChatMessage chatMessage = null;
@@ -175,6 +180,7 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
     public void navigateToBooking(SocketEventModel socketEventModel){
             Message message = socketEventModel.getMessage();
             currentBookingId = message.getDataObject(BookingId.class).getBookingId();
+            countDownTime.put(Long.parseLong(currentBookingId), 30);
             Intent intent = new Intent(currentActivity,HomeActivity.class);
             intent.putExtra("activityfragment", "activity fragment");
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

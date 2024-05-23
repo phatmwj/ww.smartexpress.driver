@@ -34,6 +34,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.Observable;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -72,6 +73,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import ww.smartexpress.driver.BR;
+import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.constant.Constants;
 import ww.smartexpress.driver.data.model.api.request.DriverStateRequest;
@@ -137,6 +139,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
             bookingId = String.valueOf(intent.getLongExtra("bookingId",0));
         }
 
+
         cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
@@ -145,6 +148,15 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
 
         viewModel.currentBookingId.observe(this, id ->{
             viewModel.loadBooking(id);
+        });
+
+        viewModel.status.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if(viewModel.status.get() == Constants.BOOKING_VISIBLE){
+                    startCountdown();
+                }
+            }
         });
 
     }
@@ -305,14 +317,14 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
     // progress bar countdown
     private void startCountdown(){
         handler.postDelayed(runnable = new Runnable() {
-            private int remainingTime = durationInSeconds;
+            private int remainingTime = ((MVVMApplication) getApplicationContext()).getCountDownTime().get(viewModel.booking.get().getId());
             @Override
             public void run() {
                 if (remainingTime >= 0) {
                     viewBinding.cardBooking.progressText.setText(String.valueOf(remainingTime));
                     viewBinding.cardBooking.progressBar.setProgress((durationInSeconds - remainingTime) * 100 / durationInSeconds);
-
                     remainingTime--;
+                    ((MVVMApplication) getApplicationContext()).getCountDownTime().put(viewModel.booking.get().getId(), remainingTime);
                     handler.postDelayed(this, updateInterval);
                 } else {
                     // Nếu hết thời gian, thực hiện các công việc sau khi đếm ngược kết thúc
@@ -585,7 +597,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
             switch (viewModel.status.get()) {
                 case Constants.BOOKING_PICKUP:
                     updateBooking(Constants.BOOKING_STATE_DONE);
-                    viewModel.getApplication().setCurrentBookingId(null);
                     if (polyline != null) {
                         polyline.remove();
                     }
@@ -704,6 +715,14 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
         if (viewModel.getApplication().getCancelBookingId()!=null) {
             viewModel.status.set(Constants.BOOKING_CUSTOMER_CANCEL);
             viewModel.getApplication().setDetailsBookingId(null);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(viewModel.status.get() == Constants.BOOKING_VISIBLE){
+            handler.removeCallbacks(runnable);
         }
     }
 }

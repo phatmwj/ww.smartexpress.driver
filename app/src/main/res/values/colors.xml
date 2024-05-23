@@ -38,4 +38,5 @@
     <color name="bar_chart">#CEDDB9</color>
     <color name="bar_chart_label">#D1424242</color>
     <color name="unchecked_rating_star_color">#9B9B9B</color>
+    <color name="bg_new">#D60FC458</color>
 </resources>
