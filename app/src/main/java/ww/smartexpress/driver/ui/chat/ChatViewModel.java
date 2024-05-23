@@ -25,6 +25,8 @@ public class ChatViewModel extends BaseViewModel {
     public ObservableField<String> customerAvatar = new ObservableField<>();
     public ObservableField<String> customerName = new ObservableField<>();
     public ObservableField<String> codeBooking = new ObservableField<>();
+    public ObservableField<String> bookingId = new ObservableField<>();
+    public ObservableField<String> roomId = new ObservableField<>();
     public MutableLiveData<MessageChat> messageChat = new MutableLiveData<>(null);
     public ObservableField<List<MessageChat>> messageChatList = new ObservableField<>();
 
@@ -47,6 +49,8 @@ public class ChatViewModel extends BaseViewModel {
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setCodeBooking(codeBooking.get());
         chatMessage.setMessage(message.get());
+        chatMessage.setRoomId(roomId.get());
+        chatMessage.setBookingId(bookingId.get());
         chatMessage.setMessageId(String.valueOf((new Date()).getTime()));
 
         Message message1 = new Message();

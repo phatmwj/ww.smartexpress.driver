@@ -67,6 +67,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import lombok.Getter;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -76,7 +77,6 @@ import ww.smartexpress.driver.constant.Constants;
 import ww.smartexpress.driver.data.model.api.request.DriverStateRequest;
 import ww.smartexpress.driver.databinding.ActivityShippingBinding;
 import ww.smartexpress.driver.databinding.DialogCancelBinding;
-import ww.smartexpress.driver.databinding.DialogOrderDetailsBinding;
 import ww.smartexpress.driver.databinding.DialogShippingImgBinding;
 import ww.smartexpress.driver.di.component.ActivityComponent;
 import ww.smartexpress.driver.ui.base.activity.BaseActivity;
@@ -96,7 +96,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
     private Runnable runnable;
     final int durationInSeconds = 30;
     final int updateInterval = 1000;
-
     //
     private Bitmap updatedAvatar;
     private static final int CAMERA_REQUEST = 100;
@@ -105,6 +104,8 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
     String storagePermission[];
     Bitmap photo;
     DialogShippingImgBinding dialogBinding;
+    @Getter
+    private String bookingId;
     private final ActivityResultLauncher<IntentSenderRequest> locationSettingsLauncher =
             registerForActivityResult(new ActivityResultContracts.StartIntentSenderForResult(), result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
@@ -133,6 +134,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
         Intent intent = getIntent();
         if(intent.getLongExtra("bookingId",0) != 0){
             viewModel.currentBookingId.postValue(intent.getLongExtra("bookingId",0));
+            bookingId = String.valueOf(intent.getLongExtra("bookingId",0));
         }
 
         cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -230,7 +232,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                             loadMapDirection(currentLocation, customerLocation);
                             viewModel.isShowDirection.set(true);
                         }
-                        updateLocationUpdatesInterval(10000);
+//                        updateLocationUpdatesInterval(10000);
                         break;
                     case Constants.BOOKING_ACCEPTED:
                         imageBookingDialog();
@@ -259,29 +261,29 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                         imageBookingDialog();
                         break;
                     case Constants.BOOKING_SUCCESS:
-                        viewModel.getApplication().setCurrentBookingId(null);
-                        viewModel.isShowDirection.set(false);
-                        viewModel.status.set(Constants.BOOKING_NONE);
+//                        viewModel.getApplication().setCurrentBookingId(null);
+//                        viewModel.isShowDirection.set(false);
+//                        viewModel.status.set(Constants.BOOKING_NONE);
                         break;
                     case Constants.BOOKING_CANCELED:
                     case Constants.BOOKING_CUSTOMER_CANCEL:
-                        viewModel.status.set(Constants.BOOKING_NONE);
-                        if (polyline != null) {
-                            polyline.remove();
-                        }
-                        if (destinationMarker != null) {
-                            destinationMarker.setVisible(false);
-                        }
-                        updateLocationUpdatesInterval(60000);
+//                        viewModel.status.set(Constants.BOOKING_NONE);
+//                        if (polyline != null) {
+//                            polyline.remove();
+//                        }
+//                        if (destinationMarker != null) {
+//                            destinationMarker.setVisible(false);
+//                        }
+//                        updateLocationUpdatesInterval(60000);
                         break;
                     default:
-                        if (polyline != null) {
-                            polyline.remove();
-                        }
-                        if (destinationMarker != null) {
-                            destinationMarker.setVisible(false);
-                        }
-                        updateLocationUpdatesInterval(60000);
+//                        if (polyline != null) {
+//                            polyline.remove();
+//                        }
+//                        if (destinationMarker != null) {
+//                            destinationMarker.setVisible(false);
+//                        }
+//                        updateLocationUpdatesInterval(60000);
                         break;
                 }
             }
@@ -289,16 +291,16 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
     }
 
 
-    private void updateLocationUpdatesInterval(long timeUpdate) {
-        if (locationManager != null) {
-            locationManager.removeUpdates(this);
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, timeUpdate, 0, this);
-            Log.d("TAG", "updateLocationUpdatesInterval: "+ timeUpdate);
-        }
-    }
+//    private void updateLocationUpdatesInterval(long timeUpdate) {
+//        if (locationManager != null) {
+//            locationManager.removeUpdates(this);
+//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                return;
+//            }
+//            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, timeUpdate, 0, this);
+//            Log.d("TAG", "updateLocationUpdatesInterval: "+ timeUpdate);
+//        }
+//    }
 
     // progress bar countdown
     private void startCountdown(){
@@ -352,12 +354,14 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                     break;
                 case Constants.BOOKING_ACCEPTED:
                     viewModel.cancelBooking();
-                    updateLocationUpdatesInterval(60000);
+//                    updateLocationUpdatesInterval(60000);
                     break;
                 default:
                     break;
             }
             viewModel.status.set(Constants.BOOKING_CANCELED);
+            viewModel.getApplication().setDeleteBookingId(viewModel.booking.get().getId());
+            viewModel.getApplication().setDetailsBookingId(null);
             dialog.dismiss();
         });
 
@@ -366,26 +370,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
         });
         dialog.show();
     }
-
-    public void orderDetailsDialog(){
-        Dialog dialog = new Dialog(this);
-        DialogOrderDetailsBinding dialogOrderDetailsBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_order_details, null, false);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(true);
-        dialog.setContentView(dialogOrderDetailsBinding.getRoot());
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.getWindow().setLayout(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-        dialog.setCanceledOnTouchOutside(true);
-        dialogOrderDetailsBinding.imgClose.setOnClickListener(v->{
-            dialog.dismiss();
-        });
-        dialog.show();
-    }
-
 
     private void displayLocationSettingsRequest() {
         locationRequest = LocationRequest.create();
@@ -496,16 +480,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                 .galleryOnly()
                 .cropSquare()
                 .start();
-    }
-
-    public Uri getUriFromBitmap(Context context, Bitmap bitmap) {
-        Uri uri = null;
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
-        uri = Uri.parse(path);
-        return uri;
     }
 
     @Override
@@ -620,7 +594,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
 //                            destinationMarker.remove();
                     }
                     viewModel.isShowDirection.set(false);
-                    updateLocationUpdatesInterval(60000);
+//                    updateLocationUpdatesInterval(60000);
                     break;
                 case Constants.BOOKING_ACCEPTED:
                     updateBooking(Constants.BOOKING_STATE_PICKUP_SUCCESS);
@@ -722,5 +696,14 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (viewModel.getApplication().getCancelBookingId()!=null) {
+            viewModel.status.set(Constants.BOOKING_CUSTOMER_CANCEL);
+            viewModel.getApplication().setDetailsBookingId(null);
+        }
     }
 }

@@ -23,8 +23,6 @@ import ww.smartexpress.driver.ui.chat.adapter.MessageAdapter;
 public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewModel> {
 
     MessageAdapter messageAdapter;
-    private Long roomId;
-    private String codeBooking;
 
     @Override
     public int getLayoutId() {
@@ -46,11 +44,13 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewMode
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if (intent.getLongExtra("roomId",0)!=0){
-            roomId = intent.getLongExtra("roomId",0);
+            viewModel.roomId.set(String.valueOf(intent.getLongExtra("roomId",0)));
         }
         if (intent.getStringExtra("codeBooking")!= null){
-            codeBooking = intent.getStringExtra("codeBooking");
-            viewModel.codeBooking.set(codeBooking);
+            viewModel.codeBooking.set(intent.getStringExtra("codeBooking"));
+        }
+        if (intent.getLongExtra("bookingId",0)!= 0){
+            viewModel.bookingId.set(String.valueOf(intent.getLongExtra("bookingId",0)));
         }
 
         messageAdapter = new MessageAdapter();
@@ -81,7 +81,7 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewMode
 
     public void loadChatDetails(){
         viewModel.showLoading();
-        viewModel.compositeDisposable.add(viewModel.getRoomChat(roomId)
+        viewModel.compositeDisposable.add(viewModel.getRoomChat(Long.valueOf(viewModel.roomId.get()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {

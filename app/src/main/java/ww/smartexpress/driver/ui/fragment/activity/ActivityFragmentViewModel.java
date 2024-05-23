@@ -364,10 +364,11 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
         );
     }
 
-    public void openChat(String codeBooking, Long roomId){
+    public void openChat(String codeBooking, Long roomId, Long bookingId){
         Intent intent = new Intent(application.getCurrentActivity(), ChatActivity.class);
         intent.putExtra("codeBooking", codeBooking);
         intent.putExtra("roomId", roomId);
+        intent.putExtra("bookingId", bookingId);
         application.getCurrentActivity().startActivity(intent);
     }
 

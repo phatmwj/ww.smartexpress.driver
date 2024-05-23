@@ -32,7 +32,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
@@ -55,6 +54,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import ww.smartexpress.driver.BR;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.constant.Constants;
 import ww.smartexpress.driver.data.model.api.request.DriverStateRequest;
@@ -150,6 +150,7 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
             if(viewModel.positionUpdate.get()!= null){
                 shippingAdapter.updateItem(viewModel.positionUpdate.get() ,currentBooking);
                 binding.rcShipping.smoothScrollToPosition(viewModel.positionUpdate.get());
+                viewModel.positionUpdate.set(null);
             }
         });
 
@@ -185,6 +186,8 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
         shippingAdapter.setOnItemClickListener(new ShippingAdapter.OnItemClickListener() {
             @Override
             public void itemClick(int position) {
+                viewModel.positionUpdate.set(position);
+                viewModel.getApplication().setDetailsBookingId(shippingAdapter.getBookingList().get(position).getId());
                 Intent intent = new Intent(getActivity(), ShippingActivity.class);
                 intent.putExtra("bookingId",shippingAdapter.getBookingList().get(position).getId() );
                 startActivity(intent);
@@ -206,6 +209,7 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
 
             @Override
             public void reject_booking(int position) {
+                viewModel.positionUpdate.set(position);
                 cancelDialog(position);
             }
 
@@ -219,12 +223,13 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
 
             @Override
             public void navigate_chat(int position) {
-                viewModel.openChat(shippingAdapter.getBookingList().get(position).getCode(), shippingAdapter.getBookingList().get(position).getRoom().getId());
+                viewModel.positionUpdate.set(position);
+                viewModel.openChat(shippingAdapter.getBookingList().get(position).getCode(), shippingAdapter.getBookingList().get(position).getRoom().getId(),shippingAdapter.getBookingList().get(position).getId());
             }
 
             @Override
             public void navigate_call(int position) {
-
+                viewModel.positionUpdate.set(position);
             }
 
             @Override
@@ -522,9 +527,6 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        if (location == null) {
-            return;
-        }
         if (viewModel.state.get() == 1) {
             viewModel.latitude.set(String.valueOf(location.getLatitude()));
             viewModel.longitude.set(String.valueOf(location.getLongitude()));
@@ -575,18 +577,25 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("TAG", "onResume: ");
-        Log.d("TAG", "onResume: "+viewModel.getApplication().getCurrentBookingId());
         if (viewModel.getApplication().getCurrentBookingId() != null) {
-//            viewModel.newBookingId.setValue(Long.valueOf(viewModel.getApplication().getCurrentBookingId()));
-            viewModel.loadNewBooking(Long.valueOf(viewModel.getApplication().getCurrentBookingId()));
+            viewModel.loadNewBooking(Long.parseLong(viewModel.getApplication().getCurrentBookingId()));
                 viewModel.getApplication().setCurrentBookingId(null);
                 binding.switchState.setClickable(false);
         }
         if (viewModel.getApplication().getCancelBookingId() != null) {
-            viewModel.loadCancelBooking(Long.valueOf(viewModel.getApplication().getCancelBookingId()));
+            viewModel.loadCancelBooking(Long.parseLong(viewModel.getApplication().getCancelBookingId()));
             viewModel.getApplication().setCancelBookingId(null);
             binding.switchState.setClickable(true);
+        }
+        if(viewModel.getApplication().getDetailsBookingId()!= null){
+            viewModel.loadBooking(viewModel.getApplication().getDetailsBookingId());
+            viewModel.getApplication().setDetailsBookingId(null);
+        }
+        if(viewModel.getApplication().getDeleteBookingId() != null){
+            if(viewModel.positionUpdate.get()!= null){
+                deleteBooking(viewModel.positionUpdate.get());
+            }
+            viewModel.getApplication().setDeleteBookingId(null);
         }
     }
 
@@ -594,6 +603,7 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
         shippingAdapter.removeItem(position);
         viewModel.getApplication().getWebSocketLiveData().getCodeBooking().remove(position);
         viewModel.getApplication().getWebSocketLiveData().sendPing();
+        viewModel.positionUpdate.set(null);
     }
 
 }

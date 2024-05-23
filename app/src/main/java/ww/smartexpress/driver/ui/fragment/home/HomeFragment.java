@@ -83,7 +83,6 @@ import ww.smartexpress.driver.data.model.api.ResponseGeneric;
 import ww.smartexpress.driver.data.model.api.request.DriverStateRequest;
 import ww.smartexpress.driver.data.model.api.request.UpdateProfileRequest;
 import ww.smartexpress.driver.databinding.DialogCancelBinding;
-import ww.smartexpress.driver.databinding.DialogOrderDetailsBinding;
 import ww.smartexpress.driver.databinding.DialogShippingImgBinding;
 import ww.smartexpress.driver.databinding.FragmentHomeBinding;
 import ww.smartexpress.driver.di.component.FragmentComponent;
@@ -417,25 +416,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
         dialog.show();
     }
 
-    public void orderDetailsDialog(){
-        Dialog dialog = new Dialog(getActivity());
-        DialogOrderDetailsBinding dialogOrderDetailsBinding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()), R.layout.dialog_order_details, null, false);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(true);
-        dialog.setContentView(dialogOrderDetailsBinding.getRoot());
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.getWindow().setLayout(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-        dialog.setCanceledOnTouchOutside(true);
-        dialogOrderDetailsBinding.imgClose.setOnClickListener(v->{
-            dialog.dismiss();
-        });
-        dialog.show();
-    }
-
     @Override
     public void onStop() {
         super.onStop();
@@ -455,11 +435,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeFragment
                 Log.d("TAG", "onResume1: ");
             }
         }
-        if (viewModel.getApplication().getCustomerCancelBooking()) {
-            viewModel.status.set(Constants.BOOKING_CUSTOMER_CANCEL);
-            viewModel.getApplication().setCustomerCancelBooking(false);
-            binding.switchState.setClickable(true);
-        }
+//        if (viewModel.getApplication().getCustomerCancelBooking()) {
+//            viewModel.status.set(Constants.BOOKING_CUSTOMER_CANCEL);
+//            viewModel.getApplication().setCustomerCancelBooking(false);
+//            binding.switchState.setClickable(true);
+//        }
     }
 
 

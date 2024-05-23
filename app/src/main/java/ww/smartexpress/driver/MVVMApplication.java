@@ -30,6 +30,7 @@ import ww.smartexpress.driver.others.MyTimberReleaseTree;
 import ww.smartexpress.driver.ui.chat.ChatActivity;
 import ww.smartexpress.driver.ui.home.HomeActivity;
 import ww.smartexpress.driver.ui.main.MainActivity;
+import ww.smartexpress.driver.ui.shipping.ShippingActivity;
 import ww.smartexpress.driver.utils.DialogUtils;
 
 import es.dmoral.toasty.Toasty;
@@ -56,13 +57,15 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
     @Getter
     @Setter
     private String currentBookingId;
-
     @Getter
     @Setter
     private String cancelBookingId;
     @Getter
     @Setter
-    private Boolean customerCancelBooking = false;
+    private Long detailsBookingId;
+    @Getter
+    @Setter
+    private Long deleteBookingId;
     @Getter
     @Setter
     private ChatMessage chatMessage = null;
@@ -155,7 +158,7 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
                         navigateToBooking(socketEventModel);
                         break;
                     case Command.CM_SEND_MESSAGE:
-//                        navigateToChat(socketEventModel);
+                        navigateToChat(socketEventModel);
                         break;
                     case Command.CM_CUSTOMER_CANCEL_BOOKING:
                         handleCancelBooking(socketEventModel);
@@ -195,8 +198,13 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
     public void handleCancelBooking(SocketEventModel socketEventModel){
         Message message = socketEventModel.getMessage();
         cancelBookingId = message.getDataObject(BookingId.class).getBookingId();
-        Intent intent = new Intent(currentActivity,HomeActivity.class);
-        intent.putExtra("activityfragment", "activity fragment");
+        Intent intent;
+        if(currentActivity instanceof ShippingActivity && Objects.equals(((ShippingActivity) currentActivity).getBookingId(), cancelBookingId)){
+            intent = new Intent(currentActivity, ShippingActivity.class);
+        }else {
+            intent = new Intent(currentActivity, HomeActivity.class);
+            intent.putExtra("activityfragment", "activity fragment");
+        }
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         currentActivity.startActivity(intent);
     }

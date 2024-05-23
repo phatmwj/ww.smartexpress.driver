@@ -11,4 +11,6 @@ public class ChatMessage {
     private String codeBooking;
     private String messageId;
     private String message;
+    private String bookingId;
+    private String roomId;
 }
