@@ -16,6 +16,7 @@ public class Constants {
     public static String dateFormat = "dd/MM/yyyy HH:mm";
     public static final String FILE_TYPE_AVATAR = "AVATAR";
     public static final String APP_DRIVER = "DRIVER_APP";
+    public static final String APP_SERVER = "BACKEND_SOCKET_APP";
 
     public static final int BOOKING_VISIBLE = 1;
     public static final int BOOKING_NONE = 0;

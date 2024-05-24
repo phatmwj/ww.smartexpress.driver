@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import lombok.Getter;
+import lombok.Setter;
 import ww.smartexpress.driver.BR;
 import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.R;
@@ -23,7 +25,9 @@ import ww.smartexpress.driver.ui.chat.adapter.MessageAdapter;
 public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewModel> {
 
     MessageAdapter messageAdapter;
-
+    @Getter
+    @Setter
+    private Long bookingId;
     @Override
     public int getLayoutId() {
         return R.layout.activity_chat;
@@ -51,6 +55,7 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewMode
         }
         if (intent.getLongExtra("bookingId",0)!= 0){
             viewModel.bookingId.set(String.valueOf(intent.getLongExtra("bookingId",0)));
+            bookingId = Long.valueOf(viewModel.bookingId.get());
         }
 
         messageAdapter = new MessageAdapter();

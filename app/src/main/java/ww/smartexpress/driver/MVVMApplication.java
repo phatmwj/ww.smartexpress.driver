@@ -70,6 +70,9 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
     private Long deleteBookingId;
     @Getter
     @Setter
+    private Long chatBookingId;
+    @Getter
+    @Setter
     private Map<Long, Integer> countDownTime = new HashMap<>();
     @Getter
     @Setter
@@ -195,13 +198,26 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
 
     public void navigateToChat(SocketEventModel socketEventModel){
         Message message = socketEventModel.getMessage();
-        chatMessage = message.getDataObject(ChatMessage.class);
-        Intent intent = new Intent(currentActivity, ChatActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        intent.putExtra("codeBooking", chatMessage.getCodeBooking());
-        intent.putExtra("roomId", chatMessage.getRoomId());
-        intent.putExtra("bookingId", chatMessage.getBookingId());
-        currentActivity.startActivity(intent);
+        if(message.getApp() == Constants.APP_SERVER){
+            chatMessage = message.getDataObject(ChatMessage.class);
+            chatBookingId = Long.valueOf(chatMessage.getBookingId());
+            if(currentActivity instanceof ChatActivity && Objects.equals(((ChatActivity) currentActivity).getBookingId(), chatBookingId)){
+                Intent intent = new Intent(currentActivity, ChatActivity.class);
+//            intent.putExtra("codeBooking", chatMessage.getCodeBooking());
+//            intent.putExtra("roomId", Long.valueOf(chatMessage.getRoomId()));
+//            intent.putExtra("bookingId", Long.valueOf(chatMessage.getBookingId()));
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                currentActivity.startActivity(intent);
+            }else{
+                Intent intent = new Intent(currentActivity, ChatActivity.class);
+                intent.putExtra("codeBooking", chatMessage.getCodeBooking());
+                intent.putExtra("roomId", Long.valueOf(chatMessage.getRoomId()));
+                intent.putExtra("bookingId", Long.valueOf(chatMessage.getBookingId()));
+//            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                currentActivity.startActivity(intent);
+            }
+        }
+
     }
 
     public void handleCancelBooking(SocketEventModel socketEventModel){
