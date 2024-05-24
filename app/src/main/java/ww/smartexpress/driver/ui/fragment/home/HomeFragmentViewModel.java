@@ -211,7 +211,7 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
                 .subscribe(response -> {
                     if(response.isResult()){
                         Log.d("TAG", "acceptBooking: "+booking.getValue().getCode());
-                        application.getWebSocketLiveData().getCodeBooking().add(booking.getValue().getCode());
+//                        application.getWebSocketLiveData().getCodeBooking().add(booking.getValue().getCode());
                         application.getWebSocketLiveData().sendPing();
                         status.set(Constants.BOOKING_ACCEPTED);
 //                        getCurrentBooking();
@@ -249,7 +249,7 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
                         bookingList.setValue(response.getData().getContent());
                         for (CurrentBooking booking: bookingList.getValue()
                              ) {
-                            application.getWebSocketLiveData().getCodeBooking().add(booking.getCode());
+//                            application.getWebSocketLiveData().getCodeBooking().add(booking.getCode());
                         }
                         application.getWebSocketLiveData().sendPing();
                         showSuccessMessage(response.getMessage());

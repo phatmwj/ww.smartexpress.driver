@@ -172,7 +172,7 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
                                     bookingList.setValue(response.getData().getContent());
                                     for (CurrentBooking booking: response.getData().getContent()
                                     ) {
-                                        application.getWebSocketLiveData().getCodeBooking().add(booking.getCode());
+                                        application.getWebSocketLiveData().getCodeBooking().put(booking.getId(),booking.getCode());
                                     }
                                     application.getWebSocketLiveData().sendPing();
                                 }else {
@@ -221,7 +221,7 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
                             if(response.isResult()){
                                 newBooking.setValue(response.getData());
                                 newBookingId.setValue(response.getData().getId());
-                                application.getWebSocketLiveData().getCodeBooking().add(0,response.getData().getCode());
+                                application.getWebSocketLiveData().getCodeBooking().put(response.getData().getId(),response.getData().getCode());
                                 application.getWebSocketLiveData().sendPing();
 //                        showSuccessMessage(response.getMessage());
                             }else {
@@ -243,8 +243,6 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(response -> {
                             if(response.isResult()){
-                                positionUpdate.set(0);
-                                Log.d("TAG", "loadCancelBooking: "+application.getWebSocketLiveData().getCodeBooking().indexOf(response.getData())+1);
                                 bookingUpdate.setValue(response.getData());
 //                        showSuccessMessage(response.getMessage());
                             }else {

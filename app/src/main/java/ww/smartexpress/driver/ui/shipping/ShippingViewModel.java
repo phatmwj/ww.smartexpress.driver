@@ -71,6 +71,9 @@ public class ShippingViewModel extends BaseViewModel {
 //        sendIntent.putExtra("sms_body", "");
 //        application.getCurrentActivity().startActivity(sendIntent);
         Intent intent = new Intent(application.getCurrentActivity(), ChatActivity.class);
+        intent.putExtra("codeBooking", booking.get().getCode());
+        intent.putExtra("roomId", booking.get().getRoom().getId());
+        intent.putExtra("bookingId", booking.get().getId());
         application.getCurrentActivity().startActivity(intent);
     }
 

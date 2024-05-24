@@ -198,6 +198,9 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
         chatMessage = message.getDataObject(ChatMessage.class);
         Intent intent = new Intent(currentActivity, ChatActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.putExtra("codeBooking", chatMessage.getCodeBooking());
+        intent.putExtra("roomId", chatMessage.getRoomId());
+        intent.putExtra("bookingId", chatMessage.getBookingId());
         currentActivity.startActivity(intent);
     }
 

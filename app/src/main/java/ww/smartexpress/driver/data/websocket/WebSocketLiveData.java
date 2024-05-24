@@ -3,8 +3,10 @@ package ww.smartexpress.driver.data.websocket;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
@@ -43,7 +45,7 @@ public class WebSocketLiveData implements Runnable{
 
     @Getter
     @Setter
-    private List<String> codeBooking = new ArrayList<>();
+    private Map<Long, String> codeBooking = new HashMap<>();
 
     @Setter
     @Getter
@@ -200,7 +202,7 @@ public class WebSocketLiveData implements Runnable{
                 message.setLang("vi");
                 message.setToken(session);
                 message.setApp(Constants.APP_DRIVER);
-                message.setData(new BookingCode(codeBooking));
+                message.setData(new BookingCode(new ArrayList<>(codeBooking.values())));
 //            String cmd = "{ \"cmd\": \"CLIENT_PING\", \"platform\": 1, \"token\": \""+session+"\" }";
                 webSocket.send(message.getPayload());
                 Timber.d("========>SEND: %s", message.getPayload());
@@ -253,7 +255,7 @@ public class WebSocketLiveData implements Runnable{
                     message.setLang("vi");
                     message.setToken(session);
                     message.setApp(Constants.APP_DRIVER);
-                    message.setData(new BookingCode(codeBooking));
+                    message.setData(new BookingCode(new ArrayList<>(codeBooking.values())));
                     webSocket.send(message.getPayload());
                     Timber.d("SEND: %s", message.getPayload());
                     socketListener.onConnected();

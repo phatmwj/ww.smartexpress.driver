@@ -143,6 +143,7 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
 
         viewModel.bookingList.observe(this,currentBookings1 -> {
             shippingAdapter.setBookingList(currentBookings1);
+            shippingAdapter.addMapIdPos();
             getBooking();
         });
 
@@ -583,6 +584,8 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
                 binding.switchState.setClickable(false);
         }
         if (viewModel.getApplication().getCancelBookingId() != null) {
+            Log.d("TAG", "onResume: "+shippingAdapter.getMapIdPos().get(Long.parseLong(viewModel.getApplication().getCancelBookingId())));
+            viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(Long.parseLong(viewModel.getApplication().getCancelBookingId())));
             viewModel.loadCancelBooking(Long.parseLong(viewModel.getApplication().getCancelBookingId()));
             viewModel.getApplication().setCancelBookingId(null);
             binding.switchState.setClickable(true);
@@ -600,9 +603,9 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
     }
 
     void deleteBooking(int position){
-        shippingAdapter.removeItem(position);
-        viewModel.getApplication().getWebSocketLiveData().getCodeBooking().remove(position);
+        viewModel.getApplication().getWebSocketLiveData().getCodeBooking().remove(shippingAdapter.getBookingList().get(position).getId());
         viewModel.getApplication().getWebSocketLiveData().sendPing();
+        shippingAdapter.removeItem(position);
         viewModel.positionUpdate.set(null);
     }
 

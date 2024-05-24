@@ -37,8 +37,18 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
     @Setter
     private int positionSelected;
 
+    @Getter
+    @Setter
+    private Map<Long, Integer> mapIdPos = new HashMap<>();
+
     public ShippingAdapter(Context context){
         this.context = context;
+    }
+
+    public void addMapIdPos(){
+        for (int i=0;i<bookingList.toArray().length;i++) {
+            mapIdPos.put(bookingList.get(i).getId(), i );
+        }
     }
 
     @NonNull
@@ -66,6 +76,7 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
     public void addItem(CurrentBooking currentBooking) {
         bookingList.add(0,currentBooking);
         notifyItemInserted(0);
+        addMapIdPos();
     }
 
     // Method to remove an item
@@ -74,6 +85,7 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
             bookingList.remove(position);
             notifyItemRemoved(position);
 //            notifyItemRangeChanged(position, bookingList.size());
+            addMapIdPos();
         }
     }
 
