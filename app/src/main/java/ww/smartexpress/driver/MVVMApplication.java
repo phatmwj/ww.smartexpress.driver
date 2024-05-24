@@ -198,7 +198,7 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
 
     public void navigateToChat(SocketEventModel socketEventModel){
         Message message = socketEventModel.getMessage();
-        if(message.getApp() == Constants.APP_SERVER){
+        if(Objects.equals(message.getApp(), Constants.APP_SERVER)){
             chatMessage = message.getDataObject(ChatMessage.class);
             chatBookingId = Long.valueOf(chatMessage.getBookingId());
             if(currentActivity instanceof ChatActivity && Objects.equals(((ChatActivity) currentActivity).getBookingId(), chatBookingId)){

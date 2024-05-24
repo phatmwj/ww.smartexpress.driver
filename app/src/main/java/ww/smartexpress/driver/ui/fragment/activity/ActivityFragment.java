@@ -55,6 +55,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import ww.smartexpress.driver.BR;
+import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.constant.Constants;
 import ww.smartexpress.driver.data.model.api.request.DriverStateRequest;
@@ -80,6 +81,8 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
     String storagePermission[];
     Bitmap photo;
     DialogShippingImgBinding dialogBinding;
+
+    MVVMApplication mvvmApplication;
 
     private final ActivityResultLauncher<IntentSenderRequest> locationSettingsLauncher =
             registerForActivityResult(new ActivityResultContracts.StartIntentSenderForResult(), result -> {
@@ -128,6 +131,8 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mvvmApplication = (MVVMApplication)  getContext().getApplicationContext();
+
         shippingAdapter = new ShippingAdapter(getContext());
 
         cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -149,7 +154,7 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
 
         viewModel.bookingUpdate.observe(this,currentBooking -> {
             if(viewModel.positionUpdate.get()!= null){
-                shippingAdapter.updateItem(viewModel.positionUpdate.get() ,currentBooking);
+                shippingAdapter.updateItem(currentBooking.getId() ,currentBooking);
                 binding.rcShipping.smoothScrollToPosition(viewModel.positionUpdate.get());
                 viewModel.positionUpdate.set(null);
             }
@@ -186,62 +191,63 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
 
         shippingAdapter.setOnItemClickListener(new ShippingAdapter.OnItemClickListener() {
             @Override
-            public void itemClick(int position) {
-                viewModel.positionUpdate.set(position);
-                viewModel.getApplication().setDetailsBookingId(shippingAdapter.getBookingList().get(position).getId());
+            public void itemClick(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(bookingId));
+                mvvmApplication.setDetailsBookingId(bookingId);
                 Intent intent = new Intent(getActivity(), ShippingActivity.class);
                 intent.putExtra("bookingId",shippingAdapter.getBookingList().get(position).getId() );
                 startActivity(intent);
             }
 
             @Override
-            public void accept_booking(int position) {
-                viewModel.positionUpdate.set(position);
-                viewModel.acceptBooking(shippingAdapter.getBookingList().get(position).getId());
+            public void accept_booking(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(bookingId));
+                viewModel.acceptBooking(bookingId);
 //                binding.rcShipping.smoothScrollToPosition(position);
             }
 
             @Override
-            public void pickup_booking(int position) {
-                viewModel.positionUpdate.set(position);
-                imageBookingDialog(shippingAdapter.getBookingList().get(position));
+            public void pickup_booking(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(bookingId));
+                imageBookingDialog(bookingId);
 //                binding.rcShipping.smoothScrollToPosition(position);
             }
 
             @Override
-            public void reject_booking(int position) {
-                viewModel.positionUpdate.set(position);
-                cancelDialog(position);
+            public void reject_booking(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(bookingId));
+                cancelDialog(bookingId);
             }
 
             @Override
-            public void done_booking(int position) {
-                viewModel.positionUpdate.set(position);
-                imageBookingDialog(shippingAdapter.getBookingList().get(position));
+            public void done_booking(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(bookingId));
+                imageBookingDialog(bookingId);
 //                binding.rcShipping.smoothScrollToPosition(position);
 //                viewModel.updateStateBooking(Constants.BOOKING_STATE_DONE, currentBookings.get(position).getId());
             }
 
             @Override
-            public void navigate_chat(int position) {
-                viewModel.positionUpdate.set(position);
-                viewModel.openChat(shippingAdapter.getBookingList().get(position).getCode(), shippingAdapter.getBookingList().get(position).getRoom().getId(),shippingAdapter.getBookingList().get(position).getId());
+            public void navigate_chat(int position, Long bookingId) {
+                int pos = shippingAdapter.getMapIdPos().get(bookingId);
+                viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(bookingId));
+                viewModel.openChat(shippingAdapter.getBookingList().get(pos).getCode(), shippingAdapter.getBookingList().get(pos).getRoom().getId(),shippingAdapter.getBookingList().get(pos).getId());
             }
 
             @Override
-            public void navigate_call(int position) {
-                viewModel.positionUpdate.set(position);
+            public void navigate_call(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(bookingId));
             }
 
             @Override
-            public void delete_booking(int position) {
-                deleteBooking(position);
+            public void delete_booking(int position, Long bookingId) {
+                deleteBooking(bookingId);
             }
 
             @Override
-            public void countdown_end(int position) {
-                viewModel.rejectBooking(shippingAdapter.getBookingList().get(position).getId());
-                deleteBooking(position);
+            public void countdown_end(int position, Long bookingId) {
+                viewModel.rejectBooking(bookingId);
+                deleteBooking(bookingId);
             }
         });
     }
@@ -258,16 +264,6 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
                 .galleryOnly()
                 .cropSquare()
                 .start();
-    }
-
-    public Uri getUriFromBitmap(Context context, Bitmap bitmap) {
-        Uri uri = null;
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
-        uri = Uri.parse(path);
-        return uri;
     }
 
     @Override
@@ -343,7 +339,8 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
         }
     }
 
-    public void imageBookingDialog(CurrentBooking booking) {
+    public void imageBookingDialog(Long bookingId) {
+        CurrentBooking booking = shippingAdapter.getBookingList().get(shippingAdapter.getMapIdPos().get(bookingId));
         Dialog dialog = new Dialog(getActivity());
         dialogBinding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()), R.layout.dialog_shipping_img, null, false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -371,10 +368,10 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
         dialogBinding.btnConfirm.setOnClickListener(view -> {
             switch (booking.getState()) {
                 case Constants.BOOKING_STATE_PICKUP_SUCCESS:
-                    updateBooking(Constants.BOOKING_STATE_DONE, booking.getId());
+                    updateBooking(Constants.BOOKING_STATE_DONE, bookingId);
                     break;
                 case Constants.BOOKING_STATE_DRIVER_ACCEPT:
-                    updateBooking(Constants.BOOKING_STATE_PICKUP_SUCCESS, booking.getId());
+                    updateBooking(Constants.BOOKING_STATE_PICKUP_SUCCESS, bookingId);
                     break;
                 default:
                     break;
@@ -411,7 +408,8 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
     }
 
 
-    public void cancelDialog(int position) {
+    public void cancelDialog(Long bookingId) {
+        int pos = shippingAdapter.getMapIdPos().get(bookingId);
         Dialog dialog = new Dialog(getActivity());
         DialogCancelBinding dialogCancelBinding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()), R.layout.dialog_cancel, null, false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -426,16 +424,16 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
         dialog.setCanceledOnTouchOutside(true);
 
         dialogCancelBinding.btnConfirm.setOnClickListener(view -> {
-            switch (shippingAdapter.getBookingList().get(position).getState()) {
+            switch (shippingAdapter.getBookingList().get(pos).getState()) {
                 case Constants.BOOKING_STATE_BOOKING:
-                    viewModel.rejectBooking(shippingAdapter.getBookingList().get(position).getId());
-                    deleteBooking(position);
+                    viewModel.rejectBooking(shippingAdapter.getBookingList().get(pos).getId());
+                    deleteBooking(bookingId);
                     break;
                 case Constants.BOOKING_STATE_DRIVER_ACCEPT:
                     Log.d("TAG", "cancelDialog: ");
-                    viewModel.cancelBooking(shippingAdapter.getBookingList().get(position).getId());
+                    viewModel.cancelBooking(shippingAdapter.getBookingList().get(pos).getId());
                     updateLocationUpdatesInterval(20000);
-                    deleteBooking(position);
+                    deleteBooking(bookingId);
                     break;
                 default:
                     break;
@@ -578,34 +576,37 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
     @Override
     public void onResume() {
         super.onResume();
-        if (viewModel.getApplication().getCurrentBookingId() != null) {
-            viewModel.loadNewBooking(Long.parseLong(viewModel.getApplication().getCurrentBookingId()));
-                viewModel.getApplication().setCurrentBookingId(null);
-                binding.switchState.setClickable(false);
+        if (mvvmApplication.getCurrentBookingId() != null) {
+            viewModel.loadNewBooking(Long.parseLong(mvvmApplication.getCurrentBookingId()));
+            mvvmApplication.setCurrentBookingId(null);
+            binding.switchState.setClickable(false);
         }
-        if (viewModel.getApplication().getCancelBookingId() != null) {
-            Log.d("TAG", "onResume: "+shippingAdapter.getMapIdPos().get(Long.parseLong(viewModel.getApplication().getCancelBookingId())));
-            viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(Long.parseLong(viewModel.getApplication().getCancelBookingId())));
-            viewModel.loadCancelBooking(Long.parseLong(viewModel.getApplication().getCancelBookingId()));
-            viewModel.getApplication().setCancelBookingId(null);
+        if (mvvmApplication.getCancelBookingId() != null) {
+            Log.d("TAG", "onResume: "+shippingAdapter.getMapIdPos().get(Long.parseLong(mvvmApplication.getCancelBookingId())));
+            viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(Long.parseLong(mvvmApplication.getCancelBookingId())));
+            viewModel.loadCancelBooking(Long.parseLong(mvvmApplication.getCancelBookingId()));
+            mvvmApplication.setCancelBookingId(null);
             binding.switchState.setClickable(true);
         }
-        if(viewModel.getApplication().getDetailsBookingId()!= null){
-            viewModel.loadBooking(viewModel.getApplication().getDetailsBookingId());
-            viewModel.getApplication().setDetailsBookingId(null);
+        if(mvvmApplication.getDetailsBookingId()!= null){
+            viewModel.loadBooking(mvvmApplication.getDetailsBookingId());
+            mvvmApplication.setDetailsBookingId(null);
         }
-        if(viewModel.getApplication().getDeleteBookingId() != null){
+        if(mvvmApplication.getDeleteBookingId() != null){
             if(viewModel.positionUpdate.get()!= null){
-                deleteBooking(viewModel.positionUpdate.get());
+                deleteBooking(mvvmApplication.getDeleteBookingId());
             }
-            viewModel.getApplication().setDeleteBookingId(null);
+            mvvmApplication.setDeleteBookingId(null);
         }
     }
 
-    void deleteBooking(int position){
-        viewModel.getApplication().getWebSocketLiveData().getCodeBooking().remove(shippingAdapter.getBookingList().get(position).getId());
-        viewModel.getApplication().getWebSocketLiveData().sendPing();
-        shippingAdapter.removeItem(position);
+    void deleteBooking(Long bookingId){
+        mvvmApplication.getWebSocketLiveData().getCodeBooking().remove(bookingId);
+        mvvmApplication.getWebSocketLiveData().sendPing();
+        shippingAdapter.removeItem(bookingId);
+        if(shippingAdapter.getMapIdPos().get(bookingId)!=0){
+            binding.rcShipping.smoothScrollToPosition(shippingAdapter.getMapIdPos().get(bookingId)-1);
+        }
         viewModel.positionUpdate.set(null);
     }
 
