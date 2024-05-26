@@ -156,6 +156,9 @@ dependencies {
     // lib for SMS verification (Phone Auth)
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.google.android.gms:play-services-auth-api-phone:17.5.0'
+
+//    implementation "androidx.credentials:credentials-play-services-auth:1.2.2"
+//    implementation "com.google.android.libraries.identity.googleid:googleid:1.1.0"
     
     // map
     implementation 'com.google.android.gms:play-services-maps:17.0.1'

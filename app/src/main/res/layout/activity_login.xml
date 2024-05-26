@@ -148,5 +148,16 @@
                 android:enabled="@{!TextUtils.isEmpty(vm.phone) &amp;&amp; !TextUtils.isEmpty(vm.password.trim())}" />
         </LinearLayout>
 
+        <com.google.android.gms.common.SignInButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sign_in_button"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/_15sdp">
+
+        </com.google.android.gms.common.SignInButton>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
