@@ -5,8 +5,10 @@ import ww.smartexpress.driver.di.scope.ActivityScope;
 import ww.smartexpress.driver.ui.achievement.AchievementActivity;
 import ww.smartexpress.driver.ui.allbike.AllBikeServiceActivity;
 import ww.smartexpress.driver.ui.award.AwardActivity;
+import ww.smartexpress.driver.ui.bank.BankActivity;
 import ww.smartexpress.driver.ui.booking.details.BookingDetailsActivity;
 import ww.smartexpress.driver.ui.chat.ChatActivity;
+import ww.smartexpress.driver.ui.deposit.DepositActivity;
 import ww.smartexpress.driver.ui.fragment.income.details.IncomeDetailsActivity;
 import ww.smartexpress.driver.ui.history.TripHistoryActivity;
 import ww.smartexpress.driver.ui.home.HomeActivity;
@@ -18,6 +20,7 @@ import dagger.Component;
 import ww.smartexpress.driver.ui.password.forget.ForgetPasswordActivity;
 import ww.smartexpress.driver.ui.password.otp.ForgetPasswordOTPActivity;
 import ww.smartexpress.driver.ui.password.renew.RenewPasswordActivity;
+import ww.smartexpress.driver.ui.payout.PayoutActivity;
 import ww.smartexpress.driver.ui.profile.edit.EditProfileActivity;
 import ww.smartexpress.driver.ui.qrcode.QrcodeActivity;
 import ww.smartexpress.driver.ui.shipping.ShippingActivity;
@@ -25,6 +28,7 @@ import ww.smartexpress.driver.ui.shipping.ShippingViewModel;
 import ww.smartexpress.driver.ui.statistic.StatisticActivity;
 import ww.smartexpress.driver.ui.signup.SignUpActivity;
 import ww.smartexpress.driver.ui.splash.SplashActivity;
+import ww.smartexpress.driver.ui.wallet.WalletActivity;
 import ww.smartexpress.driver.ui.welcome.WelcomeActivity;
 
 @ActivityScope
@@ -70,5 +74,13 @@ public interface ActivityComponent {
     void inject(ShippingActivity shippingActivity);
 
     void inject(QrcodeActivity qrcodeActivity);
+
+    void inject(WalletActivity walletActivity);
+
+    void inject(DepositActivity depositActivity);
+
+    void inject(PayoutActivity payoutActivity);
+
+    void inject(BankActivity bankActivity);
 }
 

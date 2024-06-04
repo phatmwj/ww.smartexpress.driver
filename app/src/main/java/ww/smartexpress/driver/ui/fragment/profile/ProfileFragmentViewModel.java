@@ -33,6 +33,7 @@ import ww.smartexpress.driver.ui.index.IndexActivity;
 import ww.smartexpress.driver.ui.password.renew.RenewPasswordActivity;
 import ww.smartexpress.driver.ui.profile.edit.EditProfileActivity;
 import ww.smartexpress.driver.ui.statistic.StatisticActivity;
+import ww.smartexpress.driver.ui.wallet.WalletActivity;
 
 public class ProfileFragmentViewModel extends BaseFragmentViewModel {
     public MutableLiveData<ProfileResponse> profile;
@@ -60,6 +61,10 @@ public class ProfileFragmentViewModel extends BaseFragmentViewModel {
     }
     public void goTripHistory(){
         Intent intent = new Intent(application.getCurrentActivity(), TripHistoryActivity.class);
+        application.getCurrentActivity().startActivity(intent);
+    }
+    public void goWallet(){
+        Intent intent = new Intent(application.getCurrentActivity(), WalletActivity.class);
         application.getCurrentActivity().startActivity(intent);
     }
 

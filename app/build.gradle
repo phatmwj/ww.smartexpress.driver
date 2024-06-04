@@ -20,6 +20,7 @@ android {
         buildConfigField "String", "MEDIA_URL", "\"https://org-media-template.developteam.net\""
         buildConfigField "String", "WS_URL", "\"wss://ww-socket.developteam.net/ws\""
         buildConfigField "String", "GOOGLE_MAP_URL", "\"https://maps.googleapis.com/maps/api\""
+        buildConfigField "String", "BANK_URL", "\"https://api.vietqr.io\""
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
@@ -196,5 +197,7 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
 
     implementation 'com.google.zxing:core:3.3.0'
+
+    implementation 'com.github.momo-wallet:mobile-sdk:1.0.7'
 }
 apply plugin: 'com.google.gms.google-services'

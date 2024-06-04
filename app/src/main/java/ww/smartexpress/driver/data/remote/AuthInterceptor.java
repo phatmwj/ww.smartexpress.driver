@@ -58,6 +58,23 @@ public class AuthInterceptor implements Interceptor {
             return chain.proceed(newRequest.url(builder.toString()).build());
         }
 
+        String isBank = chain.request().header("isBank");
+        if(isBank!= null && isBank.equals("1")){
+            HttpUrl url = chain.request().url();
+            String queryNames = url.encodedQuery();
+            StringBuilder builder = new StringBuilder(BuildConfig.BANK_URL);
+            builder.append('/');
+            for (int i = 0; i < chain.request().url().pathSegments().size(); i++ ) {
+                if(i == chain.request().url().pathSegments().size() -1){
+                    builder.append(chain.request().url().pathSegments().get(i)).append("?").append(queryNames);
+                }else{
+                    builder.append(chain.request().url().pathSegments().get(i)).append('/');
+                }
+            }
+            newRequest.removeHeader("isBank");
+            return chain.proceed(newRequest.url(builder.toString()).build());
+        }
+
         //Add Authentication
         String token = appPreferences.getToken();
         if (token != null && !token.equals("")) {

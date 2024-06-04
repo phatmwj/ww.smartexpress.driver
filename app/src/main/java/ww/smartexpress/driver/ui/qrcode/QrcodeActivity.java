@@ -1,5 +1,6 @@
 package ww.smartexpress.driver.ui.qrcode;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -38,8 +39,10 @@ public class QrcodeActivity extends BaseActivity<ActivityQrcodeBinding, QrcodeVi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Intent intent = getIntent();
+
         ImageView imageView = findViewById(R.id.imageView);
-        String text = "otpauth://totp/LifeUni%3A0972141969%40gmail.com?secret=FPXFGON33ZZVRBVDWZGUI354BAH4CLR4&issuer=LifeUni"; // Chỗ này bạn có thể đặt chuỗi văn bản mà bạn muốn mã hóa thành QR code
+        String text = intent.getStringExtra("qrString");
 
         try {
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();

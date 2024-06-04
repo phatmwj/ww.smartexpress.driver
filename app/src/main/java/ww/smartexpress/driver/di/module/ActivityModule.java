@@ -13,9 +13,11 @@ import ww.smartexpress.driver.di.scope.ActivityScope;
 import ww.smartexpress.driver.ui.achievement.AchievementViewModel;
 import ww.smartexpress.driver.ui.allbike.AllBikeServiceViewModel;
 import ww.smartexpress.driver.ui.award.AwardViewModel;
+import ww.smartexpress.driver.ui.bank.BankViewModel;
 import ww.smartexpress.driver.ui.base.activity.BaseActivity;
 import ww.smartexpress.driver.ui.booking.details.BookingDetailsViewModel;
 import ww.smartexpress.driver.ui.chat.ChatViewModel;
+import ww.smartexpress.driver.ui.deposit.DepositViewModel;
 import ww.smartexpress.driver.ui.fragment.income.details.IncomeDetailsViewModel;
 import ww.smartexpress.driver.ui.history.TripHistoryViewModel;
 import ww.smartexpress.driver.ui.home.HomeViewModel;
@@ -25,11 +27,13 @@ import ww.smartexpress.driver.ui.main.MainViewModel;
 import ww.smartexpress.driver.ui.password.forget.ForgetPasswordViewModel;
 import ww.smartexpress.driver.ui.password.otp.ForgetPasswordOTPViewModel;
 import ww.smartexpress.driver.ui.password.renew.RenewPasswordViewModel;
+import ww.smartexpress.driver.ui.payout.PayoutViewModel;
 import ww.smartexpress.driver.ui.profile.ProfileViewModel;
 import ww.smartexpress.driver.ui.qrcode.QrcodeViewModel;
 import ww.smartexpress.driver.ui.shipping.ShippingViewModel;
 import ww.smartexpress.driver.ui.signup.SignUpViewModel;
 import ww.smartexpress.driver.ui.splash.SplashViewModel;
+import ww.smartexpress.driver.ui.wallet.WalletViewModel;
 import ww.smartexpress.driver.ui.welcome.WelcomeViewModel;
 import ww.smartexpress.driver.ui.profile.edit.EditProfileViewModel;
 import ww.smartexpress.driver.ui.statistic.StatisticViewModel;
@@ -236,5 +240,37 @@ public class ActivityModule {
         Supplier<QrcodeViewModel> supplier = () -> new QrcodeViewModel(repository, (MVVMApplication) application);
         ViewModelProviderFactory<QrcodeViewModel> factory = new ViewModelProviderFactory<>(QrcodeViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(QrcodeViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    WalletViewModel provideWalletViewModel(Repository repository, Context application) {
+        Supplier<WalletViewModel> supplier = () -> new WalletViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<WalletViewModel> factory = new ViewModelProviderFactory<>(WalletViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(WalletViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    DepositViewModel provideDepositViewModel(Repository repository, Context application) {
+        Supplier<DepositViewModel> supplier = () -> new DepositViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<DepositViewModel> factory = new ViewModelProviderFactory<>(DepositViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(DepositViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    PayoutViewModel providePayoutViewModel(Repository repository, Context application) {
+        Supplier<PayoutViewModel> supplier = () -> new PayoutViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<PayoutViewModel> factory = new ViewModelProviderFactory<>(PayoutViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(PayoutViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    BankViewModel provideBankViewModel(Repository repository, Context application) {
+        Supplier<BankViewModel> supplier = () -> new BankViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<BankViewModel> factory = new ViewModelProviderFactory<>(BankViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(BankViewModel.class);
     }
 }

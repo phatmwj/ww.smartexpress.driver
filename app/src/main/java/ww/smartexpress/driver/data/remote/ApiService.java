@@ -13,11 +13,13 @@ import ww.smartexpress.driver.data.model.api.ResponseListObj;
 import ww.smartexpress.driver.data.model.api.ResponseWrapper;
 import ww.smartexpress.driver.data.model.api.request.CancelBookingRequest;
 import ww.smartexpress.driver.data.model.api.request.ChangeStateRequest;
+import ww.smartexpress.driver.data.model.api.request.DepositRequest;
 import ww.smartexpress.driver.data.model.api.request.DriverStateRequest;
 import ww.smartexpress.driver.data.model.api.request.EventBookingRequest;
 import ww.smartexpress.driver.data.model.api.request.ForgetPassRequest;
 import ww.smartexpress.driver.data.model.api.request.IncomeRequest;
 import ww.smartexpress.driver.data.model.api.request.LoginRequest;
+import ww.smartexpress.driver.data.model.api.request.PayoutRequest;
 import ww.smartexpress.driver.data.model.api.request.PositionRequest;
 import ww.smartexpress.driver.data.model.api.request.RegisterRequest;
 import ww.smartexpress.driver.data.model.api.request.ResetPassRequest;
@@ -35,12 +37,16 @@ import ww.smartexpress.driver.data.model.api.response.LoginResponse;
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import ww.smartexpress.driver.data.model.api.response.MomoPaymentResponse;
+import ww.smartexpress.driver.data.model.api.response.Payment;
+import ww.smartexpress.driver.data.model.api.response.PayosPaymentResponse;
 import ww.smartexpress.driver.data.model.api.response.ProfileResponse;
 import ww.smartexpress.driver.data.model.api.response.RegisterResponse;
 import ww.smartexpress.driver.data.model.api.response.RoomResponse;
 import ww.smartexpress.driver.data.model.api.response.ServiceOnlineResponse;
 import ww.smartexpress.driver.data.model.api.response.ServiceResponse;
 import ww.smartexpress.driver.data.model.api.response.UploadFileResponse;
+import ww.smartexpress.driver.data.model.api.response.WalletResponse;
 
 public interface ApiService {
 
@@ -121,4 +127,14 @@ public interface ApiService {
     Observable<ResponseWrapper<RoomResponse>> getRoomChat(@Path("id") Long id);
     @PUT("/v1/booking/reject")
     Observable<ResponseGeneric> rejectBooking(@Body CancelBookingRequest request);
+    @POST("/v1/wallet/deposit")
+    Observable<ResponseWrapper<Payment>> depositMomo(@Body DepositRequest request);
+    @POST("/v1/wallet/deposit")
+    Observable<ResponseWrapper<Payment>> depositPayos(@Body DepositRequest request);
+    @POST("/v1/request-pay-out/create")
+    Observable<ResponseGeneric> payout(@Body PayoutRequest request);
+
+    @GET("/v1/wallet/my-wallet")
+    Observable<ResponseWrapper<WalletResponse>> getMyWallet();
+
 }
