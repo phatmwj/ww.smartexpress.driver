@@ -8,4 +8,8 @@ public class QrcodeViewModel extends BaseViewModel {
     public QrcodeViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
     }
+
+    public void back(){
+        application.getCurrentActivity().finish();
+    }
 }

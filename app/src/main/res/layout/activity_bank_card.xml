@@ -72,7 +72,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_25sdp">
+                    android:layout_marginTop="@dimen/_5sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -92,18 +92,19 @@
                 </LinearLayout>
 
                 <EditText
+                    style="@style/information_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/bg_edt"
-                    android:hint="@string/fullName_hint"
-                    android:maxLines="1"
                     android:ellipsize="end"
-                    android:text=""
+                    android:focusable="false"
+                    android:hint="Ngân hàng"
                     android:inputType="text"
-                    android:maxLength="50"
-                    android:textColorHint="@color/grey_text"
-                    style="@style/information_edit_text">
+                    android:maxLines="1"
+                    android:onClick="@{()->vm.getBankList()}"
+                    android:text="@{vm.bank.name}"
+                    android:textColorHint="@color/grey_text">
 
                 </EditText>
 
@@ -162,15 +163,15 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/edtAccountNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/bg_edt"
-                    android:hint="@string/phone_hint"
-                    android:inputType="phone"
-                    android:maxLength="10"
+                    android:hint="Nhập số tài khoản"
+                    android:inputType="number"
                     android:maxLines="1"
-                    android:text=""
+                    android:text="@={vm.accountNumber}"
                     android:textColorHint="@color/grey_text"
                     style="@style/information_edit_text">
 
@@ -200,13 +201,13 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/bg_edt"
-                    android:hint="@string/phone_hint"
-                    android:inputType="phone"
-                    android:maxLength="10"
+                    android:hint="Chủ tài khoản"
+                    android:inputType="none"
+                    android:focusable="false"
                     android:maxLines="1"
-                    android:text=""
+                    android:text="@{vm.accountName.accountName}"
                     android:textColorHint="@color/grey_text"
                     style="@style/information_edit_text">
 
@@ -237,13 +238,12 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/bg_edt"
-                    android:hint="@string/phone_hint"
-                    android:inputType="phone"
-                    android:maxLength="10"
+                    android:hint="Nhập chi nhánh"
+                    android:inputType="text"
                     android:maxLines="1"
-                    android:text=""
+                    android:text="@={vm.brand}"
                     android:textColorHint="@color/grey_text"
                     style="@style/information_edit_text">
 
@@ -274,19 +274,20 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp">
+                    android:layout_marginTop="@dimen/_5sdp">
+
                     <EditText
-                        android:paddingRight="@dimen/_35sdp"
                         android:id="@+id/edtPw"
+                        style="@style/information_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_edt"
                         android:hint="@string/pw_input"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        android:textColorHint="@color/grey_text"
-                        style="@style/information_edit_text"
-                        android:text="@={vm.password}">
+                        android:paddingRight="@dimen/_35sdp"
+                        android:text="@={vm.password}"
+                        android:textColorHint="@color/grey_text">
 
                     </EditText>
 
@@ -300,19 +301,31 @@
 
                     </ImageView>
                 </FrameLayout>
-
-                <Button
-                    android:id="@+id/btnEPUpdate"
-                    style="@style/AppButtonStyle"
-                    android:layout_marginVertical="@dimen/_40sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/next">
-
-                </Button>
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_gravity="bottom">
+            <Button
+                android:enabled="@{vm.brand != null &amp;&amp; vm.accountNumber != null &amp;&amp; vm.password!= null? Boolean.TRUE:Boolean.FALSE}"
+                android:onClick="@{()->vm.updateBankAccount()}"
+                android:id="@+id/btnEPUpdate"
+                style="@style/AppButtonStyle"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lưu">
+
+            </Button>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

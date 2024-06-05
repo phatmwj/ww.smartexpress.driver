@@ -58,6 +58,7 @@ public class DepositViewModel extends BaseViewModel {
                             Intent intent = new Intent(application.getCurrentActivity(), QrcodeActivity.class);
                             MomoPaymentResponse data = ApiModelUtils.fromJson(response.getData().getPaymentInfo(), MomoPaymentResponse.class);
                             intent.putExtra("qrString", data.getQrCodeUrl());
+                            intent.putExtra("payUrl", data.getPayUrl());
                             application.getCurrentActivity().startActivity(intent);
 //                                openMoMoDeeplink(data.getDeeplink());
                             hideLoading();
@@ -79,11 +80,9 @@ public class DepositViewModel extends BaseViewModel {
                     .subscribe(response -> {
                         if(response.isResult()){
                             hideLoading();
-                            Log.d("TAG1", "doDone: "+response.getData().getPaymentInfo());
                             PayosPaymentResponse data = ApiModelUtils.fromJson(response.getData().getPaymentInfo(), PayosPaymentResponse.class);
                             Intent intent = new Intent(application.getCurrentActivity(), QrcodeActivity.class);
-                            Log.d("TAG3", "doDone: "+data.getData().getQrCode());
-                            intent.putExtra("qrString", data.getData().getQrCode());
+                            intent.putExtra("paymentInfo", response.getData().getPaymentInfo());
                             application.getCurrentActivity().startActivity(intent);
                             showSuccessMessage(response.getMessage());
                         }else {

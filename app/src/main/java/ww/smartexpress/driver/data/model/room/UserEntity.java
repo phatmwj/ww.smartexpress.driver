@@ -27,4 +27,8 @@ public class UserEntity {
 
     private double averageRating;
 
+    private String bankCard;
+
+    private String identificationCard;
+
 }

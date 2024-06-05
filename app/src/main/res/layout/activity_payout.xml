@@ -10,8 +10,9 @@
             name="vm"
             type="ww.smartexpress.driver.ui.payout.PayoutViewModel" />
         <import type="android.view.View"/>
-        <import type="android.text.TextUtils"></import>
-        <import type="android.text.InputType"></import>
+        <import type="android.text.TextUtils" />
+        <import type="android.text.InputType" />
+        <import type="ww.smartexpress.driver.utils.NumberUtils"/>
 
     </data>
 
@@ -71,7 +72,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:background="@color/white"
                     android:gravity="center_vertical">
@@ -99,34 +100,137 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:maxLines="1"
-                        android:text="0 đ" />
+                        android:text="@{NumberUtils.formatCurrency(Double.valueOf(vm.balance))}" />
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/edtMoney"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/bg_edt"
-                    android:hint="Nhập số tiền cần rút"
+                    android:hint="Nhập số tiền cần nạp"
                     android:maxLines="1"
-                    android:text="@={vm.money}"
                     android:textColorHint="@color/grey_text"
                     style="@style/information_edit_text"
-                    android:inputType="number">
+                    android:inputType="numberDecimal">
 
                 </EditText>
                 <TextView
                     style="@style/app_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     android:text="Vui lòng rút tối thiểu 50.000 đ"
                     android:maxLines="1" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@color/gray_light"/>
 
                 <TextView
                     style="@style/app_text_b"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:text="Hoặc chọn số tiền cần rút" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_12sdp">
+                    <LinearLayout
+                        android:onClick='@{()->a.clickMoney("100000")}'
+                        android:id="@+id/layoutTotal"
+                        android:layout_width="@dimen/_125sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:background='@{vm.money.equals("100000") ? @drawable/bg_money : @drawable/background_card_app}'
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            style="@style/app_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="@dimen/_15sdp"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:text="100.000"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:onClick='@{()->a.clickMoney("200000")}'
+                        android:id="@+id/layout_pre_tax_fee"
+                        android:layout_width="@dimen/_125sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background='@{vm.money.equals("200000") ? @drawable/bg_money : @drawable/background_card_app}'
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            style="@style/app_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="@dimen/_15sdp"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:text="200.000"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:onClick='@{()->a.clickMoney("1000000")}'
+                        android:layout_width="@dimen/_125sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/layout_pre_tax_fee"
+                        android:background='@{vm.money.equals("1000000") ? @drawable/bg_money : @drawable/background_card_app}'
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        <TextView
+                            style="@style/app_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="@dimen/_15sdp"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:text="1.000.000"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:onClick='@{()->a.clickMoney("500000")}'
+                        android:layout_width="@dimen/_125sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/layoutTotal"
+                        android:background='@{vm.money.equals("500000") ? @drawable/bg_money : @drawable/background_card_app}'
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            style="@style/app_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="@dimen/_15sdp"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:text="500.000"/>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_2sdp"
+                    android:background="@color/gray_light"/>
+
+                <TextView
+                    style="@style/app_text_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     android:layout_weight="1"
                     android:maxLines="1"
@@ -136,33 +240,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <RadioButton
+                        style="@style/app_text_b"
                         android:id="@+id/radioMale"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="Tài khoản ngân hàng"
-                        android:layout_marginTop="10dp"
-                        android:checked="false"
-                        android:drawableStart="@drawable/ic_icon_camera"
-                        android:textSize="@dimen/_12sdp" />
+                        android:checked="true"
+                        android:buttonTint="@color/radio_button_color"
+                        />
 
                 </RadioGroup>
-
-                <Button
-                    android:onClick="@{(v)->vm.doDone()}"
-                    android:id="@+id/button2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_25sdp"
-                    android:layout_marginBottom="@dimen/_50sdp"
-                    android:text="Thực hiện"
-                    style="@style/AppButtonStyle"
-                    android:enabled="@{!TextUtils.isEmpty(vm.money)?Boolean.TRUE:Boolean.FALSE}" />
-
-
             </LinearLayout>
-
-
-
         </androidx.core.widget.NestedScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingHorizontal="@dimen/_10sdp"
+            >
+            <Button
+                android:onClick="@{(v)->vm.doDone()}"
+                android:id="@+id/button2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:text="@string/next"
+                style="@style/AppButtonStyle"
+                android:enabled="@{!TextUtils.isEmpty(vm.money) &amp;&amp; Double.valueOf(vm.money)>= 50000  ? Boolean.TRUE:Boolean.FALSE}" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

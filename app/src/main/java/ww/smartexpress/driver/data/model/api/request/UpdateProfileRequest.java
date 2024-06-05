@@ -17,4 +17,8 @@ public class UpdateProfileRequest {
 
     private String oldPassword;
 
+    private String bankCard;
+
+    private String identificationCard;
+
 }

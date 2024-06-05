@@ -69,7 +69,7 @@
                 android:orientation="vertical">
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_110sdp"
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     app:cardCornerRadius="@dimen/_10sdp">
                     <LinearLayout
@@ -77,7 +77,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/_8sdp"
                         android:orientation="vertical"
-                        android:background="@color/green_light_app">
+                        android:background="@drawable/bank_card">
                         <TextView
                             style="@style/title"
                             android:paddingHorizontal="@dimen/_10sdp"
@@ -108,142 +108,32 @@
                             android:textSize="@dimen/_12ssp"
                             android:textColor="@color/white">
                         </TextView>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-                            <LinearLayout
-                                android:paddingHorizontal="@dimen/_10sdp"
-                                android:onClick="@{()->vm.navigateDeposit()}"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_40sdp"
-                                android:orientation="horizontal"
-                                android:background="@color/white"
-                                android:layout_weight="1">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:src="@drawable/baseline_login_24"
-                                    app:tint="@color/app_text" />
-
-                                <TextView
-                                    style="@style/app_text_b"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginHorizontal="@dimen/_10sdp"
-                                    android:layout_weight="1"
-                                    android:maxLines="1"
-                                    android:text="Nạp tiền"
-                                    android:textColor="@color/green_light_app"/>
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:paddingHorizontal="@dimen/_10sdp"
-                                android:onClick="@{()->vm.navigatePayout()}"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_40sdp"
-                                android:orientation="horizontal"
-                                android:background="@color/white"
-                                android:layout_weight="1">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:src="@drawable/baseline_logout_24"
-                                    app:tint="@color/app_text" />
-
-                                <TextView
-                                    style="@style/app_text_b"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginHorizontal="@dimen/_10sdp"
-                                    android:layout_weight="1"
-                                    android:maxLines="1"
-                                    android:text="Rút tiền"
-                                    android:textColor="@color/red_color"/>
-
-                            </LinearLayout>
-                        </LinearLayout>
 
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
+
                 <LinearLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:orientation="vertical">
-                    <TextView
-                        style="@style/app_text_b"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <LinearLayout
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:onClick="@{()->vm.navigateDeposit()}"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_weight="1"
-                        android:maxLines="1"
-                        android:text="Tài khoản COD" />
-
-                    <LinearLayout
-                        android:paddingHorizontal="@dimen/_10sdp"
-                        android:layout_width="match_parent"
                         android:layout_height="@dimen/_40sdp"
+                        android:gravity="center"
                         android:orientation="horizontal"
-                        android:background="@color/white">
+                        android:background="@color/white"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/baseline_attach_money_24"
-                            app:tint="@color/app_text" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-                            <TextView
-                                style="@style/app_text_b"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="@dimen/_10sdp"
-                                android:layout_weight="1"
-                                android:maxLines="1"
-                                android:text="Số dư hiện tại" />
-
-                            <TextView
-                                style="@style/app_text_b"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="@dimen/_10sdp"
-                                android:layout_weight="1"
-                                android:maxLines="1"
-                                android:textSize="@dimen/_20sdp"
-                                android:text="0 đ" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:paddingHorizontal="@dimen/_10sdp"
-                        android:onClick="@{()->vm.navigatePayout()}"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:background="@color/white">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/baseline_attach_money_24"
+                            android:src="@drawable/baseline_login_24"
                             app:tint="@color/app_text" />
 
                         <TextView
@@ -252,11 +142,124 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginHorizontal="@dimen/_10sdp"
-                            android:layout_weight="1"
                             android:maxLines="1"
-                            android:textColor="@color/red_color"
-                            android:text="Rút tiền" />
+                            android:text="Nạp tiền"
+                            android:textColor="@color/green_light_app"/>
+
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:onClick="@{()->vm.navigatePayout()}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_40sdp"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:background="@color/white"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/baseline_logout_24"
+                            app:tint="@color/app_text" />
+
+                        <TextView
+                            style="@style/app_text_b"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="@dimen/_10sdp"
+                            android:maxLines="1"
+                            android:text="Rút tiền"
+                            android:textColor="@color/red_color"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:onClick="@{()->vm.navigateBank()}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:orientation="vertical">
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_3sdp"
+                        android:background="@color/gray_light"/>
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:background="@color/white">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/baseline_other_houses_24"
+                            app:tint="@color/app_text" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                style="@style/app_text_b"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/_10sdp"
+                                android:layout_weight="1"
+                                android:maxLines="1"
+                                android:text="Tài khoản ngân hàng" />
+
+                            <TextView
+                                android:visibility="@{vm.user.bankCard == null ? View.GONE : View.VISIBLE}"
+                                style="@style/app_text_b"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/_10sdp"
+                                android:layout_weight="1"
+                                android:maxLines="1"
+                                android:text='@{vm.bankCard.bankName + " - " + vm.bankCard.accountName}' />
+                            <TextView
+                                android:visibility="@{vm.user.bankCard == null ? View.GONE : View.VISIBLE}"
+                                style="@style/app_text_b"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/_10sdp"
+                                android:layout_weight="1"
+                                android:maxLines="1"
+                                android:text='@{"Số tài khoản: "+vm.bankCard.accountNumber}' />
+
+                            <TextView
+                                android:visibility="@{vm.user.bankCard != null ? View.GONE : View.VISIBLE}"
+                                style="@style/app_text_b"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/_10sdp"
+                                android:layout_weight="1"
+                                android:maxLines="1"
+                                android:textColor="@color/green"
+                                android:textSize="@dimen/_10ssp"
+                                android:text="Bạn chưa có tài khoản ngân hàng" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_icon_expand"
+                            app:tint="@color/app_text" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
 

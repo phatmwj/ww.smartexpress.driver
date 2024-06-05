@@ -29,7 +29,22 @@ public class NumberUtils {
         decimalFormat.setMaximumFractionDigits(0);
         decimalFormat.setMinimumFractionDigits(0);
 
-        return decimalFormat.format(d) +" "+ "đ";
+        return decimalFormat.format(d) +" đ";
+    }
+
+    public static String formatEdtTextCurrency(double d)
+    {
+
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
+        decimalFormatSymbols.setDecimalSeparator('.');
+        decimalFormatSymbols.setGroupingSeparator('.');
+
+        DecimalFormat decimalFormat = new DecimalFormat();
+        decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
+        decimalFormat.setMaximumFractionDigits(0);
+        decimalFormat.setMinimumFractionDigits(0);
+
+        return decimalFormat.format(d);
     }
 
     public static String formatDistance(double d){
@@ -42,7 +57,7 @@ public class NumberUtils {
         decimalFormat.setMaximumFractionDigits(1);
         decimalFormat.setMinimumFractionDigits(1);
 
-        return decimalFormat.format((double) d/1000) +" "+ "Km";
+        return decimalFormat.format((double) d/1000) +" Km";
     }
     public static String formatNumberStar(int star){
         double d = (double) star;

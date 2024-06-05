@@ -13,6 +13,7 @@ import ww.smartexpress.driver.data.model.api.ResponseListObj;
 import ww.smartexpress.driver.data.model.api.ResponseWrapper;
 import ww.smartexpress.driver.data.model.api.request.CancelBookingRequest;
 import ww.smartexpress.driver.data.model.api.request.ChangeStateRequest;
+import ww.smartexpress.driver.data.model.api.request.ConfirmAccountNumberRequest;
 import ww.smartexpress.driver.data.model.api.request.DepositRequest;
 import ww.smartexpress.driver.data.model.api.request.DriverStateRequest;
 import ww.smartexpress.driver.data.model.api.request.EventBookingRequest;
@@ -26,6 +27,8 @@ import ww.smartexpress.driver.data.model.api.request.ResetPassRequest;
 import ww.smartexpress.driver.data.model.api.request.UpdateBookingRequest;
 import ww.smartexpress.driver.data.model.api.request.UpdateProfileRequest;
 import ww.smartexpress.driver.data.model.api.response.ActivityRate;
+import ww.smartexpress.driver.data.model.api.response.BankAccountResponse;
+import ww.smartexpress.driver.data.model.api.response.BankListResponse;
 import ww.smartexpress.driver.data.model.api.response.Booking;
 import ww.smartexpress.driver.data.model.api.response.CategoryResponse;
 import ww.smartexpress.driver.data.model.api.response.CurrentBooking;
@@ -136,5 +139,13 @@ public interface ApiService {
 
     @GET("/v1/wallet/my-wallet")
     Observable<ResponseWrapper<WalletResponse>> getMyWallet();
+
+    @GET("/v2/banks")
+    @Headers({"isBank:1"})
+    Observable<BankListResponse> getBankList();
+
+    @POST("/v2/lookup")
+    @Headers({"isBank:1","X-Api-Key:5b310ff0-2683-4cb5-a3aa-227b8179aec3","X-Client-Id:72a88234-f90e-45af-b4f1-bafdc9d7a01a"})
+    Observable<BankAccountResponse> accountLookup(@Body ConfirmAccountNumberRequest request);
 
 }

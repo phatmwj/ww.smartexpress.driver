@@ -102,6 +102,8 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
                         user.get().setPhone(response.getData().getPhone());
                         user.get().setAddress(response.getData().getAddress());
                         user.get().setAverageRating(response.getData().getAverageRating());
+                        user.get().setBankCard(response.getData().getBankCard());
+                        user.get().setIdentificationCard(response.getData().getIdentificationCard());
 
                         repository.getRoomService().userDao().insert(user.get())
                                 .subscribeOn(Schedulers.io())

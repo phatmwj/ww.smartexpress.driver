@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class PayoutRequest {
-    private String bankCard;
-    private int money;
+@NoArgsConstructor
+public class ConfirmAccountNumberRequest {
+    private String bin;
+    private String accountNumber;
 }

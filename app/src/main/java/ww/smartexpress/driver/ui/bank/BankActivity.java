@@ -13,6 +13,7 @@ import ww.smartexpress.driver.di.component.ActivityComponent;
 import ww.smartexpress.driver.ui.base.activity.BaseActivity;
 
 public class BankActivity extends BaseActivity<ActivityBankCardBinding, BankViewModel> {
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_bank_card;
@@ -26,6 +27,13 @@ public class BankActivity extends BaseActivity<ActivityBankCardBinding, BankView
     @Override
     public void performDependencyInjection(ActivityComponent buildComponent) {
         buildComponent.inject(this);
+
+        String userId = viewModel.getRepository().getSharedPreferences().getUserId();
+        if(userId != null){
+            viewModel.getRepository().getRoomService().userDao().findById(Long.valueOf(userId)).observe(this, userEntity -> {
+                viewModel.user.set(userEntity);
+            });
+        }
     }
 
     @Override
@@ -40,6 +48,14 @@ public class BankActivity extends BaseActivity<ActivityBankCardBinding, BankView
                 }else {
                     viewBinding.edtPw.setTransformationMethod(null);;
                 }
+            }
+        });
+
+        viewBinding.edtAccountNumber.setOnFocusChangeListener((view, b) -> {
+            if(b){
+
+            }else {
+                viewModel.getAccountName();
             }
         });
     }

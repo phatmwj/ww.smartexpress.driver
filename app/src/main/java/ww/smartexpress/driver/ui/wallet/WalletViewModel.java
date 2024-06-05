@@ -9,7 +9,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.data.Repository;
+import ww.smartexpress.driver.data.model.api.ApiModelUtils;
+import ww.smartexpress.driver.data.model.api.response.BankCard;
+import ww.smartexpress.driver.data.model.api.response.BankResponse;
 import ww.smartexpress.driver.data.model.api.response.WalletResponse;
+import ww.smartexpress.driver.data.model.room.UserEntity;
+import ww.smartexpress.driver.ui.bank.BankActivity;
 import ww.smartexpress.driver.ui.base.activity.BaseViewModel;
 import ww.smartexpress.driver.ui.deposit.DepositActivity;
 import ww.smartexpress.driver.ui.payout.PayoutActivity;
@@ -17,9 +22,14 @@ import ww.smartexpress.driver.ui.payout.PayoutActivity;
 public class WalletViewModel extends BaseViewModel {
 
     public ObservableField<WalletResponse> wallet = new ObservableField<>();
+    public ObservableField<UserEntity> user = new ObservableField<>();
+    public ObservableField<BankCard> bankCard = new ObservableField<>();
     public WalletViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
-        getMyWallet();
+    }
+
+    public Repository getRepository(){
+        return repository;
     }
 
     public void back(){
@@ -33,6 +43,12 @@ public class WalletViewModel extends BaseViewModel {
 
     public void navigatePayout(){
         Intent intent = new Intent(application.getCurrentActivity(), PayoutActivity.class);
+        intent.putExtra("balance", wallet.get().getBalance());
+        application.getCurrentActivity().startActivity(intent);
+    }
+
+    public void navigateBank(){
+        Intent intent = new Intent(application.getCurrentActivity(), BankActivity.class);
         application.getCurrentActivity().startActivity(intent);
     }
 

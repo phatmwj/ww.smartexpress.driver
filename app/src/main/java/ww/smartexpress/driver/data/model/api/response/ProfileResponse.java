@@ -10,4 +10,7 @@ public class ProfileResponse {
     private String address;
     private String avatar;
     private double averageRating;
+    private String bankCard;
+    private String identificationCard;
+
 }
