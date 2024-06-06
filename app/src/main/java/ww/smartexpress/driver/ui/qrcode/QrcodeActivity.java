@@ -3,9 +3,13 @@ package ww.smartexpress.driver.ui.qrcode;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -14,6 +18,11 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import eu.davidea.flexibleadapter.databinding.BR;
 import ww.smartexpress.driver.R;
@@ -24,6 +33,9 @@ import ww.smartexpress.driver.di.component.ActivityComponent;
 import ww.smartexpress.driver.ui.base.activity.BaseActivity;
 
 public class QrcodeActivity extends BaseActivity<ActivityQrcodeBinding, QrcodeViewModel> {
+
+    Bitmap bitmap;
+    BitmapDrawable bitmapDrawable;
     @Override
     public int getLayoutId() {
         return R.layout.activity_qrcode;
@@ -78,5 +90,32 @@ public class QrcodeActivity extends BaseActivity<ActivityQrcodeBinding, QrcodeVi
                     .into(imageView);
         }
 
+    }
+
+    public void downloadImage(){
+        bitmapDrawable= (BitmapDrawable) viewBinding.imageView.getDrawable();
+        bitmap= bitmapDrawable.getBitmap() ;
+        FileOutputStream fileOutputStream = null;
+        File sdCard = Environment.getExternalStorageDirectory() ;
+        File Directory=new File(sdCard.getAbsoluteFile()+"/Download");
+        Directory.mkdir() ;
+        String filename = String.format("%d.jpg",System.currentTimeMillis());
+        File outfile = new File(Directory, filename);
+        Toast.makeText( this,"Image Saved Successfully",Toast.LENGTH_SHORT).show() ;
+
+        try {
+            fileOutputStream = new FileOutputStream(outfile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,fileOutputStream);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+
+            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            intent.setData(Uri.fromFile(outfile));
+            sendBroadcast(intent);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

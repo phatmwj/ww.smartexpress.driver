@@ -69,7 +69,7 @@
                 android:orientation="vertical">
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_110sdp"
+                    android:layout_height="@dimen/_130sdp"
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     app:cardCornerRadius="@dimen/_10sdp">
                     <LinearLayout
@@ -84,15 +84,25 @@
                             android:paddingTop="@dimen/_10sdp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="Smart Express"
+                            android:textSize="@dimen/_18ssp"
+                            android:textColor="@color/white"/>
+                        <TextView
+                            style="@style/title"
+                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:paddingTop="@dimen/_10sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="Tài khoản"
                             android:textSize="@dimen/_14ssp"
                             android:textColor="@color/white"/>
                         <TextView
                             style="@style/title"
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:paddingHorizontal="@dimen/_10sdp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/_27ssp"
+                            android:textSize="@dimen/_25ssp"
                             android:text="@{NumberUtils.formatCurrency(vm.wallet.balance)}"
                             android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/_10sdp"/>
@@ -182,16 +192,16 @@
                     android:onClick="@{()->vm.navigateBank()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
                     android:orientation="vertical">
                     <FrameLayout
+                        android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_3sdp"
                         android:background="@color/gray_light"/>
 
                     <LinearLayout
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:paddingHorizontal="@dimen/_20sdp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
@@ -259,6 +269,42 @@
                             app:tint="@color/app_text" />
 
                     </LinearLayout>
+
+                </LinearLayout>
+                <FrameLayout
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@color/gray_light"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/baseline_history_24" />
+
+
+                    <TextView
+                        style="@style/app_text_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="Lịch sử giao dịch" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_expand" />
 
                 </LinearLayout>
 

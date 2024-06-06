@@ -40,7 +40,6 @@ import ww.smartexpress.driver.ui.index.IndexActivity;
 
 public class BankViewModel extends BaseViewModel {
 
-    public ObservableField<String> bankName = new ObservableField<>();
     public ObservableField<AccountName> accountName = new ObservableField<>();
     public ObservableField<String> accountNumber = new ObservableField<>();
     public ObservableField<String> brand = new ObservableField<>();
@@ -200,6 +199,7 @@ public class BankViewModel extends BaseViewModel {
                                         }, throwable -> {
 
                                         });
+                                application.getCurrentActivity().finish();
                                 showSuccessMessage(res.getMessage());
                             }else {
                                 showErrorMessage(res.getMessage());
