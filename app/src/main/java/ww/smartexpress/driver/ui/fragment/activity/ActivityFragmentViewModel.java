@@ -42,7 +42,7 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
     public ObservableField<String> latitude = new ObservableField<>();
     public ObservableField<String> longitude = new ObservableField<>();
     public ObservableField<Integer> isBusy = new ObservableField<>(0);
-    public MutableLiveData<List<CurrentBooking>> bookingList = new MutableLiveData<>(new ArrayList<>());
+    public MutableLiveData<List<CurrentBooking>> bookingList = new MutableLiveData<>();
     public MutableLiveData<Long> newBookingId = new MutableLiveData<>();
     public MutableLiveData<CurrentBooking> bookingUpdate = new MutableLiveData<>(new CurrentBooking());
     public MutableLiveData<CurrentBooking> newBooking = new MutableLiveData<>(new CurrentBooking());

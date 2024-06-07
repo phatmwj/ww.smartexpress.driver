@@ -24,12 +24,16 @@ import ww.smartexpress.driver.data.model.api.ApiModelUtils;
 import ww.smartexpress.driver.data.model.api.response.CurrentBooking;
 import ww.smartexpress.driver.data.model.api.response.Size;
 import ww.smartexpress.driver.databinding.ItemShippingBinding;
+import ww.smartexpress.driver.databinding.ItemShippingEmptyBinding;
 
-public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.ShippingViewHolder> {
+public class ShippingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Getter
     @Setter
     private List<CurrentBooking> bookingList = new ArrayList<>();
+
+    private static final int VT_SHIPPING = 1;
+    private static final int VT_EMPTY = 0;
     private Context context;
     private OnItemClickListener onItemClickListener;
 
@@ -54,21 +58,36 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
         }
     }
 
+
     @NonNull
     @Override
-    public ShippingAdapter.ShippingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemShippingBinding binding = ItemShippingBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
-        return new ShippingViewHolder(binding, onItemClickListener);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if(viewType == VT_SHIPPING){
+            ItemShippingBinding binding = ItemShippingBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
+            return new ShippingViewHolder(binding, onItemClickListener);
+        }else {
+            ItemShippingEmptyBinding binding = ItemShippingEmptyBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
+            return new EmptyViewHolder(binding);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ShippingAdapter.ShippingViewHolder holder, int position) {
-        holder.onBind(position);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if(holder instanceof ShippingViewHolder){
+            ((ShippingViewHolder) holder).onBind(position);
+        } else if(holder instanceof EmptyViewHolder){
+            ((EmptyViewHolder) holder).onBind(position);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return bookingList !=null?bookingList.toArray().length : 0;
+        return bookingList !=null && bookingList.toArray().length !=0 ?bookingList.toArray().length : 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return bookingList !=null && bookingList.toArray().length !=0 ? VT_SHIPPING : VT_EMPTY;
     }
 
     public void updateItem(Long bookingId, CurrentBooking currentBooking) {
@@ -79,6 +98,9 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
 
     public void addItem(CurrentBooking currentBooking) {
         bookingList.add(0,currentBooking);
+        if(bookingList.toArray().length ==1){
+            notifyDataSetChanged();
+        }
         notifyItemInserted(0);
 //        notifyItemRangeInserted(0, bookingList.toArray().length);
         addMapIdPos();
@@ -91,6 +113,19 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
         notifyItemRemoved(pos);
         notifyItemRangeRemoved(pos,bookingList.toArray().length);
         addMapIdPos();
+    }
+
+    public class EmptyViewHolder extends RecyclerView.ViewHolder{
+        private ItemShippingEmptyBinding mBinding;
+        public EmptyViewHolder(@NonNull ItemShippingEmptyBinding binding) {
+            super(binding.getRoot());
+            this.mBinding = binding;
+        }
+
+        void onBind(int position){
+            mBinding.executePendingBindings();
+        }
+
     }
 
     public class ShippingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
