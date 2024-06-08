@@ -24,7 +24,7 @@ import ww.smartexpress.driver.databinding.ItemZoomImageBinding;
 import ww.smartexpress.driver.ui.base.activity.BaseViewModel;
 
 public class BookingDetailsViewModel extends BaseViewModel {
-    public ObservableField<CurrentBooking> booking = new ObservableField<>(null);
+    public ObservableField<CurrentBooking> booking = new ObservableField<>();
     public ObservableField<String> date = new ObservableField<>();
     public ObservableField<Integer> star = new ObservableField<>(0);
     public BookingDetailsViewModel(Repository repository, MVVMApplication application) {

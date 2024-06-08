@@ -46,9 +46,9 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
     public MutableLiveData<Long> newBookingId = new MutableLiveData<>();
     public MutableLiveData<CurrentBooking> bookingUpdate = new MutableLiveData<>(new CurrentBooking());
     public MutableLiveData<CurrentBooking> newBooking = new MutableLiveData<>(new CurrentBooking());
-    public ObservableField<Integer> positionUpdate = new ObservableField<>(null);
+    public ObservableField<Integer> positionUpdate = new ObservableField<>();
 
-    public ObservableField<String> image = new ObservableField<>(null);
+    public ObservableField<String> image = new ObservableField<>();
     public ActivityFragmentViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
 

@@ -114,6 +114,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                 if (idToken != null) {
                     Log.d("OneTap", "Got ID token." + idToken);
                     // Xử lý đăng nhập thành công tại đây
+                    viewModel.showSuccessMessage(idToken);
                 }
             } catch (ApiException e) {
                 Log.e("OneTap", "Sign-in failed.", e);

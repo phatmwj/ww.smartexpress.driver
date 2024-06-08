@@ -34,6 +34,7 @@ import ww.smartexpress.driver.ui.shipping.ShippingViewModel;
 import ww.smartexpress.driver.ui.signup.SignUpViewModel;
 import ww.smartexpress.driver.ui.splash.SplashViewModel;
 import ww.smartexpress.driver.ui.wallet.WalletViewModel;
+import ww.smartexpress.driver.ui.wallet.transaction.TransactionViewModel;
 import ww.smartexpress.driver.ui.welcome.WelcomeViewModel;
 import ww.smartexpress.driver.ui.profile.edit.EditProfileViewModel;
 import ww.smartexpress.driver.ui.statistic.StatisticViewModel;
@@ -272,5 +273,13 @@ public class ActivityModule {
         Supplier<BankViewModel> supplier = () -> new BankViewModel(repository, (MVVMApplication) application);
         ViewModelProviderFactory<BankViewModel> factory = new ViewModelProviderFactory<>(BankViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(BankViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    TransactionViewModel provideTransactionViewModel(Repository repository, Context application) {
+        Supplier<TransactionViewModel> supplier = () -> new TransactionViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<TransactionViewModel> factory = new ViewModelProviderFactory<>(TransactionViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(TransactionViewModel.class);
     }
 }

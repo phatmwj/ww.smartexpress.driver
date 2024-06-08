@@ -60,7 +60,7 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
 
     public ObservableField<String> size = new ObservableField<>("");
 
-    public ObservableField<String> image = new ObservableField<>(null);
+    public ObservableField<String> image = new ObservableField<>();
 
     public MutableLiveData<List<CurrentBooking>> bookingList = new MutableLiveData<>(new ArrayList<>());
 

@@ -34,6 +34,7 @@
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:name="ww.smartexpress.driver.MVVMApplication"
@@ -101,6 +102,11 @@
             android:exported="true">
         </activity>
         <activity
+            android:name="ww.smartexpress.driver.ui.wallet.transaction.TransactionActivity"
+            android:theme="@style/Welcome"
+            android:exported="true">
+        </activity>
+        <activity
             android:name="ww.smartexpress.driver.ui.password.forget.ForgetPasswordActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:theme="@style/Welcome"
@@ -110,7 +116,7 @@
 
         <activity
             android:name="ww.smartexpress.driver.ui.login.LoginActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Welcome"
             android:exported="true">
 

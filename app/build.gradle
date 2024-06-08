@@ -199,5 +199,8 @@ dependencies {
     implementation 'com.google.zxing:core:3.3.0'
 
     implementation 'com.github.momo-wallet:mobile-sdk:1.0.7'
+
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -29,6 +29,7 @@ import ww.smartexpress.driver.ui.statistic.StatisticActivity;
 import ww.smartexpress.driver.ui.signup.SignUpActivity;
 import ww.smartexpress.driver.ui.splash.SplashActivity;
 import ww.smartexpress.driver.ui.wallet.WalletActivity;
+import ww.smartexpress.driver.ui.wallet.transaction.TransactionActivity;
 import ww.smartexpress.driver.ui.welcome.WelcomeActivity;
 
 @ActivityScope
@@ -82,5 +83,6 @@ public interface ActivityComponent {
     void inject(PayoutActivity payoutActivity);
 
     void inject(BankActivity bankActivity);
+    void inject(TransactionActivity transactionActivity);
 }
 

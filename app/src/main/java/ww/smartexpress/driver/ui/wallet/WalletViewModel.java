@@ -18,6 +18,7 @@ import ww.smartexpress.driver.ui.bank.BankActivity;
 import ww.smartexpress.driver.ui.base.activity.BaseViewModel;
 import ww.smartexpress.driver.ui.deposit.DepositActivity;
 import ww.smartexpress.driver.ui.payout.PayoutActivity;
+import ww.smartexpress.driver.ui.wallet.transaction.TransactionActivity;
 
 public class WalletViewModel extends BaseViewModel {
 
@@ -38,6 +39,11 @@ public class WalletViewModel extends BaseViewModel {
 
     public void navigateDeposit(){
         Intent intent = new Intent(application.getCurrentActivity(), DepositActivity.class);
+        application.getCurrentActivity().startActivity(intent);
+    }
+
+    public void navigateTransaction(){
+        Intent intent = new Intent(application.getCurrentActivity(), TransactionActivity.class);
         application.getCurrentActivity().startActivity(intent);
     }
 

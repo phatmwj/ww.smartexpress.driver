@@ -50,6 +50,7 @@ import ww.smartexpress.driver.data.model.api.response.ServiceOnlineResponse;
 import ww.smartexpress.driver.data.model.api.response.ServiceResponse;
 import ww.smartexpress.driver.data.model.api.response.UploadFileResponse;
 import ww.smartexpress.driver.data.model.api.response.WalletResponse;
+import ww.smartexpress.driver.data.model.api.response.WalletTransaction;
 
 public interface ApiService {
 
@@ -147,5 +148,9 @@ public interface ApiService {
     @POST("/v2/lookup")
     @Headers({"isBank:1","X-Api-Key:5b310ff0-2683-4cb5-a3aa-227b8179aec3","X-Client-Id:72a88234-f90e-45af-b4f1-bafdc9d7a01a"})
     Observable<BankAccountResponse> accountLookup(@Body ConfirmAccountNumberRequest request);
+
+    @GET("/v1/wallet-transaction/my-wallet-transaction")
+    Observable<ResponseWrapper<ResponseListObj<WalletTransaction>>> getWalletTransaction(@Query("page") Integer pageNumber,
+                                                                                         @Query("size") Integer pageSize);
 
 }

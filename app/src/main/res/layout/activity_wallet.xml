@@ -279,6 +279,7 @@
                     android:background="@color/gray_light"/>
 
                 <LinearLayout
+                    android:onClick="@{()->vm.navigateTransaction()}"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
                     android:layout_marginLeft="@dimen/_20sdp"

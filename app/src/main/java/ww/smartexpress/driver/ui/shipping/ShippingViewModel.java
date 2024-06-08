@@ -51,7 +51,7 @@ public class ShippingViewModel extends BaseViewModel {
 
     public ObservableField<String> size = new ObservableField<>("");
 
-    public ObservableField<String> image = new ObservableField<>(null);
+    public ObservableField<String> image = new ObservableField<>();
 
 
     public ShippingViewModel(Repository repository, MVVMApplication application) {
