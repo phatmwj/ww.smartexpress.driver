@@ -48,6 +48,10 @@ public class WalletViewModel extends BaseViewModel {
     }
 
     public void navigatePayout(){
+        if(bankCard == null){
+            showErrorMessage("Vui lòng cập nhập tài khoản ngân hàng!");
+            return;
+        }
         Intent intent = new Intent(application.getCurrentActivity(), PayoutActivity.class);
         intent.putExtra("balance", wallet.get().getBalance());
         application.getCurrentActivity().startActivity(intent);
