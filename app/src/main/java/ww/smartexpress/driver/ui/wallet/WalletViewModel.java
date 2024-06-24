@@ -48,7 +48,7 @@ public class WalletViewModel extends BaseViewModel {
     }
 
     public void navigatePayout(){
-        if(bankCard == null){
+        if(bankCard.get() == null){
             showErrorMessage("Vui lòng cập nhập tài khoản ngân hàng!");
             return;
         }

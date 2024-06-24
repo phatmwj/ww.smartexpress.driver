@@ -77,16 +77,16 @@ public class StatisticViewModel extends BaseViewModel {
                             if(response.isResult()){
                                 int total = response.getData().getTotalBookingAccept()+response.getData().getTotalBookingCancel();
                                 Log.d("TAG", "statistic: "+total);
-                                if(total==0){
+                                if(response.getData().getTotalBookingAccept()+response.getData().getTotalBookingReject()==0 || response.getData().getTotalBookingDone()+response.getData().getTotalBookingCancel()==0){
                                     hideLoading();
                                     return;
                                 }
-                                double accept= (double) response.getData().getTotalBookingAccept()/total*100;
+                                double accept= (double) response.getData().getTotalBookingAccept()/(response.getData().getTotalBookingAccept()+response.getData().getTotalBookingReject())*100;
                                 double complete = 0;
                                 if(response.getData().getTotalBookingAccept()!=0){
-                                    complete = (double) response.getData().getTotalBookingSuccess()/response.getData().getTotalBookingAccept()*100;
+                                    complete = (double) response.getData().getTotalBookingDone()/(response.getData().getTotalBookingDone()+response.getData().getTotalBookingCancel())*100;
                                 }
-                                double cancel= (double) response.getData().getTotalBookingCancel()/total*100;
+                                double cancel= (double) response.getData().getTotalBookingCancel()/(response.getData().getTotalBookingDone()+response.getData().getTotalBookingCancel())*100;
                                 cancelRate.set(String.format("%.0f",cancel));
                                 acceptRate.set(String.format("%.0f",accept));
                                 completeRate.set(String.format("%.0f",complete));

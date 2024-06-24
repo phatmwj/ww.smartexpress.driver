@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class ActivityRate {
     private int totalBookingAccept;
     private int totalBookingCancel;
-    private int totalBookingSuccess;
+    private int totalBookingDone;
+    private int totalBookingReject;
 }

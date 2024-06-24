@@ -146,12 +146,12 @@ public class IncomeDetailsViewModel extends BaseViewModel {
                 .subscribe(response -> {
                     if(response.isResult()){
                         int total = response.getData().getTotalBookingAccept()+response.getData().getTotalBookingCancel();
-                        if(total==0){
+                        if(response.getData().getTotalBookingDone()+response.getData().getTotalBookingCancel()==0){
                             return;
                         }
                         double complete = 0;
                         if(response.getData().getTotalBookingAccept()!=0){
-                            complete = (double) response.getData().getTotalBookingSuccess()/response.getData().getTotalBookingAccept()*100;
+                            complete = (double) response.getData().getTotalBookingDone()/(response.getData().getTotalBookingDone()+response.getData().getTotalBookingCancel())*100;
                         }
                         completeRate.set(String.format("%.0f",complete));
                     }else {

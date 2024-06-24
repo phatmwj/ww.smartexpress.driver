@@ -59,13 +59,12 @@ public class TransactionItem extends AbstractFlexibleItem<TransactionItem.Transa
                 holder.money.setTextColor(context.getResources().getColor(R.color.red_color));
                 holder.desc.setText("Rút tiền từ ví");
                 break;
-            case 2:
-                break;
             case 3:
                 holder.money.setText("+"+NumberUtils.formatCurrency((double) walletTransaction.getMoney()));
                 holder.money.setTextColor(context.getResources().getColor(R.color.green_light_app));
                 holder.desc.setText("Nhận tiền");
                 break;
+            case 2:
             case 4:
                 holder.money.setText("-"+NumberUtils.formatCurrency((double) walletTransaction.getMoney()));
                 holder.money.setTextColor(context.getResources().getColor(R.color.red_color));
@@ -75,6 +74,11 @@ public class TransactionItem extends AbstractFlexibleItem<TransactionItem.Transa
                 holder.money.setText("+"+NumberUtils.formatCurrency((double) walletTransaction.getMoney()));
                 holder.money.setTextColor(context.getResources().getColor(R.color.green_light_app));
                 holder.desc.setText("Nhận thêm tiền");
+                break;
+            case 6:
+                holder.money.setText("+"+NumberUtils.formatCurrency((double) walletTransaction.getMoney()));
+                holder.money.setTextColor(context.getResources().getColor(R.color.green_light_app));
+                holder.desc.setText("Hoàn tiền");
                 break;
             default:
                 break;

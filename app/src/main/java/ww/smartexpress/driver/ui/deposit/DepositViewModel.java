@@ -56,6 +56,7 @@ public class DepositViewModel extends BaseViewModel {
                     .subscribe(response -> {
                         if(response.isResult()){
                             Intent intent = new Intent(application.getCurrentActivity(), QrcodeActivity.class);
+                            intent.putExtra("momoPaymentInfo", response.getData().getPaymentInfo());
                             MomoPaymentResponse data = ApiModelUtils.fromJson(response.getData().getPaymentInfo(), MomoPaymentResponse.class);
                             intent.putExtra("qrString", data.getQrCodeUrl());
                             intent.putExtra("payUrl", data.getPayUrl());
