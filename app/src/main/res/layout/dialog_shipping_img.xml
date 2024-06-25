@@ -82,7 +82,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Take Photo"
-                                style="@style/roboto_medium_79_gray"/>
+                                style="@style/montserrat_medium_79_gray"/>
 
 
                         </LinearLayout>
@@ -107,7 +107,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Choose from Gallery"
-                                style="@style/roboto_medium_79_gray"/>
+                                style="@style/montserrat_medium_79_gray"/>
 
 
                         </LinearLayout>

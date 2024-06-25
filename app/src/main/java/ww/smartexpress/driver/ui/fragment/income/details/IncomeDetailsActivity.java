@@ -134,7 +134,7 @@ public class IncomeDetailsActivity extends BaseActivity<ActivityIncomeDetailsBin
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setLabelCount(labels.size());
         xAxis.setTextColor(ContextCompat.getColor(this,R.color.bar_chart_label));
-        xAxis.setTypeface(ResourcesCompat.getFont(this, R.font.roboto_medium));
+        xAxis.setTypeface(ResourcesCompat.getFont(this, R.font.montserrat_medium));
         xAxis.setDrawAxisLine(false);
         xAxis.setDrawGridLines(false);
 

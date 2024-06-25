@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/fullName"
-                    style="@style/roboto_medium_gray_12ssp">
+                    style="@style/montserrat_medium_gray_12ssp">
 
                 </TextView>
 
@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/email"
-                    style="@style/roboto_medium_gray_12ssp">
+                    style="@style/montserrat_medium_gray_12ssp">
 
                 </TextView>
 
@@ -110,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/phone"
-                    style="@style/roboto_medium_gray_12ssp">
+                    style="@style/montserrat_medium_gray_12ssp">
 
                 </TextView>
                 <TextView
@@ -147,7 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/password"
-                    style="@style/roboto_medium_gray_12ssp">
+                    style="@style/montserrat_medium_gray_12ssp">
 
                 </TextView>
                 <TextView

@@ -49,7 +49,7 @@
                 android:src="@{ivm.senderAvatar}"
                 android:visibility="@{lastMessage.sender.equals(ivm.sender)? View.GONE:View.VISIBLE}"/>
             <TextView
-                style="@style/roboto_medium_79_gray"
+                style="@style/montserrat_medium_79_gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_40sdp"
@@ -68,7 +68,7 @@
             android:layout_marginBottom="@dimen/_8sdp"
             android:visibility="@{userId.equals(ivm.sender)?View.VISIBLE:View.GONE}">
             <TextView
-                style="@style/roboto_medium_79_gray"
+                style="@style/montserrat_medium_79_gray"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_70sdp"

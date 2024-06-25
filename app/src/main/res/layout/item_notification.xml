@@ -48,7 +48,7 @@
                     android:text="@string/hot_news"
                     android:textAllCaps="true"/>
                 <TextView
-                    style="@style/roboto_medium_gray"
+                    style="@style/montserrat_medium_gray"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_2sdp"

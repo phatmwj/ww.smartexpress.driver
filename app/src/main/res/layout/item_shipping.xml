@@ -51,7 +51,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{booking.state == Constants.BOOKING_STATE_BOOKING ? @string/ship_state_new : booking.state == Constants.BOOKING_STATE_DONE ? @string/ship_state_done : booking.state == Constants.BOOKING_STATE_DRIVER_ACCEPT ? @string/ship_state_accept: booking.state == Constants.BOOKING_STATE_PICKUP_SUCCESS ? @string/ship_state_pickup: @string/customer_cancel_booking}"
-                            style="@style/roboto_regular_bold_green_11ssp"
+                            style="@style/montserrat_regular_bold_green_11ssp"
                             android:maxLines="1"
                             android:layout_weight="1"
                             android:ellipsize="end">
@@ -62,7 +62,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{booking.code }"
-                            style="@style/roboto_medium_light_gray_11ssp"
+                            style="@style/montserrat_medium_light_gray_11ssp"
                             android:maxLines="1"
                             android:ellipsize="end">
                         </TextView>
@@ -129,7 +129,7 @@
                                     android:text='@{booking.paymentKind == 1 ? "Tiền mặt" : "Ví điện tử"}'
                                     android:maxLines="1"
                                     android:ellipsize="end"
-                                    style="@style/roboto_regular_bold_green_11ssp"
+                                    style="@style/montserrat_regular_bold_green_11ssp"
                                     android:textAlignment="textStart">
                                 </TextView>
 
@@ -140,7 +140,7 @@
                                     android:text='@{NumberUtils.formatDistance(booking.distance)}'
                                     android:maxLines="1"
                                     android:ellipsize="end"
-                                    style="@style/roboto_medium_gray_12ssp"
+                                    style="@style/montserrat_medium_gray_12ssp"
                                     android:textAlignment="textEnd">
                                 </TextView>
                             </LinearLayout>
@@ -174,7 +174,7 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    style="@style/roboto_medium_light_gray_8ssp"
+                                    style="@style/montserrat_medium_light_gray_8ssp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:background="@color/white"
@@ -182,7 +182,7 @@
                                     android:text="Điểm lấy hàng" />
 
                                 <TextView
-                                    style="@style/roboto_medium_light_gray_11ssp"
+                                    style="@style/montserrat_medium_light_gray_11ssp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:background="@color/white"
@@ -191,7 +191,7 @@
                                     android:text="@{booking.pickupAddress}" />
 
 <!--                                <TextView-->
-<!--                                    style="@style/roboto_medium_light_gray_11ssp"-->
+<!--                                    style="@style/montserrat_medium_light_gray_11ssp"-->
 <!--                                    android:layout_width="wrap_content"-->
 <!--                                    android:layout_height="match_parent"-->
 <!--                                    android:background="@color/white"-->
@@ -230,7 +230,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
                                 <TextView
-                                    style="@style/roboto_medium_light_gray_8ssp"
+                                    style="@style/montserrat_medium_light_gray_8ssp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:background="@color/white"
@@ -238,7 +238,7 @@
                                     android:text="Giao hàng đến" />
 
                                 <TextView
-                                    style="@style/roboto_medium_light_gray_11ssp"
+                                    style="@style/montserrat_medium_light_gray_11ssp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:background="@color/white"
@@ -246,7 +246,7 @@
                                     android:ellipsize="end"
                                     android:text="@{booking.destinationAddress}" />
 <!--                                <TextView-->
-<!--                                    style="@style/roboto_medium_light_gray_11ssp"-->
+<!--                                    style="@style/montserrat_medium_light_gray_11ssp"-->
 <!--                                    android:layout_width="wrap_content"-->
 <!--                                    android:layout_height="match_parent"-->
 <!--                                    android:background="@color/white"-->
@@ -297,7 +297,7 @@
                                             android:text='@{size +"  "+booking.service.weight+"kg"}'
                                             android:maxLines="1"
                                             android:ellipsize="end"
-                                            style="@style/roboto_medium_light_gray_11ssp"
+                                            style="@style/montserrat_medium_light_gray_11ssp"
                                             android:textAlignment="textStart">
                                         </TextView>
 
@@ -308,7 +308,7 @@
                                             android:text=''
                                             android:maxLines="1"
                                             android:ellipsize="end"
-                                            style="@style/roboto_medium_light_gray_11ssp"
+                                            style="@style/montserrat_medium_light_gray_11ssp"
                                             android:textAlignment="textEnd">
                                         </TextView>
                                     </LinearLayout>
@@ -321,7 +321,7 @@
                                         android:text='@{"Thu hộ: "+NumberUtils.formatCurrency(booking.codPrice)}'
                                         android:maxLines="1"
                                         android:ellipsize="end"
-                                        style="@style/roboto_medium_light_gray_11ssp"
+                                        style="@style/montserrat_medium_light_gray_11ssp"
                                         android:textAlignment="textStart"/>
 
 
@@ -338,7 +338,7 @@
 <!--                                            android:text="Xem chi tiết hàng hóa"-->
 <!--                                            android:maxLines="1"-->
 <!--                                            android:ellipsize="end"-->
-<!--                                            style="@style/roboto_regular_bold_green_11ssp"-->
+<!--                                            style="@style/montserrat_regular_bold_green_11ssp"-->
 <!--                                            android:textSize="@dimen/_8sdp"-->
 <!--                                            android:textAlignment="textStart">-->
 <!--                                        </TextView>-->
@@ -395,7 +395,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/send_message"
-                                    style="@style/roboto_medium_79_gray"/>
+                                    style="@style/montserrat_medium_79_gray"/>
 
 
                             </LinearLayout>
@@ -416,7 +416,7 @@
                                     app:srcCompat="@drawable/ic_icon_call" />
 
                                 <TextView
-                                    style="@style/roboto_medium_79_gray"
+                                    style="@style/montserrat_medium_79_gray"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/call_customer" />
@@ -445,7 +445,7 @@
                             </ImageView>
 
                             <TextView
-                                style="@style/roboto_medium_79_gray"
+                                style="@style/montserrat_medium_79_gray"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@{!TextUtils.isEmpty(booking.customerNote) ? booking.customerNote : @string/empty_note}"
@@ -484,7 +484,7 @@
 
                             <!--Text implementation in center of the progress bar-->
                             <TextView
-                                style="@style/roboto_medium"
+                                style="@style/montserrat_medium"
                                 android:id="@+id/progress_text"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"

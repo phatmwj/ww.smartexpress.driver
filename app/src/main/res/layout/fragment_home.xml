@@ -131,7 +131,7 @@
 <!--                            android:layout_width="wrap_content"-->
 <!--                            android:layout_height="wrap_content"-->
 <!--                            android:text='@{"Chào " + vm.user.fullName + "!" + " Bạn có muốn chở tôi không?"}'-->
-<!--                            style="@style/roboto_regular_bold_green_11ssp"-->
+<!--                            style="@style/montserrat_regular_bold_green_11ssp"-->
 <!--                            android:maxLines="1"-->
 <!--                            android:ellipsize="end">-->
 <!--                        </TextView>-->
@@ -199,7 +199,7 @@
 <!--                                        android:text="@{vm.paymentMethod}"-->
 <!--                                        android:maxLines="1"-->
 <!--                                        android:ellipsize="end"-->
-<!--                                        style="@style/roboto_regular_bold_green_11ssp"-->
+<!--                                        style="@style/montserrat_regular_bold_green_11ssp"-->
 <!--                                        android:textAlignment="textStart">-->
 <!--                                    </TextView>-->
 
@@ -210,7 +210,7 @@
 <!--                                        android:text='@{NumberUtils.formatDistance(vm.booking.distance)}'-->
 <!--                                        android:maxLines="1"-->
 <!--                                        android:ellipsize="end"-->
-<!--                                        style="@style/roboto_medium_gray_12ssp"-->
+<!--                                        style="@style/montserrat_medium_gray_12ssp"-->
 <!--                                        android:textAlignment="textEnd">-->
 <!--                                    </TextView>-->
 <!--                                </LinearLayout>-->
@@ -246,7 +246,7 @@
 <!--                                    android:orientation="vertical">-->
 
 <!--                                    <TextView-->
-<!--                                        style="@style/roboto_medium_light_gray_8ssp"-->
+<!--                                        style="@style/montserrat_medium_light_gray_8ssp"-->
 <!--                                        android:layout_width="wrap_content"-->
 <!--                                        android:layout_height="match_parent"-->
 <!--                                        android:background="@color/white"-->
@@ -254,7 +254,7 @@
 <!--                                        android:text="Điểm lấy hàng" />-->
 
 <!--                                    <TextView-->
-<!--                                        style="@style/roboto_medium_light_gray_11ssp"-->
+<!--                                        style="@style/montserrat_medium_light_gray_11ssp"-->
 <!--                                        android:layout_width="wrap_content"-->
 <!--                                        android:layout_height="match_parent"-->
 <!--                                        android:background="@color/white"-->
@@ -293,7 +293,7 @@
 <!--                                    android:layout_height="wrap_content"-->
 <!--                                    android:orientation="vertical">-->
 <!--                                    <TextView-->
-<!--                                        style="@style/roboto_medium_light_gray_8ssp"-->
+<!--                                        style="@style/montserrat_medium_light_gray_8ssp"-->
 <!--                                        android:layout_width="wrap_content"-->
 <!--                                        android:layout_height="match_parent"-->
 <!--                                        android:background="@color/white"-->
@@ -301,7 +301,7 @@
 <!--                                        android:text="Giao hàng đến" />-->
 
 <!--                                    <TextView-->
-<!--                                        style="@style/roboto_medium_light_gray_11ssp"-->
+<!--                                        style="@style/montserrat_medium_light_gray_11ssp"-->
 <!--                                        android:layout_width="wrap_content"-->
 <!--                                        android:layout_height="match_parent"-->
 <!--                                        android:background="@color/white"-->
@@ -356,7 +356,7 @@
 <!--                                                android:text="Loại hàng: Quần áo"-->
 <!--                                                android:maxLines="1"-->
 <!--                                                android:ellipsize="end"-->
-<!--                                                style="@style/roboto_medium_light_gray_11ssp"-->
+<!--                                                style="@style/montserrat_medium_light_gray_11ssp"-->
 <!--                                                android:textAlignment="textStart">-->
 <!--                                            </TextView>-->
 
@@ -367,7 +367,7 @@
 <!--                                                android:text=''-->
 <!--                                                android:maxLines="1"-->
 <!--                                                android:ellipsize="end"-->
-<!--                                                style="@style/roboto_medium_light_gray_11ssp"-->
+<!--                                                style="@style/montserrat_medium_light_gray_11ssp"-->
 <!--                                                android:textAlignment="textEnd">-->
 <!--                                            </TextView>-->
 <!--                                        </LinearLayout>-->
@@ -386,7 +386,7 @@
 <!--                                                android:text="Xem chi tiết hàng hóa"-->
 <!--                                                android:maxLines="1"-->
 <!--                                                android:ellipsize="end"-->
-<!--                                                style="@style/roboto_regular_bold_green_11ssp"-->
+<!--                                                style="@style/montserrat_regular_bold_green_11ssp"-->
 <!--                                                android:textSize="@dimen/_9sdp"-->
 <!--                                                android:textAlignment="textStart">-->
 <!--                                            </TextView>-->
@@ -398,7 +398,7 @@
 <!--                                                android:text=''-->
 <!--                                                android:maxLines="1"-->
 <!--                                                android:ellipsize="end"-->
-<!--                                                style="@style/roboto_medium_light_gray_11ssp"-->
+<!--                                                style="@style/montserrat_medium_light_gray_11ssp"-->
 <!--                                                android:textAlignment="textEnd">-->
 <!--                                            </TextView>-->
 <!--                                        </LinearLayout>-->
@@ -454,7 +454,7 @@
 <!--                                        android:layout_width="wrap_content"-->
 <!--                                        android:layout_height="wrap_content"-->
 <!--                                        android:text="@string/send_message"-->
-<!--                                        style="@style/roboto_medium_79_gray"/>-->
+<!--                                        style="@style/montserrat_medium_79_gray"/>-->
 
 
 <!--                                </LinearLayout>-->
@@ -476,7 +476,7 @@
 <!--                                        app:srcCompat="@drawable/ic_icon_call" />-->
 
 <!--                                    <TextView-->
-<!--                                        style="@style/roboto_medium_79_gray"-->
+<!--                                        style="@style/montserrat_medium_79_gray"-->
 <!--                                        android:layout_width="wrap_content"-->
 <!--                                        android:layout_height="wrap_content"-->
 <!--                                        android:text="@string/call_customer" />-->
@@ -504,7 +504,7 @@
 <!--                                </ImageView>-->
 
 <!--                                <TextView-->
-<!--                                    style="@style/roboto_medium_79_gray"-->
+<!--                                    style="@style/montserrat_medium_79_gray"-->
 <!--                                    android:layout_width="match_parent"-->
 <!--                                    android:layout_height="wrap_content"-->
 <!--                                    android:text="@{!TextUtils.isEmpty(vm.booking.customerNote) ? vm.booking.customerNote : @string/empty_note}"-->
@@ -543,7 +543,7 @@
 
 <!--                            &lt;!&ndash;Text implementation in center of the progress bar&ndash;&gt;-->
 <!--                            <TextView-->
-<!--                                style="@style/roboto_medium"-->
+<!--                                style="@style/montserrat_medium"-->
 <!--                                android:id="@+id/progress_text"-->
 <!--                                android:layout_width="match_parent"-->
 <!--                                android:layout_height="wrap_content"-->
@@ -551,7 +551,7 @@
 <!--                                android:text="30"-->
 <!--                                android:textSize="@dimen/_18ssp"/>-->
 <!--&lt;!&ndash;                            <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;                                style="@style/roboto_medium"&ndash;&gt;-->
+<!--&lt;!&ndash;                                style="@style/montserrat_medium"&ndash;&gt;-->
 <!--&lt;!&ndash;                                android:layout_width="wrap_content"&ndash;&gt;-->
 <!--&lt;!&ndash;                                android:layout_height="wrap_content"&ndash;&gt;-->
 <!--&lt;!&ndash;                                android:gravity="center"&ndash;&gt;-->

@@ -54,7 +54,7 @@
                     android:layout_weight="1"
                     android:orientation="horizontal">
                     <TextView
-                        style="@style/roboto_medium_black_11ssp"
+                        style="@style/montserrat_medium_black_11ssp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@{NumberUtils.formatCurrency(ivm.money-ivm.promotionMoney)}"
@@ -81,7 +81,7 @@
 
                     <TextView
                         android:id="@+id/textView3"
-                        style="@style/roboto_medium_black_11ssp"
+                        style="@style/montserrat_medium_black_11ssp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -119,7 +119,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/roboto_medium_gray_11ssp"
+                        style="@style/montserrat_medium_gray_11ssp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:background="@color/white"
@@ -158,7 +158,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
-                        style="@style/roboto_medium_gray_11ssp"
+                        style="@style/montserrat_medium_gray_11ssp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:background="@color/white"
@@ -207,7 +207,7 @@
                                 android:text='@{NumberUtils.getSize(ivm.service.size) +"  "+ivm.service.weight+"Kg"}'
                                 android:maxLines="1"
                                 android:ellipsize="end"
-                                style="@style/roboto_medium_gray_11ssp"
+                                style="@style/montserrat_medium_gray_11ssp"
                                 android:textAlignment="textStart">
                             </TextView>
 
@@ -218,7 +218,7 @@
                                 android:text=''
                                 android:maxLines="1"
                                 android:ellipsize="end"
-                                style="@style/roboto_medium_light_gray_11ssp"
+                                style="@style/montserrat_medium_light_gray_11ssp"
                                 android:textAlignment="textEnd">
                             </TextView>
                         </LinearLayout>
@@ -231,7 +231,7 @@
                             android:text='@{"Thu hộ: "+NumberUtils.formatCurrency(ivm.codPrice)}'
                             android:maxLines="1"
                             android:ellipsize="end"
-                            style="@style/roboto_medium_gray_11ssp"
+                            style="@style/montserrat_medium_gray_11ssp"
                             android:textAlignment="textStart"/>
 
                     </LinearLayout>
@@ -249,7 +249,7 @@
 
             <TextView
                 android:layout_marginTop="@dimen/_5sdp"
-                style="@style/roboto_medium_black_8ssp"
+                style="@style/montserrat_medium_black_8ssp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@color/white"

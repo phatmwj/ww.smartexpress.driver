@@ -59,7 +59,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            style="@style/roboto_medium_light_gray_8ssp"
+                            style="@style/montserrat_medium_light_gray_8ssp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@color/white"
@@ -67,7 +67,7 @@
                             android:text="Điểm lấy hàng" />
 
                         <TextView
-                            style="@style/roboto_medium_light_gray_11ssp"
+                            style="@style/montserrat_medium_light_gray_11ssp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@color/white"
@@ -76,7 +76,7 @@
                             android:text="@{vm.booking.pickupAddress}" />
 
                         <TextView
-                            style="@style/roboto_medium_light_gray_11ssp"
+                            style="@style/montserrat_medium_light_gray_11ssp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@color/white"
@@ -112,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <TextView
-                            style="@style/roboto_medium_light_gray_8ssp"
+                            style="@style/montserrat_medium_light_gray_8ssp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@color/white"
@@ -120,7 +120,7 @@
                             android:text="Giao hàng đến" />
 
                         <TextView
-                            style="@style/roboto_medium_light_gray_11ssp"
+                            style="@style/montserrat_medium_light_gray_11ssp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@color/white"
@@ -128,7 +128,7 @@
                             android:ellipsize="end"
                             android:text="@{vm.booking.destinationAddress}" />
                         <TextView
-                            style="@style/roboto_medium_light_gray_11ssp"
+                            style="@style/montserrat_medium_light_gray_11ssp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@color/white"

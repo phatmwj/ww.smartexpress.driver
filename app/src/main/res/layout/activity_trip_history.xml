@@ -79,7 +79,7 @@
                     </androidx.recyclerview.widget.RecyclerView>
                     <TextView
                         android:onClick="@{()->vm.loadMore()}"
-                        style="@style/roboto_medium"
+                        style="@style/montserrat_medium"
                         android:id="@+id/loadMore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

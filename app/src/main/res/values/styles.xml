@@ -55,44 +55,44 @@
         <item name="android:layout_marginEnd">16dp</item>
     </style>
     <style name="username">
-        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
         <item name="android:textSize">@dimen/_7ssp</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
     <style name="app_title">
-        <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
         <item name="android:textSize">@dimen/_14ssp</item>
         <item name="android:textColor">#424242</item>
     </style>
     <style name="app_text">
-        <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
         <item name="android:textColor">#979797</item>
     </style>
     <style name="app_text_b">
-        <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
         <item name="android:textColor">#424242</item>
         <item name="android:textSize">@dimen/_12sdp</item>
     </style>
     <style name="app_text_small">
-        <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
         <item name="android:textColor">@color/green_light_app</item>
         <item name="android:textSize">@dimen/_8ssp</item>
     </style>
     <style name="app_text_big">
-        <item name="fontFamily">@font/roboto_bold</item>
-        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="fontFamily">@font/montserrat_bold</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
         <item name="android:textSize">@dimen/_25ssp</item>
     </style>
     <style name="AppEditTextStyle">
         <item name="android:background">@drawable/background_edittext_profile</item>
-        <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
         <item name="android:padding">@dimen/_10sdp</item>
         <item name="android:textColorHint">#979797</item>
         <item name="android:textColor">#424242</item>
@@ -102,8 +102,8 @@
         parent="android:style/Widget.Material.RatingBar.Small">
     </style>
     <style name="MyAppButtonStyle" parent="Widget.AppCompat.Button.Colored">
-        <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
         <item name="android:background">@drawable/background_button_app</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/_14ssp</item>
@@ -140,24 +140,24 @@
         <item name="backgroundTint" >@color/button_state_color</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/_14ssp</item>
-        <item name="fontFamily">@font/roboto_bold</item>
-        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="fontFamily">@font/montserrat_bold</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
         <item name="android:elevation">0dp</item>
     </style>
 
     <style name="big_title">
-        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="fontFamily">@font/montserrat_bold</item>
         <item name="android:textSize">@dimen/_30ssp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="welcome_subtitle">
-        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
         <item name="android:textColor">@color/hint_gray</item>
     </style>
 
     <style name="information_edit_text">
-        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/_12ssp</item>
     </style>
@@ -165,12 +165,12 @@
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
         <item name="colorPrimary">@color/green_light</item>
         <item name="colorOnPrimary">@color/green_light</item>
-        <item name="fontFamily">@font/roboto_bold</item>
-        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="fontFamily">@font/montserrat_bold</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
     </style>
 
     <style name="title">
-        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">@dimen/_15ssp</item>
         <item name="android:textColor">@color/title_home_page</item>
@@ -181,43 +181,43 @@
     </style>
 
     <style name="small_information">
-        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">@dimen/_9ssp</item>
         <item name="android:textColor">@color/gray</item>
     </style>
 
-    <style name="roboto_medium_black_11ssp" >
-        <item name="fontFamily">@font/roboto_medium</item>
+    <style name="montserrat_medium_black_11ssp" >
+        <item name="fontFamily">@font/montserrat_medium</item>
         <item name="android:textSize">@dimen/_11ssp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="roboto_medium_gray_11ssp">
-        <item name="fontFamily">@font/roboto_medium</item>
+    <style name="montserrat_medium_gray_11ssp">
+        <item name="fontFamily">@font/montserrat_medium</item>
         <item name="android:textSize">@dimen/_11ssp</item>
         <item name="android:textColor">#85000000</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="roboto_medium_black_8ssp">
-        <item name="fontFamily">@font/roboto_medium</item>
+    <style name="montserrat_medium_black_8ssp">
+        <item name="fontFamily">@font/montserrat_medium</item>
         <item name="android:textSize">@dimen/_8ssp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="location_text">
-        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">@dimen/_11ssp</item>
         <item name="android:textColor">@color/title_home_page</item>
     </style>
 
-    <style name="roboto_medium_gray">
-        <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+    <style name="montserrat_medium_gray">
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
         <item name="android:textColor">@color/gray</item>
     </style>
     <style name="SpinnerTheme" parent="android:Widget.Spinner">
@@ -225,7 +225,7 @@
     </style>
 
     <style name="new_password_text">
-        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">@dimen/_20ssp</item>
         <item name="android:textColor">@color/black</item>
@@ -233,15 +233,15 @@
     </style>
 
     <style name="send_new_otp">
-        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
         <item name="android:textStyle">bold</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">@dimen/_13ssp</item>
         <item name="android:textColor">#898A8D</item>
     </style>
 
-    <style name="roboto_medium_gray_12ssp">
-        <item name="fontFamily">@font/roboto_medium</item>
+    <style name="montserrat_medium_gray_12ssp">
+        <item name="fontFamily">@font/montserrat_medium</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">@dimen/_12ssp</item>
         <item name="android:textColor">@color/grey_text</item>
@@ -256,24 +256,24 @@
         <item name="android:textColor">@color/red_color</item>
     </style>
 
-    <style name="roboto_regular_bold_green_11ssp">
-        <item name="fontFamily">@font/roboto_regular</item>
+    <style name="montserrat_regular_bold_green_11ssp">
+        <item name="fontFamily">@font/montserrat_medium</item>
         <item name="android:textStyle">bold</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">@dimen/_11ssp</item>
         <item name="android:textColor">@color/green_light</item>
     </style>
 
-    <style name="roboto_medium_light_gray_8ssp">
-        <item name="fontFamily">@font/roboto_medium</item>
+    <style name="montserrat_medium_light_gray_8ssp">
+        <item name="fontFamily">@font/montserrat_medium</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">@dimen/_8ssp</item>
         <item name="android:textColor">#85424242</item>
     </style>
 
-    <style name="roboto_medium_79_gray">
-        <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+    <style name="montserrat_medium_79_gray">
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
         <item name="android:textColor">#C9424242</item>
     </style>
 
@@ -283,8 +283,8 @@
         <item name="backgroundTint" >@color/button_state_color</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/_11ssp</item>
-        <item name="fontFamily">@font/roboto_bold</item>
-        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="fontFamily">@font/montserrat_bold</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
         <item name="android:elevation">0dp</item>
     </style>
 
@@ -293,13 +293,13 @@
         <item name="android:textColor">@color/green_light</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/_11ssp</item>
-        <item name="fontFamily">@font/roboto_bold</item>
-        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="fontFamily">@font/montserrat_bold</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
         <item name="android:elevation">0dp</item>
     </style>
 
-    <style name="roboto_medium_light_gray_11ssp" >
-        <item name="fontFamily">@font/roboto_medium</item>
+    <style name="montserrat_medium_light_gray_11ssp" >
+        <item name="fontFamily">@font/montserrat_medium</item>
         <item name="android:textSize">@dimen/_11ssp</item>
         <item name="android:textColor">@color/title_home_page</item>
         <item name="android:includeFontPadding">false</item>
@@ -309,34 +309,34 @@
         <item name="android:textColor">@color/green_light</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/_14ssp</item>
-        <item name="fontFamily">@font/roboto_bold</item>
-        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="fontFamily">@font/montserrat_bold</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
         <item name="android:elevation">0dp</item>
     </style>
     <style name="trip_information_text_bold">
-        <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
         <item name="android:textColor">@color/title_home_page</item>
         <item name="android:textSize">@dimen/_14ssp</item>
     </style>
-    <style name="roboto_medium">
-        <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+    <style name="montserrat_medium">
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
     </style>
     <style name="trip_information_text_medium">
-        <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
         <item name="android:textColor">#C9424242</item>
     </style>
     <style name="new_password_subtitle">
-        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">@dimen/_11ssp</item>
         <item name="android:textColor">@color/grey_text</item>
     </style>
     <style name="BookCarButton" parent="Widget.AppCompat.Button.Colored">
-        <item name="fontFamily">@font/roboto_bold</item>
-        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="fontFamily">@font/montserrat_bold</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
         <item name="android:textSize">@dimen/_13ssp</item>
         <item name="textAllCaps">false</item>
         <item name="background">@drawable/app_button_background</item>
