@@ -149,6 +149,7 @@
         </LinearLayout>
 
         <com.google.android.gms.common.SignInButton
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/sign_in_button"

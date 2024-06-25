@@ -52,15 +52,16 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:text="@string/trip_history_title">
+                    android:text="Lịch sử chuyến đi">
 
                 </TextView>
             </FrameLayout>
+
             <include
                 android:id="@+id/layout"
                 layout="@layout/item_booking_empty"
-                android:visibility="@{vm.isEmpty ? View.VISIBLE:View.GONE}">
-            </include>
+                android:visibility="@{vm.isEmpty ? View.VISIBLE:View.GONE}"></include>
+
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

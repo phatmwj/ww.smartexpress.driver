@@ -59,9 +59,9 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
         getStateDriver();
     }
 
-    public MVVMApplication getApplication(){
-        return application;
-    }
+//    public MVVMApplication getApplication(){
+//        return application;
+//    }
     public void updatePosition(){
         PositionRequest positionRequest = new PositionRequest();
         positionRequest.setIsBusy(isBusy.get());
@@ -132,7 +132,7 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
                         if(state.get()==1){
                             updatePosition();
                         }
-                        showSuccessMessage(response.getMessage());
+//                        showSuccessMessage(response.getMessage());
                     }else {
                         showErrorMessage(response.getMessage());
                     }
@@ -180,7 +180,7 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
                                 }else {
                                     bookingList.setValue(new ArrayList<>());
                                 }
-                                showSuccessMessage(response.getMessage());
+//                                showSuccessMessage(response.getMessage());
                             }else {
 //                        showErrorMessage(response.getMessage());
                             }

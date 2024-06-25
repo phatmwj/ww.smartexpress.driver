@@ -244,7 +244,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                             loadMapDirection(currentLocation, customerLocation);
                             viewModel.isShowDirection.set(true);
                         }
-//                        updateLocationUpdatesInterval(10000);
                         break;
                     case Constants.BOOKING_ACCEPTED:
                         imageBookingDialog();
@@ -273,46 +272,14 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                         imageBookingDialog();
                         break;
                     case Constants.BOOKING_SUCCESS:
-//                        viewModel.getApplication().setCurrentBookingId(null);
-//                        viewModel.isShowDirection.set(false);
-//                        viewModel.status.set(Constants.BOOKING_NONE);
-                        break;
                     case Constants.BOOKING_CANCELED:
                     case Constants.BOOKING_CUSTOMER_CANCEL:
-//                        viewModel.status.set(Constants.BOOKING_NONE);
-//                        if (polyline != null) {
-//                            polyline.remove();
-//                        }
-//                        if (destinationMarker != null) {
-//                            destinationMarker.setVisible(false);
-//                        }
-//                        updateLocationUpdatesInterval(60000);
-                        break;
                     default:
-//                        if (polyline != null) {
-//                            polyline.remove();
-//                        }
-//                        if (destinationMarker != null) {
-//                            destinationMarker.setVisible(false);
-//                        }
-//                        updateLocationUpdatesInterval(60000);
                         break;
                 }
             }
         });
     }
-
-
-//    private void updateLocationUpdatesInterval(long timeUpdate) {
-//        if (locationManager != null) {
-//            locationManager.removeUpdates(this);
-//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                return;
-//            }
-//            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, timeUpdate, 0, this);
-//            Log.d("TAG", "updateLocationUpdatesInterval: "+ timeUpdate);
-//        }
-//    }
 
     // progress bar countdown
     private void startCountdown(){

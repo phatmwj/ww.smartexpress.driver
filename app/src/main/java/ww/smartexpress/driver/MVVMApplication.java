@@ -123,8 +123,8 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
         webSocketLiveData.setSocketListener(this);
         webSocketLiveData.setAppOnline(true);
 
-        Intent serviceIntent = new Intent(this, ForegroundService.class);
-        startService(serviceIntent);
+//        Intent serviceIntent = new Intent(this, ForegroundService.class);
+//        startService(serviceIntent);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
