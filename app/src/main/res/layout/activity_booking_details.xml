@@ -246,6 +246,25 @@
                                 android:gravity="right"
                                 android:text='@{NumberUtils.formatCurrency(vm.booking.money)}' />
                         </FrameLayout>
+                        <FrameLayout
+                            android:visibility="@{vm.booking.promotionMoney > 0 ? View.VISIBLE : View.GONE}"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_10sdp">
+                            <TextView
+                                style="@style/trip_information_text_medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Khuyến mãi" />
+
+                            <TextView
+                                style="@style/trip_information_text_medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:gravity="right"
+                                android:text='@{NumberUtils.formatCurrency(vm.booking.promotionMoney)}' />
+                        </FrameLayout>
 
                         <FrameLayout
                             android:visibility="gone"
@@ -286,7 +305,7 @@
                                 android:id="@+id/textView21"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/payment_cash" />
+                                android:text='@{vm.booking.paymentKind ==1 ? @string/payment_cash : "Thanh toán ví điện tử"}' /> />
 
                             <ImageView
                                 android:id="@+id/imageView16"
@@ -303,7 +322,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="right"
-                                android:text='@{NumberUtils.formatCurrency(vm.booking.money)}'
+                                android:text='@{NumberUtils.formatCurrency(vm.booking.money - vm.booking.promotionMoney)}'
                                 android:maxLines="1"
                                 android:ellipsize="end"/>
                         </LinearLayout>
@@ -522,8 +541,8 @@
 
                                 <ImageView
                                     android:id="@+id/imgPickupImage"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="111dp"
+                                    android:layout_width="@dimen/_80sdp"
+                                    android:layout_height="@dimen/_80sdp"
                                     android:onClick="@{(v) -> vm.zoomImage(vm.booking.pickupImage)}"
                                     android:src="@{vm.booking.pickupImage}" />
                             </androidx.cardview.widget.CardView>

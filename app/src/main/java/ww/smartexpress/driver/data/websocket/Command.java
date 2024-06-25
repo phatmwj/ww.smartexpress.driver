@@ -8,4 +8,6 @@ public class Command {
     public static final String CM_SEND_MESSAGE = "SEND_MSG";
     public static final String CM_DELIVER_MSG = "DELIVER_MSG";
     public static final String CM_CUSTOMER_CANCEL_BOOKING = "CUSTOMER_CANCEL_BOOKING";
+
+    public static final String CM_CLIENT_RECEIVED_PUSH_NOTIFICATION = "CLIENT_RECEIVED_PUSH_NOTIFICATION";
 }

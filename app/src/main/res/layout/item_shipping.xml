@@ -111,7 +111,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
-                                    android:text='@{NumberUtils.formatCurrency(booking.money)}'
+                                    android:text='@{NumberUtils.formatCurrency(booking.money - booking.promotionMoney)}'
                                     android:maxLines="1"
                                     android:ellipsize="end"
                                     style="@style/title"
@@ -126,7 +126,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Tiền mặt"
+                                    android:text='@{booking.paymentKind == 1 ? "Tiền mặt" : "Ví điện tử"}'
                                     android:maxLines="1"
                                     android:ellipsize="end"
                                     style="@style/roboto_regular_bold_green_11ssp"

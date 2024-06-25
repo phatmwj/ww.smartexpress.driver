@@ -43,6 +43,7 @@ public class PayoutViewModel extends BaseViewModel {
                                 }else {
                                     hideLoading();
                                     showErrorMessage(response.getMessage());
+                                    back();
                                 }
                             },error->{
                                 hideLoading();

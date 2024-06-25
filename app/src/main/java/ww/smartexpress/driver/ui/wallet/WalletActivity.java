@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import ww.smartexpress.driver.BR;
+import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.data.model.api.ApiModelUtils;
 import ww.smartexpress.driver.data.model.api.response.BankCard;
@@ -43,5 +44,16 @@ public class WalletActivity extends BaseActivity<ActivityWalletBinding, WalletVi
         }
 
         viewModel.getMyWallet();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MVVMApplication mvvmApplication = (MVVMApplication) getApplication();
+        if(mvvmApplication.getIsDepositSuccess()){
+            viewModel.getMyWallet();
+            mvvmApplication.setIsDepositSuccess(false);
+        }
     }
 }

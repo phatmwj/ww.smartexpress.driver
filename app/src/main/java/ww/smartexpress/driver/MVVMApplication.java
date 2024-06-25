@@ -17,9 +17,13 @@ import java.util.Map;
 import java.util.Objects;
 
 import ww.smartexpress.driver.constant.Constants;
+import ww.smartexpress.driver.data.model.api.ApiModelUtils;
 import ww.smartexpress.driver.data.model.api.response.BookingCode;
 import ww.smartexpress.driver.data.model.api.response.BookingId;
 import ww.smartexpress.driver.data.model.api.response.ChatMessage;
+import ww.smartexpress.driver.data.model.api.response.DepositMessage;
+import ww.smartexpress.driver.data.model.api.response.DepositSuccess;
+import ww.smartexpress.driver.data.model.other.ToastMessage;
 import ww.smartexpress.driver.data.websocket.Command;
 import ww.smartexpress.driver.data.websocket.Message;
 import ww.smartexpress.driver.data.websocket.SocketEventModel;
@@ -32,7 +36,9 @@ import ww.smartexpress.driver.others.MyTimberReleaseTree;
 import ww.smartexpress.driver.ui.chat.ChatActivity;
 import ww.smartexpress.driver.ui.home.HomeActivity;
 import ww.smartexpress.driver.ui.main.MainActivity;
+import ww.smartexpress.driver.ui.qrcode.QrcodeActivity;
 import ww.smartexpress.driver.ui.shipping.ShippingActivity;
+import ww.smartexpress.driver.ui.wallet.WalletActivity;
 import ww.smartexpress.driver.utils.DialogUtils;
 
 import es.dmoral.toasty.Toasty;
@@ -40,6 +46,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 import lombok.Getter;
 import lombok.Setter;
 import timber.log.Timber;
+import ww.smartexpress.driver.utils.NumberUtils;
 
 public class MVVMApplication extends Application implements LifecycleObserver, SocketListener {
     @Setter
@@ -77,6 +84,12 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
     @Getter
     @Setter
     private ChatMessage chatMessage = null;
+    @Getter
+    @Setter
+    private Boolean isDepositSuccess = false;
+    @Getter
+    @Setter
+    private DepositMessage depositMessage = null;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -174,6 +187,9 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
                     case Command.CM_CUSTOMER_CANCEL_BOOKING:
                         handleCancelBooking(socketEventModel);
                         break;
+                    case Command.CM_CLIENT_RECEIVED_PUSH_NOTIFICATION:
+                        handleDepositSuccess(socketEventModel);
+                        break;
                     default:
                         break;
                 }
@@ -235,6 +251,42 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         currentActivity.startActivity(intent);
+    }
+
+    public void handleDepositSuccess(SocketEventModel socketEventModel){
+        isDepositSuccess = true;
+        Message message = socketEventModel.getMessage();
+        DepositSuccess depositSuccess = message.getDataObject(DepositSuccess.class);
+        depositMessage = ApiModelUtils.fromJson(depositSuccess.getMessage(),DepositMessage.class);
+        Intent intent ;
+        ToastMessage toastMessage;
+        switch (depositSuccess.getKind()){
+            case 1:
+                if(currentActivity instanceof WalletActivity || currentActivity instanceof QrcodeActivity){
+                    intent = new Intent(currentActivity, WalletActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    currentActivity.startActivity(intent);
+                }
+                toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Bạn đã nạp thành công "+ NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" vào ví");
+                toastMessage.showMessage(currentActivity);
+                break;
+            case 2:
+                if(currentActivity instanceof WalletActivity){
+                    intent = new Intent(currentActivity, WalletActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    currentActivity.startActivity(intent);
+                }
+                toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Yêu cầu rút "+NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" đã được chấp nhận");
+                toastMessage.showMessage(currentActivity);
+                break;
+            case 3:
+                toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Yêu cầu rút "+NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" bị từ chối vì: "+depositMessage.getReason());
+                toastMessage.showMessage(currentActivity);
+                break;
+            default:
+                break;
+        }
+
     }
 
     @Override

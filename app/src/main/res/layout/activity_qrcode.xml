@@ -68,8 +68,7 @@
             style="@style/app_text_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"/>
+            android:layout_gravity="center"/>
         <LinearLayout
             android:onClick="@{()->a.downloadImage()}"
             android:layout_marginTop="@dimen/_10sdp"

@@ -44,4 +44,5 @@ public class CurrentBooking {
     private String deliveryImage;
     private String senderName;
     private String senderPhone;
+    private Integer paymentKind;
 }

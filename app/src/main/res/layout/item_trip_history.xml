@@ -57,7 +57,7 @@
                         style="@style/roboto_medium_black_11ssp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@{NumberUtils.formatCurrency(ivm.money)}"
+                        android:text="@{NumberUtils.formatCurrency(ivm.money-ivm.promotionMoney)}"
                         android:maxLines="1"
                         android:ellipsize="end">
 
@@ -248,6 +248,7 @@
             </LinearLayout>
 
             <TextView
+                android:layout_marginTop="@dimen/_5sdp"
                 style="@style/roboto_medium_black_8ssp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
