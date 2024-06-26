@@ -16,6 +16,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -24,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -57,6 +59,7 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.gson.JsonArray;
 import com.google.maps.android.PolyUtil;
 
@@ -86,9 +89,7 @@ import ww.smartexpress.driver.ui.base.activity.BaseActivity;
 public class ShippingActivity extends BaseActivity<ActivityShippingBinding, ShippingViewModel> implements OnMapReadyCallback, LocationListener {
 
     private GoogleMap mMap;
-    private LocationRequest locationRequest;
     private Marker currentLocationMarker;
-    private LocationManager locationManager;
     private LatLng currentLocation;
     private LatLng customerLocation;
     private LatLng destinationLocation;
@@ -102,10 +103,12 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
     private Bitmap updatedAvatar;
     private static final int CAMERA_REQUEST = 100;
     private static final int STORAGE_REQUEST = 200;
-    String cameraPermission[];
-    String storagePermission[];
+    String[] cameraPermission;
+    String[] storagePermission;
     Bitmap photo;
     DialogShippingImgBinding dialogBinding;
+
+    BottomSheetBehavior sheetBehavior;
     @Getter
     private String bookingId;
     private final ActivityResultLauncher<IntentSenderRequest> locationSettingsLauncher =
@@ -132,23 +135,61 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+        if (Build.VERSION.SDK_INT >= 19) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if(intent.getLongExtra("bookingId",0) != 0){
             viewModel.currentBookingId.postValue(intent.getLongExtra("bookingId",0));
             bookingId = String.valueOf(intent.getLongExtra("bookingId",0));
         }
+        viewModel.currentBookingId.observe(this, id ->{
+            viewModel.loadBooking(id);
+        });
+        sheetBehavior = BottomSheetBehavior.from(viewBinding.cardBooking.layoutBooking);
+        sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+//                        btnBottomSheet.setText("Close Sheet");
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+//                        btnBottomSheet.setText("Expand Sheet");
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
 
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
 
         cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        viewModel.currentBookingId.observe(this, id ->{
-            viewModel.loadBooking(id);
-        });
 
         viewModel.status.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
@@ -209,7 +250,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
         mMap = googleMap;
         getCurrentLocation();
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -351,7 +392,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
     }
 
     private void displayLocationSettingsRequest() {
-        locationRequest = LocationRequest.create();
+        LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
                 .addLocationRequest(locationRequest);

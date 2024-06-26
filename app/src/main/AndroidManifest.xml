@@ -211,7 +211,7 @@
         <activity
             android:name="ww.smartexpress.driver.ui.shipping.ShippingActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"
-            android:theme="@style/Welcome"
+            android:theme="@style/MyAppTheme"
             android:exported="true">
 
         </activity>

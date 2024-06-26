@@ -66,10 +66,6 @@ public class ShippingViewModel extends BaseViewModel {
     }
 
     public void openChat(){
-//        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-//        sendIntent.setData(Uri.parse("sms:" + customerPhone.get()));
-//        sendIntent.putExtra("sms_body", "");
-//        application.getCurrentActivity().startActivity(sendIntent);
         Intent intent = new Intent(application.getCurrentActivity(), ChatActivity.class);
         intent.putExtra("codeBooking", booking.get().getCode());
         intent.putExtra("roomId", booking.get().getRoom().getId());
@@ -95,7 +91,6 @@ public class ShippingViewModel extends BaseViewModel {
                             if(response.isResult()){
                                 Log.d("TAG", "acceptBooking: "+booking.get().getCode());
                                 status.set(Constants.BOOKING_ACCEPTED);
-//                        getCurrentBooking();
                                 repository.getSharedPreferences().setLong(Constants.ROOM_ID,response.getData().getRoom().getId());
                                 showSuccessMessage(response.getMessage());
                             }else {
@@ -130,7 +125,7 @@ public class ShippingViewModel extends BaseViewModel {
                         }else if(response.getData().getState() == Constants.BOOKING_STATE_CANCEL){
                             status.set(Constants.BOOKING_CUSTOMER_CANCEL);
                         }
-                        showSuccessMessage(response.getMessage());
+//                        showSuccessMessage(response.getMessage());
                     }else {
                         showErrorMessage(response.getMessage());
                     }

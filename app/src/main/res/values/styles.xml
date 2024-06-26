@@ -351,4 +351,8 @@
         <item name="android:button">@null</item>
         <item name="android:background">@drawable/bg_checkbox</item>
     </style>
+    <style name="Rounded" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/_5sdp</item>
+    </style>
 </resources>

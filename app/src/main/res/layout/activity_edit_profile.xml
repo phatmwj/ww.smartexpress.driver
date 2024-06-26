@@ -20,37 +20,49 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-
-        <ImageView
-            android:id="@+id/imageView"
+        <FrameLayout
+            android:id="@+id/frameLayout2"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_180sdp"
-            android:layout_gravity="top"
-            app:srcCompat="@drawable/driver_profile"
-
-            android:scaleType="centerCrop"/>
-        <ImageView
-            android:onClick="@{(v)->vm.back()}"
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_marginLeft="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:background="@drawable/background_oval_white"
+            android:layout_height="@dimen/_50sdp"
             android:padding="@dimen/_5sdp"
-            android:src="@drawable/ic_icon_back" />
+            android:layout_gravity="top">
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center"
+                android:onClick="@{()->vm.back()}"
+                android:paddingLeft="@dimen/_5ssp"
+                android:paddingRight="@dimen/_20ssp"
+                android:src="@drawable/ic_icon_back">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/textView10"
+                style="@style/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="Thông tin cá nhân">
+
+            </TextView>
+        </FrameLayout>
+
 
         <LinearLayout
             android:onClick="@{()->a.hideKeyboard()}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_140sdp"
+            android:layout_marginTop="@dimen/_100sdp"
             android:orientation="vertical">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageViewAva"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_80sdp"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
                 android:layout_gravity="center"
                 android:src="@{vm.avatar}" />
             <TextView
@@ -88,64 +100,115 @@
                     android:layout_weight="1"
                     android:text="@{String.valueOf(vm.user.averageRating)}"/>
             </LinearLayout>
-            <TextView
-                style="@style/app_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:text="@string/full_name"
-                android:maxLines="1" />
-            <EditText
-                android:id="@+id/edtEPFullName"
-                style="@style/AppEditTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:hint="@string/input_name"
-                android:maxLines="1"
-                android:text="@={vm.fullName}"
-                android:enabled="false"/>
-            <TextView
-                style="@style/app_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:text="@string/email"
-                android:maxLines="1"
-                android:visibility="gone"/>
-            <EditText
-                style="@style/AppEditTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:hint="@string/input_email"
-                android:maxLines="1"
-                android:text="@={vm.email}"
-                android:visibility="gone"/>
-            <TextView
-                style="@style/app_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:text="@string/phone"
-                android:maxLines="1" />
-            <EditText
-                style="@style/AppEditTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:hint="@string/input_phone"
-                android:maxLines="1"
-                android:text="@={vm.user.phone}"
-                android:enabled="false">
 
-            </EditText>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxBackgroundMode="outline"
+                app:shapeAppearanceOverlay="@style/Rounded"
+                android:hint="Họ và tên"
+                app:hintEnabled="true"
+                app:boxStrokeColor="#898A8D"
+                app:hintTextColor="#898A8D"
+                app:helperTextTextColor="#898A8D"
+                app:boxStrokeWidthFocused="1dp"
+                android:focusable="false"
+                android:enabled="false"
+                app:hintAnimationEnabled="false">
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/app_text_b"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@={vm.fullName}"
+                    android:textColor="#545454">
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxBackgroundMode="outline"
+                app:shapeAppearanceOverlay="@style/Rounded"
+                android:hint="Số điện thoại"
+                app:hintEnabled="true"
+                app:boxStrokeColor="#898A8D"
+                app:hintTextColor="#898A8D"
+                app:helperTextTextColor="#898A8D"
+                app:boxStrokeWidthFocused="1dp"
+                android:enabled="false"
+                app:hintAnimationEnabled="false">
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/app_text_b"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@={vm.phone}"
+                    android:inputType="textPhonetic"
+                    android:textColor="#545454">
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+<!--            <TextView-->
+<!--                style="@style/app_text"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/_15sdp"-->
+<!--                android:layout_marginLeft="@dimen/_15sdp"-->
+<!--                android:text="@string/full_name"-->
+<!--                android:maxLines="1" />-->
+<!--            <EditText-->
+<!--                android:id="@+id/edtEPFullName"-->
+<!--                style="@style/AppEditTextStyle"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="@dimen/_12sdp"-->
+<!--                android:layout_marginTop="@dimen/_10sdp"-->
+<!--                android:hint="@string/input_name"-->
+<!--                android:maxLines="1"-->
+<!--                android:text="@={vm.fullName}"-->
+<!--                android:enabled="false"/>-->
+<!--            <TextView-->
+<!--                style="@style/app_text"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/_10sdp"-->
+<!--                android:layout_marginLeft="@dimen/_15sdp"-->
+<!--                android:text="@string/email"-->
+<!--                android:maxLines="1"-->
+<!--                android:visibility="gone"/>-->
+<!--            <EditText-->
+<!--                style="@style/AppEditTextStyle"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="@dimen/_12sdp"-->
+<!--                android:layout_marginTop="@dimen/_10sdp"-->
+<!--                android:hint="@string/input_email"-->
+<!--                android:maxLines="1"-->
+<!--                android:text="@={vm.email}"-->
+<!--                android:visibility="gone"/>-->
+<!--            <TextView-->
+<!--                style="@style/app_text"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/_10sdp"-->
+<!--                android:layout_marginLeft="@dimen/_15sdp"-->
+<!--                android:text="@string/phone"-->
+<!--                android:maxLines="1" />-->
+<!--            <EditText-->
+<!--                style="@style/AppEditTextStyle"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="@dimen/_12sdp"-->
+<!--                android:layout_marginTop="@dimen/_10sdp"-->
+<!--                android:hint="@string/input_phone"-->
+<!--                android:maxLines="1"-->
+<!--                android:text="@={vm.user.phone}"-->
+<!--                android:enabled="false">-->
+
+<!--            </EditText>-->
 
             <LinearLayout
                 android:layout_width="match_parent"

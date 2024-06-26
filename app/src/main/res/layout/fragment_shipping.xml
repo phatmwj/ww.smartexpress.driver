@@ -27,11 +27,11 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardCornerRadius="0dp"
             android:elevation="@dimen/_15sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_gravity="top"
-            app:cardElevation="@dimen/_5sdp">
+            app:cardElevation="@dimen/_2sdp">
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,6 +83,7 @@
             android:textColor="@color/black"/>
 
         <com.google.android.material.tabs.TabLayout
+            android:visibility="gone"
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             style="@style/CustomTabLayoutStyle"

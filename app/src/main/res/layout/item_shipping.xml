@@ -56,16 +56,19 @@
                             android:layout_weight="1"
                             android:ellipsize="end">
                         </TextView>
-
                         <TextView
-                            android:layout_marginBottom="@dimen/_5sdp"
+                            style="@style/montserrat_regular_bold_green_11ssp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{booking.code }"
-                            style="@style/montserrat_medium_light_gray_11ssp"
+                            android:background="@drawable/background_text_green"
+                            android:ellipsize="end"
                             android:maxLines="1"
-                            android:ellipsize="end">
-                        </TextView>
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:paddingHorizontal="@dimen/_8sdp"
+                            android:paddingVertical="@dimen/_3sdp"
+                            android:text="@{booking.code }"
+                            android:textColor="@color/white"/>
+
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -279,12 +282,24 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:layout_weight="1">
-
+                                    <TextView
+                                        android:visibility="@{booking.isCod? View.VISIBLE : View.GONE}"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="3"
+                                        android:layout_marginRight="@dimen/_8sdp"
+                                        android:text='@{"Thu hộ: "+NumberUtils.formatCurrency(booking.codPrice)}'
+                                        android:maxLines="1"
+                                        android:ellipsize="end"
+                                        style="@style/montserrat_medium_light_gray_11ssp"
+                                        android:textSize="@dimen/_13ssp"
+                                        android:textAlignment="textStart"/>
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -312,17 +327,7 @@
                                             android:textAlignment="textEnd">
                                         </TextView>
                                     </LinearLayout>
-                                    <TextView
-                                        android:visibility="@{booking.isCod? View.VISIBLE : View.GONE}"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="3"
-                                        android:layout_marginRight="@dimen/_8sdp"
-                                        android:text='@{"Thu hộ: "+NumberUtils.formatCurrency(booking.codPrice)}'
-                                        android:maxLines="1"
-                                        android:ellipsize="end"
-                                        style="@style/montserrat_medium_light_gray_11ssp"
-                                        android:textAlignment="textStart"/>
+
 
 
 <!--                                    <LinearLayout-->

@@ -41,22 +41,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:background="@drawable/background_card_app"
+                android:elevation="@dimen/_2sdp"
+                android:background="@color/white"
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:onClick="@{(v)->vm.goProfileSetting()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/_10sdp"
                     android:layout_marginLeft="@dimen/_15sdp"
                     android:layout_marginRight="@dimen/_15sdp"
+                    android:onClick="@{(v)->vm.goProfileSetting()}"
                     android:orientation="horizontal">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="@dimen/_40sdp"
                         android:layout_height="@dimen/_40sdp"
-                        android:src="@{vm.user.avatar}"/>
+                        android:src="@{vm.user.avatar}" />
 
 
                     <LinearLayout
@@ -72,7 +73,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:maxLines="1"
-                            android:text="@{vm.user.fullName}"/>
+                            android:text="@{vm.user.fullName}" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -105,12 +106,14 @@
                 </LinearLayout>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/background_card_app"
+                android:elevation="@dimen/_2sdp"
+                android:background="@color/white"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -147,8 +150,8 @@
                 </LinearLayout>
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@drawable/background_underline"/>
+                    android:layout_height="@dimen/_3sdp"
+                    android:background="@color/gray_light"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -184,8 +187,8 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@drawable/background_underline" />
+                    android:layout_height="@dimen/_3sdp"
+                    android:background="@color/gray_light"/>
                 <LinearLayout
                     android:onClick="@{(v)->vm.goAwardProgram()}"
                     android:layout_width="match_parent"
@@ -290,8 +293,8 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@drawable/background_underline" />
+                    android:layout_height="@dimen/_3sdp"
+                    android:background="@color/gray_light"/>
                 <LinearLayout
                     android:onClick="@{(v)->vm.goTripHistory()}"
                     android:layout_width="match_parent"
@@ -331,7 +334,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/background_card_app"
+                android:elevation="@dimen/_2sdp"
+                android:background="@color/white"
                 android:orientation="vertical">
 
 
@@ -367,8 +371,8 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@drawable/background_underline" />
+                    android:layout_height="@dimen/_3sdp"
+                    android:background="@color/gray_light"/>
                 <LinearLayout
                     android:onClick="@{(v)->vm.logoutDialog()}"
                     android:layout_width="match_parent"

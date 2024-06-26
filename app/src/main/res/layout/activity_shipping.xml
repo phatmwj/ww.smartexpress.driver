@@ -17,18 +17,21 @@
         <import type="ww.smartexpress.driver.utils.NumberUtils" />
     </data>
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
-
         <androidx.cardview.widget.CardView
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_30sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="@dimen/_20sdp"
             android:elevation="@dimen/_15sdp"
-            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_gravity="top"
             app:cardElevation="@dimen/_5sdp">
             <LinearLayout
@@ -71,11 +74,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@color/white"
-                            android:maxLines="1"
+                            android:maxLines="2"
+                            android:textSize="@dimen/_9ssp"
                             android:ellipsize="end"
                             android:text="@{vm.booking.pickupAddress}" />
 
                         <TextView
+                            android:visibility="gone"
                             style="@style/montserrat_medium_light_gray_11ssp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -124,10 +129,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@color/white"
-                            android:maxLines="1"
+                            android:maxLines="2"
+                            android:textSize="@dimen/_9ssp"
                             android:ellipsize="end"
                             android:text="@{vm.booking.destinationAddress}" />
                         <TextView
+                            android:visibility="gone"
                             style="@style/montserrat_medium_light_gray_11ssp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -155,19 +162,13 @@
                 />
         </FrameLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:elevation="@dimen/_5sdp"
-            android:orientation="vertical">
-            <include
-                android:id="@+id/card_booking"
-                layout="@layout/layout_booking"
-                bind:vm = "@{vm}"
-                bind:a = "@{a}"/>
-
-        </LinearLayout>
-
     </FrameLayout>
+
+        <include
+            android:id="@+id/card_booking"
+            layout="@layout/layout_booking"
+            bind:vm = "@{vm}"
+            bind:a = "@{a}"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
