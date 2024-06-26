@@ -24,7 +24,7 @@
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="@dimen/_5sdp"
@@ -81,6 +81,43 @@
             android:text="@string/current_order"
             android:textSize="@dimen/_18sdp"
             android:textColor="@color/black"/>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            style="@style/CustomTabLayoutStyle"
+            android:background="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            app:tabTextColor="@color/black"
+            app:tabIndicatorColor="@color/green_light_app"
+            app:tabMode="fixed"
+            app:tabGravity="fill">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabAll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tất cả" />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đơn mới" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabProcessing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lấy hàng" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabCompleted"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Trả hàng" />
+        </com.google.android.material.tabs.TabLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:paddingTop="@dimen/_10sdp"

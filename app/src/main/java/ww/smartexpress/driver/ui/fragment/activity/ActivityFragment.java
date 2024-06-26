@@ -72,13 +72,12 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
 
     ShippingAdapter shippingAdapter;
     private LocationManager locationManager;
-    private LocationRequest locationRequest;
     private Boolean isLogin;
     private Bitmap updatedAvatar;
     private static final int CAMERA_REQUEST = 100;
     private static final int STORAGE_REQUEST = 200;
-    String cameraPermission[];
-    String storagePermission[];
+    String[] cameraPermission;
+    String[] storagePermission;
     Bitmap photo;
     DialogShippingImgBinding dialogBinding;
 
@@ -550,7 +549,7 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
     }
 
     private void displayLocationSettingsRequest() {
-        locationRequest = LocationRequest.create();
+        LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
                 .addLocationRequest(locationRequest);

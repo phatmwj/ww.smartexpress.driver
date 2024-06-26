@@ -230,7 +230,7 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel {
     }
     public void getCurrentBooking(){
         showLoading();
-        compositeDisposable.add(repository.getApiService().getCurrentBooking()
+        compositeDisposable.add(repository.getApiService().getCurrentBooking(null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {

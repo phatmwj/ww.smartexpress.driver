@@ -254,6 +254,8 @@
     <style name="CustomTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
         <item name="android:textColor">@color/red_color</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
     </style>
 
     <style name="montserrat_regular_bold_green_11ssp">

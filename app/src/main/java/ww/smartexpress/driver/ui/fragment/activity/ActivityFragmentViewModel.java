@@ -49,6 +49,7 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
     public ObservableField<Integer> positionUpdate = new ObservableField<>();
 
     public ObservableField<String> image = new ObservableField<>();
+    public MutableLiveData<Integer> stateBooking = new MutableLiveData<>();
     public ActivityFragmentViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
 
@@ -59,9 +60,6 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
         getStateDriver();
     }
 
-//    public MVVMApplication getApplication(){
-//        return application;
-//    }
     public void updatePosition(){
         PositionRequest positionRequest = new PositionRequest();
         positionRequest.setIsBusy(isBusy.get());
@@ -165,7 +163,7 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
 
     public void getCurrentBooking(){
         showLoading();
-        compositeDisposable.add(repository.getApiService().getCurrentBooking()
+        compositeDisposable.add(repository.getApiService().getCurrentBooking(stateBooking.getValue())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(response -> {
