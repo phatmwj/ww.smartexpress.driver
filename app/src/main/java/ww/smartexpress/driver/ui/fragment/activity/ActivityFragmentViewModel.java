@@ -43,6 +43,8 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
     public ObservableField<String> longitude = new ObservableField<>();
     public ObservableField<Integer> isBusy = new ObservableField<>(0);
     public MutableLiveData<List<CurrentBooking>> bookingList = new MutableLiveData<>();
+    public MutableLiveData<List<CurrentBooking>> bookingList1 = new MutableLiveData<>();
+    public MutableLiveData<List<CurrentBooking>> bookingList2 = new MutableLiveData<>();
     public MutableLiveData<Long> newBookingId = new MutableLiveData<>();
     public MutableLiveData<CurrentBooking> bookingUpdate = new MutableLiveData<>(new CurrentBooking());
     public MutableLiveData<CurrentBooking> newBooking = new MutableLiveData<>(new CurrentBooking());
@@ -55,7 +57,9 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
 
         loadProfile();
 
-        getCurrentBooking();
+        getCurrentBooking(null);
+        getCurrentBooking(100);
+        getCurrentBooking(200);
 
         getStateDriver();
     }
@@ -161,22 +165,35 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
         );
     }
 
-    public void getCurrentBooking(){
+    public void getCurrentBooking(Integer state){
         showLoading();
-        compositeDisposable.add(repository.getApiService().getCurrentBooking(stateBooking.getValue())
+        compositeDisposable.add(repository.getApiService().getCurrentBooking(state)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(response -> {
                             if(response.isResult()){
                                 if(response.getData().getContent()!=null && response.getData().getTotalElements()>0){
-                                    bookingList.setValue(response.getData().getContent());
-                                    for (CurrentBooking booking: response.getData().getContent()
-                                    ) {
-                                        application.getWebSocketLiveData().getCodeBooking().put(booking.getId(),booking.getCode());
+                                    if(state == null){
+                                        bookingList.setValue(response.getData().getContent());
+
+                                        for (CurrentBooking booking: response.getData().getContent()
+                                        ) {
+                                            application.getWebSocketLiveData().getCodeBooking().put(booking.getId(),booking.getCode());
+                                        }
+                                        application.getWebSocketLiveData().sendPing();
+                                    }else if(state == 100){
+                                        bookingList1.setValue(response.getData().getContent());
+                                    }else if (state == 200){
+                                        bookingList2.setValue(response.getData().getContent());
                                     }
-                                    application.getWebSocketLiveData().sendPing();
                                 }else {
-                                    bookingList.setValue(new ArrayList<>());
+                                    if(state == null){
+                                        bookingList.setValue(new ArrayList<>());
+                                    }else if(state == 100){
+                                        bookingList1.setValue(new ArrayList<>());
+                                    }else if (state == 200){
+                                        bookingList2.setValue(new ArrayList<>());
+                                    }
                                 }
 //                                showSuccessMessage(response.getMessage());
                             }else {

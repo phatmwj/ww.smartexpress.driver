@@ -44,6 +44,7 @@ import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -71,6 +72,8 @@ import ww.smartexpress.driver.ui.shipping.ShippingActivity;
 public class ActivityFragment extends BaseFragment<FragmentShippingBinding, ActivityFragmentViewModel> implements LocationListener {
 
     ShippingAdapter shippingAdapter;
+    ShippingAdapter shippingAdapter1;
+    ShippingAdapter shippingAdapter2;
     private LocationManager locationManager;
     private Boolean isLogin;
     private Bitmap updatedAvatar;
@@ -112,13 +115,6 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
 
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +129,8 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
         mvvmApplication = (MVVMApplication)  getContext().getApplicationContext();
 
         shippingAdapter = new ShippingAdapter(getContext());
+        shippingAdapter1 = new ShippingAdapter(getContext());
+        shippingAdapter2 = new ShippingAdapter(getContext());
 
         cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -149,19 +147,69 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
             shippingAdapter.setBookingList(currentBookings1);
             shippingAdapter.addMapIdPos();
             getBooking();
+            setTextTabItem();
+        });
+
+        viewModel.bookingList1.observe(this,currentBookings1 -> {
+            shippingAdapter1.setBookingList(currentBookings1);
+            shippingAdapter1.addMapIdPos();
+            getBooking1();
+            setTextTabItem();
+        });
+
+        viewModel.bookingList2.observe(this,currentBookings1 -> {
+            shippingAdapter2.setBookingList(currentBookings1);
+            shippingAdapter2.addMapIdPos();
+            getBooking2();
+            setTextTabItem();
         });
 
         viewModel.bookingUpdate.observe(this,currentBooking -> {
             if(viewModel.positionUpdate.get()!= null){
-                shippingAdapter.updateItem(currentBooking.getId() ,currentBooking);
-                binding.rcShipping.smoothScrollToPosition(viewModel.positionUpdate.get());
+                if(currentBooking.getState() == Constants.BOOKING_STATE_DRIVER_ACCEPT){
+                    shippingAdapter.updateItem(currentBooking.getId() ,currentBooking);
+                    if(shippingAdapter1.getMapIdPos().get(currentBooking.getId()) == null){
+                        shippingAdapter1.addItem(currentBooking);
+                    }else {
+                        shippingAdapter1.updateItem(currentBooking.getId(), currentBooking);
+                    }
+                }else if(currentBooking.getState() == Constants.BOOKING_STATE_PICKUP_SUCCESS){
+                    shippingAdapter.updateItem(currentBooking.getId() ,currentBooking);
+                    if(shippingAdapter1.getMapIdPos().get(currentBooking.getId()) != null){
+                        shippingAdapter1.removeItem(currentBooking.getId());
+                    }
+                    if(shippingAdapter2.getMapIdPos().get(currentBooking.getId()) == null){
+                        shippingAdapter2.addItem(currentBooking);
+                    }else {
+                        shippingAdapter2.updateItem(currentBooking.getId(), currentBooking);
+                    }
+                }else if(currentBooking.getState() == Constants.BOOKING_STATE_DONE){
+                    shippingAdapter.removeItem(currentBooking.getId());
+                    if(shippingAdapter1.getMapIdPos().get(currentBooking.getId()) != null){
+                        shippingAdapter1.removeItem(currentBooking.getId());
+                    }
+                    if(shippingAdapter2.getMapIdPos().get(currentBooking.getId()) != null){
+                        shippingAdapter2.removeItem(currentBooking.getId());
+                    }
+                }else if(currentBooking.getState() == Constants.BOOKING_STATE_CANCEL){
+                    shippingAdapter.removeItem(currentBooking.getId());
+                    if(shippingAdapter1.getMapIdPos().get(currentBooking.getId())!= null){
+                        shippingAdapter1.removeItem(currentBooking.getId());
+                    }
+                }
+                if(viewModel.stateBooking.getValue() == null){
+                    binding.rcShipping.smoothScrollToPosition(viewModel.positionUpdate.get());
+                }
                 viewModel.positionUpdate.set(null);
+                setTextTabItem();
             }
         });
 
         viewModel.newBooking.observe(this,newBooking -> {
+            binding.tabLayout.getTabAt(0).select();
             shippingAdapter.addItem(newBooking);
             binding.rcShipping.smoothScrollToPosition(0);
+            setTextTabItem();
         });
 
 
@@ -181,8 +229,43 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
                 viewModel.changeDriverState(new DriverStateRequest(viewModel.state.get()));
             }
         });
+
+        binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                // Xử lý khi tab được chọn
+                switch (tab.getPosition()) {
+                    case 0:
+                        viewModel.stateBooking.setValue(null);
+                        break;
+                    case 1:
+                        viewModel.stateBooking.setValue(100);
+                        break;
+                    case 2:
+                        viewModel.stateBooking.setValue(200);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // Xử lý khi tab không được chọn
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // Xử lý khi tab được chọn lại
+            }
+        });
     }
 
+    private void setTextTabItem(){
+        binding.tabLayout.getTabAt(0).setText("Tất cả("+shippingAdapter.getBookingList().toArray().length+")");
+        binding.tabLayout.getTabAt(1).setText("Lấy hàng("+shippingAdapter1.getBookingList().toArray().length+")");
+        binding.tabLayout.getTabAt(2).setText("Trả hàng("+shippingAdapter2.getBookingList().toArray().length+")");
+    }
     private void getBooking(){
         binding.rcShipping.setAdapter(shippingAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -236,6 +319,141 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
             @Override
             public void navigate_call(int position, Long bookingId) {
                 viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(bookingId));
+            }
+
+            @Override
+            public void delete_booking(int position, Long bookingId) {
+                deleteBooking(bookingId);
+            }
+
+            @Override
+            public void countdown_end(int position, Long bookingId) {
+                viewModel.rejectBooking(bookingId);
+                deleteBooking(bookingId);
+            }
+        });
+    }
+
+    private void getBooking1(){
+        binding.rcShippingStateAccepted.setAdapter(shippingAdapter1);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        binding.rcShippingStateAccepted.setLayoutManager(layoutManager);
+
+        shippingAdapter1.setOnItemClickListener(new ShippingAdapter.OnItemClickListener() {
+            @Override
+            public void itemClick(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter1.getMapIdPos().get(bookingId));
+                mvvmApplication.setDetailsBookingId(bookingId);
+                Intent intent = new Intent(getActivity(), ShippingActivity.class);
+                intent.putExtra("bookingId",shippingAdapter1.getBookingList().get(position).getId() );
+                startActivity(intent);
+            }
+
+            @Override
+            public void accept_booking(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter1.getMapIdPos().get(bookingId));
+                viewModel.acceptBooking(bookingId);
+//                binding.rcShipping.smoothScrollToPosition(position);
+            }
+
+            @Override
+            public void pickup_booking(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter1.getMapIdPos().get(bookingId));
+                imageBookingDialog(bookingId);
+//                binding.rcShipping.smoothScrollToPosition(position);
+            }
+
+            @Override
+            public void reject_booking(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter1.getMapIdPos().get(bookingId));
+                cancelDialog(bookingId);
+            }
+
+            @Override
+            public void done_booking(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter1.getMapIdPos().get(bookingId));
+                imageBookingDialog(bookingId);
+//                binding.rcShipping.smoothScrollToPosition(position);
+//                viewModel.updateStateBooking(Constants.BOOKING_STATE_DONE, currentBookings.get(position).getId());
+            }
+
+            @Override
+            public void navigate_chat(int position, Long bookingId) {
+                int pos = shippingAdapter1.getMapIdPos().get(bookingId);
+                viewModel.positionUpdate.set(shippingAdapter1.getMapIdPos().get(bookingId));
+                viewModel.openChat(shippingAdapter1.getBookingList().get(pos).getCode(), shippingAdapter1.getBookingList().get(pos).getRoom().getId(),shippingAdapter1.getBookingList().get(pos).getId());
+            }
+
+            @Override
+            public void navigate_call(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter1.getMapIdPos().get(bookingId));
+            }
+
+            @Override
+            public void delete_booking(int position, Long bookingId) {
+                deleteBooking(bookingId);
+            }
+
+            @Override
+            public void countdown_end(int position, Long bookingId) {
+                viewModel.rejectBooking(bookingId);
+                deleteBooking(bookingId);
+            }
+        });
+    }
+    private void getBooking2(){
+        binding.rcShippingStatePickup.setAdapter(shippingAdapter2);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        binding.rcShippingStatePickup.setLayoutManager(layoutManager);
+
+        shippingAdapter2.setOnItemClickListener(new ShippingAdapter.OnItemClickListener() {
+            @Override
+            public void itemClick(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter2.getMapIdPos().get(bookingId));
+                mvvmApplication.setDetailsBookingId(bookingId);
+                Intent intent = new Intent(getActivity(), ShippingActivity.class);
+                intent.putExtra("bookingId",shippingAdapter2.getBookingList().get(position).getId() );
+                startActivity(intent);
+            }
+
+            @Override
+            public void accept_booking(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter2.getMapIdPos().get(bookingId));
+                viewModel.acceptBooking(bookingId);
+//                binding.rcShipping.smoothScrollToPosition(position);
+            }
+
+            @Override
+            public void pickup_booking(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter2.getMapIdPos().get(bookingId));
+                imageBookingDialog(bookingId);
+//                binding.rcShipping.smoothScrollToPosition(position);
+            }
+
+            @Override
+            public void reject_booking(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter2.getMapIdPos().get(bookingId));
+                cancelDialog(bookingId);
+            }
+
+            @Override
+            public void done_booking(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter2.getMapIdPos().get(bookingId));
+                imageBookingDialog(bookingId);
+//                binding.rcShipping.smoothScrollToPosition(position);
+//                viewModel.updateStateBooking(Constants.BOOKING_STATE_DONE, currentBookings.get(position).getId());
+            }
+
+            @Override
+            public void navigate_chat(int position, Long bookingId) {
+                int pos = shippingAdapter.getMapIdPos().get(bookingId);
+                viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(bookingId));
+                viewModel.openChat(shippingAdapter2.getBookingList().get(pos).getCode(), shippingAdapter2.getBookingList().get(pos).getRoom().getId(),shippingAdapter2.getBookingList().get(pos).getId());
+            }
+
+            @Override
+            public void navigate_call(int position, Long bookingId) {
+                viewModel.positionUpdate.set(shippingAdapter2.getMapIdPos().get(bookingId));
             }
 
             @Override
@@ -603,10 +821,17 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
         mvvmApplication.getWebSocketLiveData().getCodeBooking().remove(bookingId);
         mvvmApplication.getWebSocketLiveData().sendPing();
         shippingAdapter.removeItem(bookingId);
+        if(shippingAdapter1.getMapIdPos().get(bookingId) != null){
+            shippingAdapter1.removeItem(bookingId);
+        }
         if(shippingAdapter.getMapIdPos().get(bookingId)!=0){
             binding.rcShipping.smoothScrollToPosition(shippingAdapter.getMapIdPos().get(bookingId)-1);
         }
+        if(shippingAdapter1.getMapIdPos().get(bookingId)!=null && shippingAdapter1.getMapIdPos().get(bookingId)!=0){
+            binding.rcShippingStateAccepted.smoothScrollToPosition(shippingAdapter1.getMapIdPos().get(bookingId)-1);
+        }
         viewModel.positionUpdate.set(null);
+        setTextTabItem();
     }
 
 

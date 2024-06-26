@@ -20,7 +20,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/bg_app"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
@@ -83,11 +83,11 @@
             android:textColor="@color/black"/>
 
         <com.google.android.material.tabs.TabLayout
-            android:visibility="gone"
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             style="@style/CustomTabLayoutStyle"
-            android:background="@color/white"
+            app:tabSelectedTextColor="@color/green_light_app"
+            android:background="@color/bg_app"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             app:tabTextColor="@color/black"
@@ -100,11 +100,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tất cả" />
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabNew"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Đơn mới" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabProcessing"
@@ -121,8 +116,23 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:visibility="@{vm.stateBooking == null ? View.VISIBLE : View.GONE}"
             android:paddingTop="@dimen/_10sdp"
             android:id="@+id/rc_shipping"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="@{vm.stateBooking == 100 ? View.VISIBLE : View.GONE}"
+            android:paddingTop="@dimen/_10sdp"
+            android:id="@+id/rc_shippingStateAccepted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="@{vm.stateBooking == 200 ? View.VISIBLE : View.GONE}"
+            android:paddingTop="@dimen/_10sdp"
+            android:id="@+id/rc_shippingStatePickup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"/>
