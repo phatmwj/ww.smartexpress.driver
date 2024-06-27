@@ -21,7 +21,7 @@
         android:elevation="@dimen/_5sdp">
 
         <LinearLayout
-            android:background="@drawable/bg_green_light_elevation"
+            android:background="@drawable/bg_corners_app"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -38,7 +38,8 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
                 <TextView
-                    style="@style/small_information"
+                    style="@style/montserrat_medium_gray_11ssp"
+                    android:textSize="@dimen/_9ssp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{DateUtils.dateFormat(ivm.createdDate)}"
@@ -47,22 +48,7 @@
                     android:layout_weight="1">
 
                 </TextView>
-                <LinearLayout
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-                    <TextView
-                        style="@style/montserrat_medium_black_11ssp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@{NumberUtils.formatCurrency(ivm.money-ivm.promotionMoney)}"
-                        android:maxLines="1"
-                        android:ellipsize="end">
 
-                    </TextView>
-                </LinearLayout>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -99,6 +85,31 @@
 
             </LinearLayout>
             <LinearLayout
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    style="@style/montserrat_medium_gray_11ssp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:maxLines="1"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="@{ivm.service.name}" />
+                <TextView
+                    style="@style/montserrat_medium_black_11ssp"
+                    android:textSize="@dimen/_12ssp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@{NumberUtils.formatCurrency(ivm.money-ivm.promotionMoney)}"
+                    android:maxLines="1"
+                    android:ellipsize="end">
+
+                </TextView>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -119,7 +130,8 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/montserrat_medium_gray_11ssp"
+                        style="@style/text_style_montserrat"
+                        android:textSize="@dimen/_11ssp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:background="@color/white"
@@ -130,18 +142,14 @@
 
             </LinearLayout>
 
-            <FrameLayout
-                android:layout_width="@dimen/_5sdp"
-                android:layout_height="@dimen/_15sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:background="@drawable/line_dashed_border">
 
-            </FrameLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:orientation="horizontal">
 
@@ -158,7 +166,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
-                        style="@style/montserrat_medium_gray_11ssp"
+                        style="@style/text_style_montserrat"
+                        android:textSize="@dimen/_11ssp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:background="@color/white"
@@ -207,7 +216,8 @@
                                 android:text='@{NumberUtils.getSize(ivm.service.size) +"  "+ivm.service.weight+"Kg"}'
                                 android:maxLines="1"
                                 android:ellipsize="end"
-                                style="@style/montserrat_medium_gray_11ssp"
+                                style="@style/text_style_montserrat"
+                                android:textSize="@dimen/_11ssp"
                                 android:textAlignment="textStart">
                             </TextView>
 
@@ -218,7 +228,8 @@
                                 android:text=''
                                 android:maxLines="1"
                                 android:ellipsize="end"
-                                style="@style/montserrat_medium_light_gray_11ssp"
+                                style="@style/text_style_montserrat"
+                                android:textSize="@dimen/_11ssp"
                                 android:textAlignment="textEnd">
                             </TextView>
                         </LinearLayout>
@@ -231,7 +242,8 @@
                             android:text='@{"Thu hộ: "+NumberUtils.formatCurrency(ivm.codPrice)}'
                             android:maxLines="1"
                             android:ellipsize="end"
-                            style="@style/montserrat_medium_gray_11ssp"
+                            style="@style/text_style_montserrat"
+                            android:textSize="@dimen/_11ssp"
                             android:textAlignment="textStart"/>
 
                     </LinearLayout>
@@ -246,17 +258,6 @@
                     </ImageView>
                 </LinearLayout>
             </LinearLayout>
-
-            <TextView
-                android:layout_marginTop="@dimen/_5sdp"
-                style="@style/montserrat_medium_black_8ssp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:maxLines="1"
-                android:text="@{ivm.service.name}" />
-
-
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,7 +17,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F3F3F3">
+        android:background="@color/bg_app">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,24 +25,11 @@
             android:orientation="vertical">
 
 
-                <TextView
-                    style="@style/app_text_big"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_12sdp"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    android:layout_gravity="left"
-                    android:text="@string/profile_setting"
-                    android:textColor="@color/black"/>
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:elevation="@dimen/_2sdp"
-                android:background="@color/white"
+                android:background="@color/bg_app"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -55,8 +42,8 @@
                     android:orientation="horizontal">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="@dimen/_40sdp"
-                        android:layout_height="@dimen/_40sdp"
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="@dimen/_60sdp"
                         android:src="@{vm.user.avatar}" />
 
 
@@ -74,6 +61,14 @@
                             android:layout_weight="1"
                             android:maxLines="1"
                             android:text="@{vm.user.fullName}" />
+
+                        <TextView
+                            style="@style/text_style_montserrat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:text="@{vm.user.phone}" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -107,57 +102,81 @@
 
             </LinearLayout>
 
+        <LinearLayout
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="@dimen/_3sdp"
+                style="@style/app_text_b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:textAllCaps="true"
+                android:textColor="@color/gray"
+                android:text="Thanh toán" />
+            <LinearLayout
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:onClick="@{(v)->vm.goWallet()}"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/baseline_attach_money_24"
+                    app:tint="@color/app_text" />
+
+                <TextView
+                    style="@style/app_text_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:text="Tài khoản của tôi" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_icon_expand" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:elevation="@dimen/_2sdp"
                 android:background="@color/white"
+                android:paddingHorizontal="@dimen/_15sdp"
                 android:orientation="vertical">
-
+                <TextView
+                    android:layout_marginTop="@dimen/_3sdp"
+                    style="@style/app_text_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:textAllCaps="true"
+                    android:textColor="@color/gray"
+                    android:text="Tổng quan"
+                    android:layout_marginBottom="@dimen/_5sdp"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_15sdp"
-                    android:onClick="@{(v)->vm.goWallet()}"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/baseline_attach_money_24"
-                        app:tint="@color/app_text" />
-
-                    <TextView
-                        style="@style/app_text_b"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_weight="1"
-                        android:maxLines="1"
-                        android:text="Tài khoản của tôi" />
-
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_icon_expand" />
-                </LinearLayout>
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_3sdp"
-                    android:background="@color/gray_light"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_15sdp"
                     android:onClick="@{(v)->vm.goActivity()}"
                     android:orientation="horizontal">
 
@@ -187,7 +206,8 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_3sdp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginLeft="@dimen/_25sdp"
                     android:background="@color/gray_light"/>
                 <LinearLayout
                     android:onClick="@{(v)->vm.goAwardProgram()}"
@@ -265,8 +285,6 @@
                     android:onClick="@{(v)->vm.goAllBikeConfig()}"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_15sdp"
                     android:orientation="horizontal">
                     <ImageView
                         android:layout_width="wrap_content"
@@ -281,7 +299,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_weight="1"
                         android:maxLines="1"
-                        android:text="@string/config_all_bike_service" />
+                        android:text="Cấu hình dịch vụ" />
 
 
                     <ImageView
@@ -293,14 +311,13 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_3sdp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginLeft="@dimen/_25sdp"
                     android:background="@color/gray_light"/>
                 <LinearLayout
                     android:onClick="@{(v)->vm.goTripHistory()}"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_15sdp"
                     android:orientation="horizontal">
                     <ImageView
                         android:layout_width="wrap_content"
@@ -332,19 +349,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:elevation="@dimen/_2sdp"
+                android:paddingHorizontal="@dimen/_15sdp"
                 android:background="@color/white"
                 android:orientation="vertical">
-
+                <TextView
+                    android:layout_marginTop="@dimen/_3sdp"
+                    style="@style/app_text_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:textAllCaps="true"
+                    android:textColor="@color/gray"
+                    android:text="Cài đặt"
+                    android:layout_marginBottom="@dimen/_5sdp"/>
 
                 <LinearLayout
                     android:onClick="@{(v)->vm.renewPassword()}"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_15sdp"
                     android:orientation="horizontal">
                     <ImageView
                         android:layout_width="wrap_content"
@@ -371,14 +395,13 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_3sdp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginLeft="@dimen/_25sdp"
                     android:background="@color/gray_light"/>
                 <LinearLayout
                     android:onClick="@{(v)->vm.logoutDialog()}"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_15sdp"
                     android:orientation="horizontal">
                     <ImageView
                         android:layout_width="wrap_content"

@@ -19,11 +19,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/bg_app">
         <FrameLayout
             android:id="@+id/frameLayout2"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@color/white"
             android:padding="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,239 +69,152 @@
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tên ngân hàng"
-                        style="@style/montserrat_medium_gray_12ssp">
-
-                    </TextView>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/required_star"
-                        android:textColor="@color/red_color">
-
-                    </TextView>
-                </LinearLayout>
-
-                <EditText
-                    style="@style/information_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="@drawable/bg_edt"
-                    android:ellipsize="end"
-                    android:focusable="false"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxBackgroundMode="outline"
+                    app:shapeAppearanceOverlay="@style/Rounded"
                     android:hint="Ngân hàng"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:onClick="@{()->vm.getBankList()}"
-                    android:text="@{vm.bank.name}"
-                    android:textColorHint="@color/grey_text">
+                    app:hintEnabled="true"
+                    app:boxStrokeColor="#898A8D"
+                    app:boxBackgroundColor="@color/white"
+                    app:hintTextColor="#898A8D"
+                    app:helperTextTextColor="#898A8D"
+                    android:background="@color/bg_app"
+                    app:boxStrokeWidthFocused="1dp"
+                    app:hintAnimationEnabled="false">
 
-                </EditText>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/email"
-                        style="@style/montserrat_medium_gray_12ssp">
-
-                    </TextView>
-
-                </LinearLayout>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:background="@drawable/bg_edt"
-                    android:hint="@string/email_hint"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:text=""
-                    android:textColorHint="@color/grey_text"
-                    style="@style/information_edit_text"
-                    android:visibility="gone">
-
-                </EditText>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Số tài khoản"
-                        style="@style/montserrat_medium_gray_12ssp">
-
-                    </TextView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/required_star"
-                        android:textColor="@color/red_color">
-
-                    </TextView>
-
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/edtAccountNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="@drawable/bg_edt"
-                    android:hint="Nhập số tài khoản"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:text="@={vm.accountNumber}"
-                    android:textColorHint="@color/grey_text"
-                    style="@style/information_edit_text">
-
-                </EditText>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tên chủ tài khoản"
-                        style="@style/montserrat_medium_gray_12ssp">
-
-                    </TextView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/required_star"
-                        android:textColor="@color/red_color">
-
-                    </TextView>
-
-                </LinearLayout>
-
-                <EditText
-                    android:onClick="@{()->a.hideKeyboard()}"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="@drawable/bg_edt"
-                    android:hint="Chủ tài khoản"
-                    android:inputType="none"
-                    android:focusable="false"
-                    android:maxLines="1"
-                    android:text="@{vm.accountName.accountName}"
-                    android:textColorHint="@color/grey_text"
-                    style="@style/information_edit_text">
-
-                </EditText>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Chi nhánh"
-                        style="@style/montserrat_medium_gray_12ssp">
-
-                    </TextView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/required_star"
-                        android:textColor="@color/red_color">
-
-                    </TextView>
-
-                </LinearLayout>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="@drawable/bg_edt"
-                    android:hint="Nhập chi nhánh"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:text="@={vm.brand}"
-                    android:textColorHint="@color/grey_text"
-                    style="@style/information_edit_text">
-
-                </EditText>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/password"
-                        style="@style/montserrat_medium_gray_12ssp">
-
-                    </TextView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/required_star"
-                        android:textColor="@color/red_color">
-
-                    </TextView>
-
-                </LinearLayout>
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp">
-
-                    <EditText
-                        android:id="@+id/edtPw"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:onClick="@{()->vm.getBankList()}"
                         style="@style/information_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_edt"
-                        android:hint="@string/pw_input"
+                        android:text="@{vm.bank.name}"
+                        android:inputType="text"
+                        android:focusable="false"
+                        android:maxLines="1"
+                        android:ellipsize="end"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxBackgroundMode="outline"
+                    app:shapeAppearanceOverlay="@style/Rounded"
+                    android:hint="Số tài khoản"
+                    app:hintEnabled="true"
+                    app:boxStrokeColor="#898A8D"
+                    app:boxBackgroundColor="@color/white"
+                    app:hintTextColor="#898A8D"
+                    app:helperTextTextColor="#898A8D"
+                    android:background="@color/bg_app"
+                    app:boxStrokeWidthFocused="@dimen/_1sdp"
+                    app:hintAnimationEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtAccountNumber"
+                        style="@style/information_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:text="@={vm.accountNumber}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxBackgroundMode="outline"
+                    app:shapeAppearanceOverlay="@style/Rounded"
+                    android:hint="Chủ tài khoản"
+                    app:hintEnabled="true"
+                    app:boxStrokeColor="#898A8D"
+                    app:boxBackgroundColor="@color/white"
+                    app:hintTextColor="#898A8D"
+                    app:helperTextTextColor="#898A8D"
+                    android:background="@color/bg_app"
+                    app:boxStrokeWidthFocused="@dimen/_1sdp"
+                    app:hintAnimationEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/information_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:focusable="false"
+                        android:importantForAccessibility="yes"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:text="@{vm.accountName.accountName}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxBackgroundMode="outline"
+                    app:shapeAppearanceOverlay="@style/Rounded"
+                    android:hint="Chi nhánh"
+                    app:hintEnabled="true"
+                    app:boxStrokeColor="#898A8D"
+                    app:boxBackgroundColor="@color/white"
+                    app:hintTextColor="#898A8D"
+                    app:helperTextTextColor="#898A8D"
+                    android:background="@color/bg_app"
+                    app:boxStrokeWidthFocused="@dimen/_1sdp"
+                    app:hintAnimationEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/information_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:text="@={vm.brand}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxBackgroundMode="outline"
+                    app:shapeAppearanceOverlay="@style/Rounded"
+                    android:hint="Mật khẩu"
+                    app:hintEnabled="true"
+                    app:boxStrokeColor="#898A8D"
+                    app:boxBackgroundColor="@color/white"
+                    app:hintTextColor="#898A8D"
+                    app:helperTextTextColor="#898A8D"
+                    android:background="@color/bg_app"
+                    app:boxStrokeWidthFocused="@dimen/_1sdp"
+                    app:endIconMode="password_toggle"
+                    app:hintAnimationEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/information_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        android:paddingRight="@dimen/_35sdp"
-                        android:text="@={vm.password}"
-                        android:textColorHint="@color/grey_text">
-
-                    </EditText>
-
-                    <ImageView
-                        android:onClick="@{(v)->vm.setIsVisibilityPassword()}"
-                        android:layout_gravity="right|center_vertical"
-                        android:layout_marginRight="@dimen/_15sdp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@{vm.isVisibility ? @drawable/ic_icon_visibility_off : @drawable/ic_icon_visibility}">
-
-                    </ImageView>
-                </FrameLayout>
+                        android:text="@={vm.password}" />
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

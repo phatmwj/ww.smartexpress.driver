@@ -28,8 +28,12 @@ public class PayoutViewModel extends BaseViewModel {
     }
 
     public void doDone(){
-        if(money.get() == null && Integer.valueOf(money.get())>50000){
-            showErrorMessage("Số tiền rút không hợp lệ");
+        if(money.get() != null && Integer.valueOf(money.get())<50000){
+            showErrorMessage("Số tiền rút tối thiểu là 50.000đ");
+            return;
+        }
+        if(money.get() != null && Integer.valueOf(money.get())> balance.get()){
+            showErrorMessage("Số tiền rút vượt quá số dư trong ví");
             return;
         }
         showLoading();
@@ -40,10 +44,10 @@ public class PayoutViewModel extends BaseViewModel {
                                 if(response.isResult()){
                                     hideLoading();
                                     showSuccessMessage(response.getMessage());
+                                    back();
                                 }else {
                                     hideLoading();
                                     showErrorMessage(response.getMessage());
-                                    back();
                                 }
                             },error->{
                                 hideLoading();

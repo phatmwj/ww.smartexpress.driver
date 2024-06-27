@@ -355,4 +355,16 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/_5sdp</item>
     </style>
+    <style name="text_style_montserrat">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+    <style name="text_style_semibold">
+        <item name="fontFamily">@font/montserrat_semibold</item>
+        <item name="android:fontFamily">@font/montserrat_semibold</item>
+    </style>
+    <style name="text_style_medium">
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
+    </style>
 </resources>

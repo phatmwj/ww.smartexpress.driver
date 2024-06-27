@@ -18,26 +18,37 @@
         android:background="#00FFFFFF">
 
         <LinearLayout
+            android:paddingHorizontal="@dimen/_10sdp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_15sdp"
             android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/bg_corners_app"
             android:gravity="center">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:src="@{ivm.service.image}" />
+                <LinearLayout
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/app_text_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="@{ivm.service.name}" />
+                    <TextView
+                        style="@style/app_text_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="@{String.valueOf(ivm.ratioShare)+'%'}" />
+                </LinearLayout>
 
-            <TextView
-                style="@style/app_text_b"
-                android:layout_width="@dimen/_160sdp"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:text="@{ivm.service.name}" />
-            <TextView
-                style="@style/app_text_b"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:maxLines="1"
-                android:text="@{String.valueOf(ivm.ratioShare)+'%'}" />
 
             <com.kyleduo.switchbutton.SwitchButton
                 android:id="@+id/switchState"
@@ -52,11 +63,11 @@
             </com.kyleduo.switchbutton.SwitchButton>
         </LinearLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:layout_gravity="bottom"
-            android:background="@drawable/background_underline"
-            android:visibility="@{i==ivm.id?View.GONE:View.VISIBLE}"/>
+<!--        <FrameLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/_1sdp"-->
+<!--            android:layout_gravity="bottom"-->
+<!--            android:background="@drawable/background_underline"-->
+<!--            android:visibility="@{i==ivm.id?View.GONE:View.VISIBLE}"/>-->
     </FrameLayout>
 </layout>

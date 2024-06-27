@@ -35,27 +35,6 @@ public class RenewPasswordActivity extends BaseActivity<ActivityRenewPasswordBin
         if(bundle != null){
             viewModel.isForgot.set(bundle.getBoolean("isForgot", false));
         }
-        viewModel.isPwVisibility.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
-            @Override
-            public void onPropertyChanged(Observable sender, int propertyId) {
-                if(!viewModel.isPwVisibility.get()){
-                    viewBinding.edtNewPw.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }else {
-                    viewBinding.edtNewPw.setTransformationMethod(null);;
-                }
-            }
-        });
-
-        viewModel.isCPwVisibility.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
-            @Override
-            public void onPropertyChanged(Observable sender, int propertyId) {
-                if(!viewModel.isCPwVisibility.get()){
-                    viewBinding.edtCPw.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }else {
-                    viewBinding.edtCPw.setTransformationMethod(null);;
-                }
-            }
-        });
 
         viewBinding.btnConfirm.setOnClickListener(view -> {
             hideKeyboard();

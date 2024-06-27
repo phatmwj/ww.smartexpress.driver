@@ -18,12 +18,13 @@
         android:onClick="@{()->a.hideKeyboard()}"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/bg_app">
 
         <FrameLayout
             android:id="@+id/frameLayout2"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@color/white"
             android:padding="@dimen/_5sdp"
             android:layout_gravity="top">
 
@@ -105,16 +106,18 @@
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:boxBackgroundMode="outline"
                 app:shapeAppearanceOverlay="@style/Rounded"
                 android:hint="Họ và tên"
                 app:hintEnabled="true"
                 app:boxStrokeColor="#898A8D"
+                app:boxBackgroundColor="@color/white"
+                android:background="@color/bg_app"
                 app:hintTextColor="#898A8D"
                 app:helperTextTextColor="#898A8D"
-                app:boxStrokeWidthFocused="1dp"
+                app:boxStrokeWidthFocused="@dimen/_1sdp"
                 android:focusable="false"
                 android:enabled="false"
                 app:hintAnimationEnabled="false">
@@ -130,16 +133,18 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:boxBackgroundMode="outline"
                 app:shapeAppearanceOverlay="@style/Rounded"
+                app:boxBackgroundColor="@color/white"
+                android:background="@color/bg_app"
                 android:hint="Số điện thoại"
                 app:hintEnabled="true"
                 app:boxStrokeColor="#898A8D"
                 app:hintTextColor="#898A8D"
                 app:helperTextTextColor="#898A8D"
-                app:boxStrokeWidthFocused="1dp"
+                app:boxStrokeWidthFocused="@dimen/_1sdp"
                 android:enabled="false"
                 app:hintAnimationEnabled="false">
                 <com.google.android.material.textfield.TextInputEditText

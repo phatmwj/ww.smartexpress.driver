@@ -17,11 +17,10 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/_10sdp"
         android:paddingRight="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_5sdp"
         android:elevation="@dimen/_5sdp">
 
         <LinearLayout
-            android:background="@drawable/bg_green_light_elevation"
+            android:background="@drawable/bg_corners_app"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

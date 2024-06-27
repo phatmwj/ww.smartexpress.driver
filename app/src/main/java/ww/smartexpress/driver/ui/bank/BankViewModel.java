@@ -45,7 +45,6 @@ public class BankViewModel extends BaseViewModel {
     public ObservableField<String> brand = new ObservableField<>();
     public ObservableField<String> password = new ObservableField<>();
     public ObservableField<String> bankSearch = new ObservableField<>("");
-    public ObservableField<Boolean> isVisibility = new ObservableField<>(false);
     public ObservableField<List<BankResponse>> bankResponseList = new ObservableField<>();
     public ObservableField<BankResponse> bank = new ObservableField<>();
 
@@ -55,9 +54,6 @@ public class BankViewModel extends BaseViewModel {
     }
     public Repository getRepository(){
         return repository;
-    }
-    public void setIsVisibilityPassword(){
-        isVisibility.set(!isVisibility.get());
     }
 
     public void back(){
@@ -200,7 +196,7 @@ public class BankViewModel extends BaseViewModel {
 
                                         });
                                 application.getCurrentActivity().finish();
-                                showSuccessMessage(res.getMessage());
+                                showSuccessMessage("Cập nhật tài khoản ngân hàng thành công");
                             }else {
                                 showErrorMessage(res.getMessage());
                             }

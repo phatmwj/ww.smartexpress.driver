@@ -19,11 +19,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/bg_app">
         <FrameLayout
             android:id="@+id/frameLayout2"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@color/white"
             android:padding="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,11 +71,19 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/_10sdp">
 
+            <LinearLayout
+                android:layout_marginTop="@dimen/_10sdp"
+                android:elevation="@dimen/_2sdp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:background="@drawable/bg_corners_app"
+                android:paddingVertical="@dimen/_10sdp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="@color/white"
                     android:gravity="center_vertical">
 
                     <ImageView
@@ -91,7 +100,8 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_weight="1"
                         android:maxLines="2"
-                        android:text="Số tiền hiện tại" />
+                        android:text="Số tiền hiện tại"
+                        android:textColor="@color/gray"/>
 
 
                     <TextView
@@ -117,37 +127,59 @@
 
                 </EditText>
                 <TextView
-                    style="@style/app_text"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    style="@style/text_style_montserrat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
                     android:text="Vui lòng rút tối thiểu 50.000 đ"
                     android:maxLines="1" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_2sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="@color/gray_light"/>
 
                 <TextView
                     style="@style/app_text_b"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_weight="1"
                     android:maxLines="1"
-                    android:text="Hoặc chọn số tiền cần rút" />
+                    android:text="Chọn nhanh số tiền"
+                    android:textColor="@color/gray"/>
 
-                <RelativeLayout
+                <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/_12sdp">
+                    android:columnCount="3"
+                    android:rowCount="2"
+                    android:paddingVertical="@dimen/_12sdp">
                     <LinearLayout
+                        android:layout_marginHorizontal="@dimen/_3sdp"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:onClick='@{()->a.clickMoney("50000")}'
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:background='@{vm.money.equals("50000") ? @drawable/bg_money : @drawable/background_card_app}'
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            style="@style/text_style_medium"
+                            android:textSize="@dimen/_13sdp"
+                            android:textColor="@color/app_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:text="50.000"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginHorizontal="@dimen/_3sdp"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
                         android:onClick='@{()->a.clickMoney("100000")}'
                         android:id="@+id/layoutTotal"
-                        android:layout_width="@dimen/_125sdp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:background='@{vm.money.equals("100000") ? @drawable/bg_money : @drawable/background_card_app}'
@@ -155,18 +187,23 @@
                         android:gravity="center">
 
                         <TextView
-                            style="@style/app_title"
+                            style="@style/text_style_medium"
+                            android:textSize="@dimen/_13sdp"
+                            android:textColor="@color/app_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="@dimen/_15sdp"
+                            android:layout_marginVertical="@dimen/_10sdp"
                             android:layout_weight="1"
                             android:maxLines="1"
                             android:text="100.000"/>
                     </LinearLayout>
                     <LinearLayout
+                        android:layout_marginHorizontal="@dimen/_3sdp"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
                         android:onClick='@{()->a.clickMoney("200000")}'
                         android:id="@+id/layout_pre_tax_fee"
-                        android:layout_width="@dimen/_125sdp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:background='@{vm.money.equals("200000") ? @drawable/bg_money : @drawable/background_card_app}'
@@ -174,36 +211,23 @@
                         android:gravity="center">
 
                         <TextView
-                            style="@style/app_title"
+                            style="@style/text_style_medium"
+                            android:textSize="@dimen/_13sdp"
+                            android:textColor="@color/app_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="@dimen/_15sdp"
+                            android:layout_marginVertical="@dimen/_10sdp"
                             android:layout_weight="1"
                             android:maxLines="1"
                             android:text="200.000"/>
                     </LinearLayout>
+
                     <LinearLayout
-                        android:onClick='@{()->a.clickMoney("1000000")}'
-                        android:layout_width="@dimen/_125sdp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/layout_pre_tax_fee"
-                        android:background='@{vm.money.equals("1000000") ? @drawable/bg_money : @drawable/background_card_app}'
-                        android:orientation="vertical"
-                        android:gravity="center">
-                        <TextView
-                            style="@style/app_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="@dimen/_15sdp"
-                            android:layout_weight="1"
-                            android:maxLines="1"
-                            android:text="1.000.000"/>
-                    </LinearLayout>
-                    <LinearLayout
+                        android:layout_marginHorizontal="@dimen/_3sdp"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
                         android:onClick='@{()->a.clickMoney("500000")}'
-                        android:layout_width="@dimen/_125sdp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_alignParentLeft="true"
@@ -213,32 +237,83 @@
                         android:gravity="center">
 
                         <TextView
-                            style="@style/app_title"
+                            style="@style/text_style_medium"
+                            android:textSize="@dimen/_13sdp"
+                            android:textColor="@color/app_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="@dimen/_15sdp"
+                            android:layout_marginVertical="@dimen/_10sdp"
                             android:layout_weight="1"
                             android:maxLines="1"
                             android:text="500.000"/>
                     </LinearLayout>
-                </RelativeLayout>
+                    <LinearLayout
+                        android:layout_marginHorizontal="@dimen/_3sdp"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:onClick='@{()->a.clickMoney("1000000")}'
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/layout_pre_tax_fee"
+                        android:background='@{vm.money.equals("1000000") ? @drawable/bg_money : @drawable/background_card_app}'
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        <TextView
+                            style="@style/text_style_medium"
+                            android:textSize="@dimen/_13sdp"
+                            android:textColor="@color/app_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:text="1.000.000"/>
+                    </LinearLayout>
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_2sdp"
-                    android:background="@color/gray_light"
-                    android:layout_marginBottom="@dimen/_5sdp"/>
+                    <LinearLayout
+                        android:layout_marginHorizontal="@dimen/_3sdp"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:onClick='@{()->a.clickMoney("2000000")}'
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/layoutTotal"
+                        android:background='@{vm.money.equals("2000000") ? @drawable/bg_money : @drawable/background_card_app}'
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            style="@style/text_style_medium"
+                            android:textSize="@dimen/_13sdp"
+                            android:textColor="@color/app_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:text="2.000.000"/>
+                    </LinearLayout>
+                </GridLayout>
+            </LinearLayout>
 
                 <TextView
+                    android:layout_marginTop="@dimen/_10sdp"
                     style="@style/app_text_b"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
                     android:layout_weight="1"
                     android:maxLines="1"
-                    android:text="Tài khoản nhận tiền" />
+                    android:text="Tài khoản nhận tiền"
+                    android:textColor="@color/gray"/>
 
                 <RadioGroup
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/bg_corners_app"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <RadioButton
