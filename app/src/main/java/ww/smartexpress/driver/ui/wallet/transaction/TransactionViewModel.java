@@ -23,7 +23,7 @@ public class TransactionViewModel extends BaseViewModel {
     public MutableLiveData<List<WalletTransaction>> transactions = new MutableLiveData<>();
     public TransactionViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
-        getTransaction();
+//        getTransaction();
     }
     public void back(){
         application.getCurrentActivity().finish();
@@ -47,8 +47,8 @@ public class TransactionViewModel extends BaseViewModel {
                         }
                     }else {
                         showErrorMessage(response.getMessage());
+                        hideLoading();
                     }
-                    hideLoading();
                 },error->{
                     showErrorMessage(application.getString(R.string.newtwork_error));
                     error.printStackTrace();

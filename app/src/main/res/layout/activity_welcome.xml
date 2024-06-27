@@ -15,7 +15,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/bg_app"
         tools:context=".ui.welcome.WelcomeActivity">
 
 
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:text="@string/welcome_subtitle"
-                style="@style/welcome_subtitle"/>
+                style="@style/text_style_montserrat"/>
 
             <Button
                 android:onClick="@{(v)->vm.doNext()}"

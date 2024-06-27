@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -15,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
-        android:background="@color/white">
+        android:background="@color/bg_app">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,177 +24,121 @@
             android:layout_marginTop="@dimen/_30ssp"
             android:layout_marginHorizontal="@dimen/_12sdp"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/signup"
-                style="@style/big_title">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginTop="@dimen/_15sdp"
+                style="@style/big_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_18sdp"
+                android:text="Đăng kí tài xế\nSmart Express">
             </TextView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_25sdp">
+            <ImageView
+                android:id="@+id/imgLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_120sdp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/logo_welcome" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fullName"
-                    style="@style/montserrat_medium_gray_12ssp">
+        </LinearLayout>
 
-                </TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/required_star"
-                    android:textColor="@color/red_color">
-
-                </TextView>
-            </LinearLayout>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginTop="@dimen/_15sdp"
-                android:background="@drawable/bg_edt"
-                android:hint="@string/fullName_hint"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="@={vm.fullName}"
-                android:inputType="text"
-                android:maxLength="50"
-                android:textColorHint="@color/grey_text"
-                style="@style/information_edit_text">
-
-            </EditText>
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:visibility="gone">
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxBackgroundMode="outline"
+                app:shapeAppearanceOverlay="@style/Rounded"
+                android:hint="Họ và tên *"
+                app:hintEnabled="true"
+                app:boxStrokeColor="#898A8D"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="#898A8D"
+                app:helperTextTextColor="#898A8D"
+                android:background="@color/bg_app"
+                app:boxStrokeWidthFocused="@dimen/_1sdp"
+                app:hintAnimationEnabled="false">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/email"
-                    style="@style/montserrat_medium_gray_12ssp">
-
-                </TextView>
-
-            </LinearLayout>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:background="@drawable/bg_edt"
-                android:hint="@string/email_hint"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="@={vm.email}"
-                android:textColorHint="@color/grey_text"
-                style="@style/information_edit_text"
-                android:visibility="gone">
-
-            </EditText>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/phone"
-                    style="@style/montserrat_medium_gray_12ssp">
-
-                </TextView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/required_star"
-                    android:textColor="@color/red_color">
-
-                </TextView>
-
-            </LinearLayout>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:background="@drawable/bg_edt"
-                android:hint="@string/phone_hint"
-                android:inputType="phone"
-                android:maxLength="10"
-                android:maxLines="1"
-                android:text="@={vm.phone}"
-                android:textColorHint="@color/grey_text"
-                style="@style/information_edit_text">
-
-            </EditText>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/password"
-                    style="@style/montserrat_medium_gray_12ssp">
-
-                </TextView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/required_star"
-                    android:textColor="@color/red_color">
-
-                </TextView>
-
-            </LinearLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp">
-                <EditText
-                    android:paddingRight="@dimen/_35sdp"
-                    android:id="@+id/edtPw"
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/information_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_edt"
-                    android:hint="@string/pw_input"
+                    android:ellipsize="end"
+                    android:focusable="true"
+                    android:importantForAccessibility="yes"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:text="@={vm.fullName}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxBackgroundMode="outline"
+                app:shapeAppearanceOverlay="@style/Rounded"
+                android:hint="Số điện thoại *"
+                app:hintEnabled="true"
+                app:boxStrokeColor="#898A8D"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="#898A8D"
+                app:helperTextTextColor="#898A8D"
+                android:background="@color/bg_app"
+                app:boxStrokeWidthFocused="@dimen/_1sdp"
+                app:hintAnimationEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/information_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:focusable="true"
+                    android:importantForAccessibility="yes"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:maxLength="10"
+                    android:text="@={vm.phone}"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxBackgroundMode="outline"
+                app:shapeAppearanceOverlay="@style/Rounded"
+                android:hint="Mật khẩu *"
+                app:hintEnabled="true"
+                app:boxStrokeColor="#898A8D"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="#898A8D"
+                app:helperTextTextColor="#898A8D"
+                android:background="@color/bg_app"
+                app:boxStrokeWidthFocused="@dimen/_1sdp"
+                app:endIconMode="password_toggle"
+                app:hintAnimationEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/information_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:focusable="true"
+                    android:importantForAccessibility="yes"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:textColorHint="@color/grey_text"
-                    style="@style/information_edit_text"
-                    android:text="@={vm.password}">
-
-                </EditText>
-
-                <ImageView
-                    android:onClick="@{(v)->vm.setIsVisibilityPassword()}"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_marginRight="@dimen/_15sdp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@{vm.isVisibility ? @drawable/ic_icon_visibility_off : @drawable/ic_icon_visibility}">
-
-                </ImageView>
-            </FrameLayout>
+                    android:text="@={vm.password}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btnEPUpdate"
                 style="@style/AppButtonStyle"
-                android:layout_marginVertical="@dimen/_40sdp"
+                android:layout_marginVertical="@dimen/_30sdp"
                 android:enabled="@{!TextUtils.isEmpty(vm.fullName)  &amp;&amp; !TextUtils.isEmpty(vm.phone) &amp;&amp; !TextUtils.isEmpty(vm.password)}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

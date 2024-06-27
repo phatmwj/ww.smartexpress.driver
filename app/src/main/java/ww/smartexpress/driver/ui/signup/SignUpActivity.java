@@ -32,15 +32,5 @@ public class SignUpActivity extends BaseActivity<ActivitySignupBinding, SignUpVi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        viewModel.isVisibility.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
-            @Override
-            public void onPropertyChanged(Observable sender, int propertyId) {
-                if(!viewModel.isVisibility.get()){
-                    viewBinding.edtPw.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }else {
-                    viewBinding.edtPw.setTransformationMethod(null);;
-                }
-            }
-        });
     }
 }

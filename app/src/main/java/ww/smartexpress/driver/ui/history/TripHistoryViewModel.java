@@ -25,10 +25,11 @@ public class TripHistoryViewModel extends BaseViewModel {
     public ObservableField<Integer> pageNumber = new ObservableField<>(0);
     public ObservableField<Integer> pageSize = new ObservableField<>(10);
     public ObservableField<Integer> pageTotal = new ObservableField<>();
+    public ObservableField<Integer> totalItem = new ObservableField<>(0);
 
     public TripHistoryViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
-        getMyBooking();
+//        getMyBooking();
     }
 
     public void back(){
@@ -46,11 +47,12 @@ public class TripHistoryViewModel extends BaseViewModel {
                     if(response.isResult()){
                         bookingList.setValue(response.getData().getContent());
                         pageTotal.set(response.getData().getTotalPages());
+                        totalItem.set(response.getData().getTotalElements().intValue());
                         Log.d("TAG", "getMyBooking: "+ pageTotal.get());
                     }else {
                         showErrorMessage(response.getMessage());
+                        hideLoading();
                     }
-                    hideLoading();
                 },error->{
                     showErrorMessage(application.getString(R.string.newtwork_error));
                     error.printStackTrace();

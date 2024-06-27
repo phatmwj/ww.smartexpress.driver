@@ -1,9 +1,14 @@
 package ww.smartexpress.driver.ui.history;
 
+import static android.nfc.tech.MifareUltralight.PAGE_SIZE;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,10 +27,10 @@ import ww.smartexpress.driver.di.component.ActivityComponent;
 import ww.smartexpress.driver.ui.base.activity.BaseActivity;
 import ww.smartexpress.driver.ui.booking.details.BookingDetailsActivity;
 import ww.smartexpress.driver.ui.history.adapter.TripHistoryAdapter;
+import ww.smartexpress.driver.ui.view.EndlessRecyclerViewScrollListener;
 
 public class TripHistoryActivity extends BaseActivity<ActivityTripHistoryBinding, TripHistoryViewModel> {
     private TripHistoryAdapter tripHistoryAdapter;
-    private List<Booking> bookingList;
     @Override
     public int getLayoutId() {
         return R.layout.activity_trip_history;
@@ -46,28 +51,27 @@ public class TripHistoryActivity extends BaseActivity<ActivityTripHistoryBinding
         super.onCreate(savedInstanceState);
         viewBinding.setLifecycleOwner(this);
         tripHistoryAdapter = new TripHistoryAdapter();
-        bookingList = new ArrayList<>();
         viewModel.bookingList.observe(this, bookings -> {
             // Update UI or adapter when bookingList changes
-            if(bookingList == null || bookingList.isEmpty()){
-                bookingList = bookings;
+            if(tripHistoryAdapter.getItemCount() == 0){
+                tripHistoryAdapter.setBookings(bookings);
+                loadTripHistories();
             }else {
-                bookingList.addAll(bookings);
+                tripHistoryAdapter.addListBooking(bookings);
             }
-            tripHistoryAdapter.setBookings(bookingList);
-            if(bookingList == null || bookingList.isEmpty()){
+            if(tripHistoryAdapter.getItemCount() == 0){
                 viewModel.isEmpty.set(true);
             }
+            viewModel.hideLoading();
         });
+        viewModel.getMyBooking();
 
-        loadTripHistories();
     }
 
     public void loadTripHistories(){
 
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this
                 ,LinearLayoutManager.VERTICAL, false);
-        viewBinding.rcTripHistory.setLayoutManager(layout);
         viewBinding.rcTripHistory.setItemAnimator(new DefaultItemAnimator());
         viewBinding.rcTripHistory.setAdapter(tripHistoryAdapter);
 
@@ -79,6 +83,34 @@ public class TripHistoryActivity extends BaseActivity<ActivityTripHistoryBinding
                 startActivity(intent);
             }
         });
+
+        EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener
+                = new EndlessRecyclerViewScrollListener((LinearLayoutManager) layout) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+////                        Toast.makeText(view.getContext(), "Loading More ...",
+////                                Toast.LENGTH_SHORT).show();
+//
+////                        List<Student> list = new ArrayList<Student>();
+////                        for (int i = 0; i <= 5; i++) {
+////                            list.add(new Student("Mới "+ i, 1988));
+////                        }
+////                        students.addAll(list);
+////                        adapter.notifyDataSetChanged();
+//                    }
+//                }, 1500);
+                viewModel.loadMore();
+
+            }
+        };
+//Thêm Listener vào
+        viewBinding.rcTripHistory.addOnScrollListener(endlessRecyclerViewScrollListener);
+
+        viewBinding.rcTripHistory.setLayoutManager(layout);
 
     }
 }

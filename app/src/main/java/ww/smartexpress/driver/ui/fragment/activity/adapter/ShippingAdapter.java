@@ -53,6 +53,7 @@ public class ShippingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public void addMapIdPos(){
+        mapIdPos.clear();
         for (int i=0;i<bookingList.toArray().length;i++) {
             mapIdPos.put(bookingList.get(i).getId(), i );
         }

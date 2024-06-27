@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/bg_app">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,97 +33,71 @@
                 style="@style/big_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/_18sdp"
                 android:text="@string/login_title">
 
             </TextView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_25sdp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/phone"
-                    style="@style/montserrat_medium_gray_12ssp">
-
-                </TextView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/required_star"
-                    android:textColor="@color/red_color">
-
-                </TextView>
-
-            </LinearLayout>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginTop="@dimen/_15sdp"
-                android:background="@drawable/bg_edt"
-                android:hint="@string/phone_hint"
-                android:maxLines="1"
-                android:text="@={vm.phone}"
-                android:textColorHint="@color/grey_text"
-                style="@style/information_edit_text"
-                android:inputType="number">
-
-            </EditText>
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp">
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxBackgroundMode="outline"
+                app:shapeAppearanceOverlay="@style/Rounded"
+                android:hint="Số điện thoại *"
+                app:hintEnabled="true"
+                app:boxStrokeColor="#898A8D"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="#898A8D"
+                app:helperTextTextColor="#898A8D"
+                android:background="@color/bg_app"
+                app:counterMaxLength="10"
+                app:boxStrokeWidthFocused="@dimen/_1sdp"
+                app:hintAnimationEnabled="false">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/password"
-                    style="@style/montserrat_medium_gray_12ssp">
-
-                </TextView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/required_star"
-                    android:textColor="@color/red_color">
-
-                </TextView>
-
-            </LinearLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp">
-                <EditText
-                    android:paddingRight="@dimen/_35sdp"
-                    android:id="@+id/edtPw"
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/information_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_edt"
-                    android:hint="@string/pw_input"
+                    android:ellipsize="end"
+                    android:focusable="true"
+                    android:importantForAccessibility="yes"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:maxLength="10"
+                    android:text="@={vm.phone}"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxBackgroundMode="outline"
+                app:shapeAppearanceOverlay="@style/Rounded"
+                android:hint="Mật khẩu *"
+                app:hintEnabled="true"
+                app:boxStrokeColor="#898A8D"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="#898A8D"
+                app:helperTextTextColor="#898A8D"
+                android:background="@color/bg_app"
+                app:boxStrokeWidthFocused="@dimen/_1sdp"
+                app:endIconMode="password_toggle"
+                app:hintAnimationEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/information_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:focusable="true"
+                    android:importantForAccessibility="yes"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:textColorHint="@color/grey_text"
-                    style="@style/information_edit_text"
-                    android:text="@={vm.password}">
-
-                </EditText>
-
-                <ImageView
-                    android:onClick="@{(v)->vm.setIsVisibilityPassword()}"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_marginRight="@dimen/_15sdp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@{vm.isVisibility ? @drawable/ic_icon_visibility_off : @drawable/ic_icon_visibility}">
-
-                </ImageView>
-            </FrameLayout>
+                    android:text="@={vm.password}"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:onClick="@{(v)->vm.forgetPw()}"
@@ -141,7 +115,7 @@
                 android:id="@+id/button2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginBottom="@dimen/_50sdp"
                 android:text="@string/next"
                 style="@style/AppButtonStyle"

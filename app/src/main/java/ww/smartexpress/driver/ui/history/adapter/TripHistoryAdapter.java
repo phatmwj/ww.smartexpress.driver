@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ww.smartexpress.driver.BR;
@@ -23,6 +24,14 @@ public class TripHistoryAdapter extends RecyclerView.Adapter<TripHistoryAdapter.
     public void setBookings(List<Booking> bookings){
         this.bookings = bookings;
         notifyDataSetChanged();
+    }
+
+    public void addListBooking(List<Booking> bookings){
+        if(bookings == null){
+            return;
+        }
+        this.bookings.addAll(bookings);
+        notifyItemRangeInserted(this.bookings.size() - bookings.size(),bookings.size());
     }
 
     @NonNull

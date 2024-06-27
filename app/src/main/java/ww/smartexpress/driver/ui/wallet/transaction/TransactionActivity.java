@@ -62,9 +62,6 @@ public class TransactionActivity extends BaseActivity<ActivityTransactionBinding
                 mFlexibleAdapter = new FlexibleAdapter(transactionItemList, this);
 
 
-                viewBinding.rcTransaction.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-                viewBinding.rcTransaction.setAdapter(mFlexibleAdapter);
-
                 if(viewModel.totalElement.get()> viewModel.pageSize.get()){
                     mFlexibleAdapter
                             .setLoadingMoreAtStartUp(false)
@@ -75,10 +72,15 @@ public class TransactionActivity extends BaseActivity<ActivityTransactionBinding
                 }
                 EmptyViewHelper.create(mFlexibleAdapter, findViewById(R.id.empty_view), null, this);
 
+                viewBinding.rcTransaction.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+                viewBinding.rcTransaction.setAdapter(mFlexibleAdapter);
             }else {
                 mFlexibleAdapter.onLoadMoreComplete(transactionItemList);
             }
+            viewModel.hideLoading();
         });
+
+        viewModel.getTransaction();
 
     }
 
@@ -102,7 +104,7 @@ public class TransactionActivity extends BaseActivity<ActivityTransactionBinding
                 viewModel.pageNumber.set(viewModel.pageNumber.get()+1);
                 viewModel.getTransaction();
             }
-        }, 3000);
+        }, 1500);
 
 
     }
