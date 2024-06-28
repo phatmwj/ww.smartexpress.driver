@@ -47,7 +47,7 @@ public class ShippingViewModel extends BaseViewModel {
     public MutableLiveData<Long> currentBookingId = new MutableLiveData<>();
     public ObservableField<CurrentBooking> booking = new ObservableField<>();
     public MutableLiveData<CurrentBooking> bookingValue = new MutableLiveData<>();
-    public ObservableField<Boolean> isShowDirection = new ObservableField<>(false);
+//    public ObservableField<Boolean> isShowDirection = new ObservableField<>(false);
 
     public ObservableField<String> size = new ObservableField<>("");
 
@@ -125,6 +125,8 @@ public class ShippingViewModel extends BaseViewModel {
                         }else if(response.getData().getState() == Constants.BOOKING_STATE_CANCEL){
                             status.set(Constants.BOOKING_CUSTOMER_CANCEL);
                         }
+
+                        ((ShippingActivity) application.getCurrentActivity()).getCurrentLocation();
 //                        showSuccessMessage(response.getMessage());
                     }else {
                         showErrorMessage(response.getMessage());

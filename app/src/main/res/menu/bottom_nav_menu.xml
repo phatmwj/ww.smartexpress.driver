@@ -15,7 +15,7 @@
         android:id="@+id/notification"
         android:title="@string/title_notification"
         android:icon="@drawable/ic_icon_notification"
-        android:visible="false"/>
+         />
 
     <item
         android:id="@+id/account"

@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.data.Repository;
+import ww.smartexpress.driver.data.model.api.ResponseListObj;
+import ww.smartexpress.driver.data.model.api.ResponseWrapper;
 import ww.smartexpress.driver.data.model.api.response.WalletTransaction;
 import ww.smartexpress.driver.ui.base.activity.BaseViewModel;
 
@@ -27,6 +30,10 @@ public class TransactionViewModel extends BaseViewModel {
     }
     public void back(){
         application.getCurrentActivity().finish();
+    }
+
+    public Observable<ResponseWrapper<ResponseListObj<WalletTransaction>>> getMyTransaction(){
+        return repository.getApiService().getWalletTransaction(pageNumber.get(),pageSize.get());
     }
 
     public void getTransaction(){

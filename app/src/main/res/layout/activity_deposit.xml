@@ -100,6 +100,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:text="Vui lòng nạp tối thiểu 10.000 đ"
+                    android:textColor="@color/red_color"
+                    android:textSize="@dimen/_9ssp"
                     android:maxLines="1" />
 
                 <TextView
@@ -311,8 +313,8 @@
                         android:textSize="@dimen/_11ssp"/>
 
                     <CheckBox
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_20sdp"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
                         style="@style/CustomCheckboxStyle"
                         android:onCheckedChanged="@{(cb,b)->vm.onMomo(b)}"
                         android:checked="@{vm.paymentKind ==1? Boolean.TRUE :Boolean.FALSE}"/>
@@ -348,8 +350,8 @@
 
                     <CheckBox
                         style="@style/CustomCheckboxStyle"
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_20sdp"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
                         android:checked="@{vm.paymentKind ==2? Boolean.TRUE :Boolean.FALSE}"
                         android:onCheckedChanged="@{(cb,b)->vm.onPayos(b)}" />
                 </LinearLayout>

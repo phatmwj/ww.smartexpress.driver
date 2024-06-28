@@ -21,6 +21,7 @@
         android:elevation="@dimen/_5sdp">
 
         <LinearLayout
+            android:elevation="@dimen/_2sdp"
             android:background="@drawable/bg_corners_app"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,7 +64,7 @@
                         android:background="@{ivm.state == 300 ? @drawable/item_circle_dot_green : ivm.state== -100 ? @drawable/item_circle_dot_red: @drawable/item_circle_dot_yellow}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/textView3"
-                        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/textView3"

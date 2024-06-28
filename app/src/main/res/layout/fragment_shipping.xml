@@ -18,18 +18,18 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/layout_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg_app"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-            android:layout_marginTop="@dimen/_10sdp"
+            android:id="@+id/layout_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="0dp"
             android:elevation="@dimen/_15sdp"
-            android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_gravity="top"
             app:cardElevation="@dimen/_2sdp">
             <FrameLayout

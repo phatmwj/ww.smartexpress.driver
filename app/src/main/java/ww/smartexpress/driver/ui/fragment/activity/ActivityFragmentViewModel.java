@@ -209,7 +209,7 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
     }
 
     public void loadBooking(long id){
-        showLoading();
+//        showLoading();
         compositeDisposable.add(repository.getApiService().loadBooking(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

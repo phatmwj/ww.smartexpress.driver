@@ -107,17 +107,10 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
     String[] storagePermission;
     Bitmap photo;
     DialogShippingImgBinding dialogBinding;
-
     BottomSheetBehavior sheetBehavior;
     @Getter
     private String bookingId;
-    private final ActivityResultLauncher<IntentSenderRequest> locationSettingsLauncher =
-            registerForActivityResult(new ActivityResultContracts.StartIntentSenderForResult(), result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                } else {
-                    Toast.makeText(this, R.string.notify_disabled_gps, Toast.LENGTH_SHORT).show();
-                }
-            });
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_shipping;
@@ -148,14 +141,17 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
         super.onCreate(savedInstanceState);
+
         Intent intent = getIntent();
         if(intent.getLongExtra("bookingId",0) != 0){
             viewModel.currentBookingId.postValue(intent.getLongExtra("bookingId",0));
             bookingId = String.valueOf(intent.getLongExtra("bookingId",0));
         }
+
         viewModel.currentBookingId.observe(this, id ->{
             viewModel.loadBooking(id);
         });
+
         sheetBehavior = BottomSheetBehavior.from(viewBinding.cardBooking.layoutBooking);
         sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
@@ -163,17 +159,9 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 switch (newState) {
                     case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-//                        btnBottomSheet.setText("Close Sheet");
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-//                        btnBottomSheet.setText("Expand Sheet");
-                    }
-                    break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                    case BottomSheetBehavior.STATE_COLLAPSED:
                     case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
                     case BottomSheetBehavior.STATE_SETTLING:
                         break;
                 }
@@ -204,9 +192,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        if (location == null) {
-            return;
-        }
+        Log.d("TAG", "onLocationChanged: " +1);
         currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
         if (currentLocationMarker == null) {
             currentLocationMarker = mMap.addMarker(new MarkerOptions().position(currentLocation).title("Driver current location"));
@@ -214,47 +200,50 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
         } else {
             currentLocationMarker.setPosition(currentLocation);
         }
-        if (viewModel.status.get() == Constants.BOOKING_ACCEPTED && !viewModel.isShowDirection.get()) {
+        if (viewModel.status.get() == Constants.BOOKING_ACCEPTED) {
+            Log.d("TAG", "onLocationChanged: " +1111);
             BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
-            if (destinationMarker != null) {
-                destinationMarker.setVisible(true);
+            if (polyline != null) {
+                polyline.remove();
             }
             if (destinationMarker == null) {
                 destinationMarker = mMap.addMarker(new MarkerOptions().position(customerLocation).title(viewModel.booking.get().getPickupAddress()).icon(desIc));
             } else {
+                destinationMarker.setVisible(true);
                 destinationMarker.setPosition(customerLocation);
             }
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16));
             loadMapDirection(currentLocation, customerLocation);
-            viewModel.isShowDirection.set(true);
+//            viewModel.isShowDirection.set(true);
         }
-        if (viewModel.status.get() == Constants.BOOKING_PICKUP && !viewModel.isShowDirection.get()) {
+        if (viewModel.status.get() == Constants.BOOKING_PICKUP) {
+            Log.d("TAG", "onLocationChanged: " +2222);
             if (polyline != null) {
                 polyline.remove();
-            }
-            if (destinationMarker != null) {
-                destinationMarker.setVisible(true);
             }
             BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
             if (destinationMarker == null) {
                 destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation).title(viewModel.booking.get().getDestinationAddress()).icon(desIc));
             } else {
+                destinationMarker.setVisible(true);
                 destinationMarker.setPosition(destinationLocation);
             }
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16));
             loadMapDirection(currentLocation, destinationLocation);
-            viewModel.isShowDirection.set(true);
+//            viewModel.isShowDirection.set(true);
         }
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-        getCurrentLocation();
+//        getCurrentLocation();
 
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 20000, 0, this);
 
         viewModel.bookingValue.observe(this, currentBooking -> {
             customerLocation = new LatLng(currentBooking.getPickupLat(), currentBooking.getPickupLong());
@@ -268,22 +257,22 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                 switch (viewModel.status.get()) {
                     case Constants.BOOKING_VISIBLE:
                         viewModel.acceptBooking();
-//                        BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
-                        viewModel.isShowDirection.set(false);
                         handler.removeCallbacks(runnable);
                         viewBinding.cardBooking.progressText.setText(String.valueOf(durationInSeconds));
                         viewBinding.cardBooking.progressBar.setProgress(0);
-                        if (destinationMarker != null) {
-                            destinationMarker.setVisible(true);
-                        }
+
                         if (destinationMarker == null) {
                             destinationMarker = mMap.addMarker(new MarkerOptions().position(customerLocation).title(viewModel.booking.get().getPickupAddress()).icon(desIc));
                         } else {
+                            destinationMarker.setVisible(true);
                             destinationMarker.setPosition(customerLocation);
+                        }
+                        if (polyline != null) {
+                            polyline.remove();
                         }
                         if (currentLocation != null) {
                             loadMapDirection(currentLocation, customerLocation);
-                            viewModel.isShowDirection.set(true);
+//                            viewModel.isShowDirection.set(true);
                         }
                         break;
                     case Constants.BOOKING_ACCEPTED:
@@ -391,29 +380,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
         dialog.show();
     }
 
-    private void displayLocationSettingsRequest() {
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                .addLocationRequest(locationRequest);
-        builder.setAlwaysShow(true);
-
-        SettingsClient settingsClient = LocationServices.getSettingsClient(this);
-        Task<LocationSettingsResponse> task = settingsClient.checkLocationSettings(builder.build());
-        task.addOnSuccessListener(locationSettingsResponse -> {
-            // Vị trí đã được bật, thực hiện các công việc cần thiết
-        });
-
-        task.addOnFailureListener(e -> {
-            if (e instanceof ResolvableApiException) {
-                ResolvableApiException resolvable = (ResolvableApiException) e;
-                // Sử dụng ActivityResultLauncher để bắt đầu IntentSender
-                IntentSenderRequest request = new IntentSenderRequest.Builder(resolvable.getResolution()).build();
-                locationSettingsLauncher.launch(request);
-            }
-        });
-    }
-
     // gg maps polyline
     public void loadMapDirection(LatLng origin, LatLng des) {
         viewModel.compositeDisposable.add(viewModel.getMapDirection(origin, des)
@@ -464,7 +430,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                 }));
     }
 
-    private void getCurrentLocation() {
+    public void getCurrentLocation() {
         FusedLocationProviderClient mFusedLocationClient =
                 LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -483,6 +449,34 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16));
                         } else {
                             currentLocationMarker.setPosition(currentLocation);
+                        }
+                        if (viewModel.status.get() == Constants.BOOKING_ACCEPTED) {
+                            BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
+                            if (polyline != null) {
+                                polyline.remove();
+                            }
+                            if (destinationMarker == null) {
+                                destinationMarker = mMap.addMarker(new MarkerOptions().position(customerLocation).title(viewModel.booking.get().getPickupAddress()).icon(desIc));
+                            } else {
+                                destinationMarker.setVisible(true);
+                                destinationMarker.setPosition(customerLocation);
+                            }
+                            loadMapDirection(currentLocation, customerLocation);
+//                            viewModel.isShowDirection.set(true);
+                        }
+                        if (viewModel.status.get() == Constants.BOOKING_PICKUP ) {
+                            if (polyline != null) {
+                                polyline.remove();
+                            }
+                            BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
+                            if (destinationMarker == null) {
+                                destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation).title(viewModel.booking.get().getDestinationAddress()).icon(desIc));
+                            } else {
+                                destinationMarker.setVisible(true);
+                                destinationMarker.setPosition(destinationLocation);
+                            }
+                            loadMapDirection(currentLocation, destinationLocation);
+//                            viewModel.isShowDirection.set(true);
                         }
                     }
                 });
@@ -612,7 +606,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                         destinationMarker.setVisible(false);
 //                            destinationMarker.remove();
                     }
-                    viewModel.isShowDirection.set(false);
+//                    viewModel.isShowDirection.set(false);
 //                    updateLocationUpdatesInterval(60000);
                     break;
                 case Constants.BOOKING_ACCEPTED:
@@ -623,7 +617,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                     if (destinationMarker != null) {
                         destinationMarker.setVisible(true);
                     }
-                    viewModel.isShowDirection.set(false);
+//                    viewModel.isShowDirection.set(false);
                     if (destinationMarker == null) {
                         destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation).title(viewModel.booking.get().getDestinationAddress()).icon(desIc));
                     } else {
@@ -631,7 +625,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                     }
                     if (currentLocation != null) {
                         loadMapDirection(currentLocation, destinationLocation);
-                        viewModel.isShowDirection.set(true);
+//                        viewModel.isShowDirection.set(true);
                     }
                     break;
                 default:
@@ -702,19 +696,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
             viewModel.showErrorMessage("Vui lòng cập nhật hình ảnh");
             viewModel.hideLoading();
         }
-    }
-
-    @Override
-    public void onProviderDisabled(@NonNull String provider) {
-        displayLocationSettingsRequest();
-    }
-
-    @Override
-    public void onProviderEnabled(@NonNull String provider) {
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
     }
 
     @Override

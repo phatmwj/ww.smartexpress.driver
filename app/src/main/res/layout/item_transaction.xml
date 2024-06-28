@@ -21,6 +21,7 @@
 
         <LinearLayout
             android:background="@drawable/bg_corners_app"
+            android:elevation="@dimen/_2sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

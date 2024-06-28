@@ -21,6 +21,7 @@ import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.data.Repository;
 import ww.smartexpress.driver.data.local.prefs.PreferencesService;
 import ww.smartexpress.driver.data.model.api.response.ProfileResponse;
+import ww.smartexpress.driver.data.model.api.response.WalletResponse;
 import ww.smartexpress.driver.data.model.room.UserEntity;
 import ww.smartexpress.driver.databinding.DialogLogoutBinding;
 import ww.smartexpress.driver.ui.achievement.AchievementActivity;
@@ -36,12 +37,12 @@ import ww.smartexpress.driver.ui.statistic.StatisticActivity;
 import ww.smartexpress.driver.ui.wallet.WalletActivity;
 
 public class ProfileFragmentViewModel extends BaseFragmentViewModel {
-    public MutableLiveData<ProfileResponse> profile;
+    public MutableLiveData<ProfileResponse> profile = new MutableLiveData<>();;
+    public ObservableField<WalletResponse> wallet = new ObservableField<>();
     public ObservableField<UserEntity> user = new ObservableField<>();
     public ProfileFragmentViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
-        profile = new MutableLiveData<>();
-//        loadProfile();
+        getMyWallet();
     }
     public Repository getRepository(){
         return repository;
@@ -110,21 +111,17 @@ public class ProfileFragmentViewModel extends BaseFragmentViewModel {
         application.getCurrentActivity().startActivity(intent);
     }
 
-    public void loadProfile(){
-        showLoading();
-        compositeDisposable.add(repository.getApiService().getProfile()
+    public void getMyWallet(){
+        compositeDisposable.add(repository.getApiService().getMyWallet()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
                     if(response.isResult()){
-                        profile.setValue(response.getData());
-                        hideLoading();
+                        wallet.set(response.getData());
                     }else {
-                        hideLoading();
                         showErrorMessage(response.getMessage());
                     }
                 },error->{
-                    hideLoading();
                     showErrorMessage(application.getString(R.string.newtwork_error));
                     error.printStackTrace();
                 })

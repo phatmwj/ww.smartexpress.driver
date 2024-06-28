@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import ww.smartexpress.driver.BR;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.data.model.api.response.Booking;
@@ -51,21 +53,41 @@ public class TripHistoryActivity extends BaseActivity<ActivityTripHistoryBinding
         super.onCreate(savedInstanceState);
         viewBinding.setLifecycleOwner(this);
         tripHistoryAdapter = new TripHistoryAdapter();
-        viewModel.bookingList.observe(this, bookings -> {
-            // Update UI or adapter when bookingList changes
-            if(tripHistoryAdapter.getItemCount() == 0){
-                tripHistoryAdapter.setBookings(bookings);
-                loadTripHistories();
-            }else {
-                tripHistoryAdapter.addListBooking(bookings);
-            }
-            if(tripHistoryAdapter.getItemCount() == 0){
-                viewModel.isEmpty.set(true);
-            }
-            viewModel.hideLoading();
-        });
-        viewModel.getMyBooking();
+        getMyBooking();
 
+    }
+
+
+    public void getMyBooking(){
+        if(viewModel.pageNumber.get() == 0){
+            viewModel.showLoading();
+        }
+        viewModel.compositeDisposable.add(viewModel.getBookings()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    if(response.isResult()){
+                        viewModel.pageTotal.set(response.getData().getTotalPages());
+                        viewModel.totalItem.set(response.getData().getTotalElements().intValue());
+                        if(tripHistoryAdapter.getItemCount() == 0){
+                            tripHistoryAdapter.setBookings(response.getData().getContent());
+                            loadTripHistories();
+                        }else {
+                            tripHistoryAdapter.addListBooking(response.getData().getContent());
+                        }
+                        if(tripHistoryAdapter.getItemCount() == 0){
+                            viewModel.isEmpty.set(true);
+                        }
+                    }else {
+                        viewModel.showErrorMessage(response.getMessage());
+                    }
+                    viewModel.hideLoading();
+                },error->{
+                    viewModel.showErrorMessage(application.getString(R.string.newtwork_error));
+                    error.printStackTrace();
+                    viewModel.hideLoading();
+                })
+        );
     }
 
     public void loadTripHistories(){
@@ -103,7 +125,9 @@ public class TripHistoryActivity extends BaseActivity<ActivityTripHistoryBinding
 ////                        adapter.notifyDataSetChanged();
 //                    }
 //                }, 1500);
-                viewModel.loadMore();
+                int pageCurrent = viewModel.pageNumber.get();
+                viewModel.pageNumber.set(pageCurrent+1);
+                getMyBooking();
 
             }
         };

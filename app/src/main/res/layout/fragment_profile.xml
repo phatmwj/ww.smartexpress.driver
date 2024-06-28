@@ -12,6 +12,7 @@
             type="ww.smartexpress.driver.ui.fragment.profile.ProfileFragmentViewModel" />
         <import type="android.view.View" />
         <import type="android.text.TextUtils" />
+        <import type="ww.smartexpress.driver.utils.NumberUtils"/>
 
     </data>
     <LinearLayout
@@ -147,6 +148,17 @@
                             android:layout_weight="1"
                             android:maxLines="1"
                             android:text="Tài khoản của tôi" />
+
+                        <TextView
+                            style="@style/app_text_b"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="@dimen/_10sdp"
+                            android:maxLines="1"
+                            android:textSize="@dimen/_14ssp"
+                            android:textColor="@color/black"
+                            android:text="@{NumberUtils.formatCurrency(Double.valueOf(vm.wallet.balance))}" />
 
 
                         <ImageView
