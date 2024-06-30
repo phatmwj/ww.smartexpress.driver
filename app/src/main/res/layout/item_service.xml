@@ -14,21 +14,26 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#00FFFFFF">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:paddingHorizontal="@dimen/_10sdp"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_45sdp"
-            android:orientation="horizontal"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:background="@drawable/bg_corners_app"
-            android:gravity="center">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:src="@{ivm.service.image}" />
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_5sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp">
+            <LinearLayout
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:src="@{ivm.service.image}"/>
                 <LinearLayout
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_width="wrap_content"
@@ -50,18 +55,19 @@
                 </LinearLayout>
 
 
-            <com.kyleduo.switchbutton.SwitchButton
-                android:id="@+id/switchState"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="@{ivm.state == 0? Boolean.FALSE : Boolean.TRUE}"
-                app:kswBackColor="@color/switch_track"
-                app:kswThumbColor="@color/switch_thumb"
-                app:kswThumbHeight="@dimen/_10sdp"
-                app:kswThumbMarginLeft="@dimen/_5sdp"
-                app:kswThumbWidth="@dimen/_10sdp">
-            </com.kyleduo.switchbutton.SwitchButton>
-        </LinearLayout>
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:id="@+id/switchState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="@{ivm.state == 0? Boolean.FALSE : Boolean.TRUE}"
+                    app:kswBackColor="@color/switch_track"
+                    app:kswThumbColor="@color/switch_thumb"
+                    app:kswThumbHeight="@dimen/_10sdp"
+                    app:kswThumbMarginLeft="@dimen/_5sdp"
+                    app:kswThumbWidth="@dimen/_10sdp">
+                </com.kyleduo.switchbutton.SwitchButton>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
 <!--        <FrameLayout-->
 <!--            android:layout_width="match_parent"-->

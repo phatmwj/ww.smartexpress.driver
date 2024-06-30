@@ -62,8 +62,7 @@
                     android:id="@+id/rcService"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingHorizontal="@dimen/_10sdp"
-                    android:clipToPadding="true">
+                    android:clipToPadding="false">
                 </androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>

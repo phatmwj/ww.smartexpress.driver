@@ -10,12 +10,14 @@ import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.data.Repository;
 import ww.smartexpress.driver.data.model.api.ApiModelUtils;
+import ww.smartexpress.driver.data.model.api.response.AccountCOD;
 import ww.smartexpress.driver.data.model.api.response.BankCard;
 import ww.smartexpress.driver.data.model.api.response.BankResponse;
 import ww.smartexpress.driver.data.model.api.response.WalletResponse;
 import ww.smartexpress.driver.data.model.room.UserEntity;
 import ww.smartexpress.driver.ui.bank.BankActivity;
 import ww.smartexpress.driver.ui.base.activity.BaseViewModel;
+import ww.smartexpress.driver.ui.cod.CodActivity;
 import ww.smartexpress.driver.ui.deposit.DepositActivity;
 import ww.smartexpress.driver.ui.payout.PayoutActivity;
 import ww.smartexpress.driver.ui.wallet.transaction.TransactionActivity;
@@ -25,8 +27,10 @@ public class WalletViewModel extends BaseViewModel {
     public ObservableField<WalletResponse> wallet = new ObservableField<>();
     public ObservableField<UserEntity> user = new ObservableField<>();
     public ObservableField<BankCard> bankCard = new ObservableField<>();
+    public ObservableField<AccountCOD> accountCOD = new ObservableField<>();
     public WalletViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
+        getMyCOD();
     }
 
     public Repository getRepository(){
@@ -62,6 +66,10 @@ public class WalletViewModel extends BaseViewModel {
         application.getCurrentActivity().startActivity(intent);
     }
 
+    public void navigateCOD(){
+        Intent intent = new Intent(application.getCurrentActivity(), CodActivity.class);
+        application.getCurrentActivity().startActivity(intent);
+    }
 
     public void getMyWallet(){
         showLoading();
@@ -76,6 +84,26 @@ public class WalletViewModel extends BaseViewModel {
                         hideLoading();
                         showErrorMessage(response.getMessage());
                     }
+                },error->{
+                    hideLoading();
+                    showErrorMessage(application.getString(R.string.newtwork_error));
+                    error.printStackTrace();
+                })
+        );
+    }
+
+    public void getMyCOD(){
+        showLoading();
+        compositeDisposable.add(repository.getApiService().getAccountCOD()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    if(response.isResult()){
+                        accountCOD.set(response.getData());
+                    }else {
+                        showErrorMessage(response.getMessage());
+                    }
+                    hideLoading();
                 },error->{
                     hideLoading();
                     showErrorMessage(application.getString(R.string.newtwork_error));

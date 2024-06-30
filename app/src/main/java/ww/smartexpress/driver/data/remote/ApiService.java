@@ -26,6 +26,8 @@ import ww.smartexpress.driver.data.model.api.request.RegisterRequest;
 import ww.smartexpress.driver.data.model.api.request.ResetPassRequest;
 import ww.smartexpress.driver.data.model.api.request.UpdateBookingRequest;
 import ww.smartexpress.driver.data.model.api.request.UpdateProfileRequest;
+import ww.smartexpress.driver.data.model.api.response.AccountCOD;
+import ww.smartexpress.driver.data.model.api.response.AccountName;
 import ww.smartexpress.driver.data.model.api.response.ActivityRate;
 import ww.smartexpress.driver.data.model.api.response.BankAccountResponse;
 import ww.smartexpress.driver.data.model.api.response.BankListResponse;
@@ -41,6 +43,8 @@ import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import ww.smartexpress.driver.data.model.api.response.MomoPaymentResponse;
+import ww.smartexpress.driver.data.model.api.response.NewsResponse;
+import ww.smartexpress.driver.data.model.api.response.NotificationResponse;
 import ww.smartexpress.driver.data.model.api.response.Payment;
 import ww.smartexpress.driver.data.model.api.response.PayosPaymentResponse;
 import ww.smartexpress.driver.data.model.api.response.ProfileResponse;
@@ -152,5 +156,18 @@ public interface ApiService {
     @GET("/v1/wallet-transaction/my-wallet-transaction")
     Observable<ResponseWrapper<ResponseListObj<WalletTransaction>>> getWalletTransaction(@Query("page") Integer pageNumber,
                                                                                          @Query("size") Integer pageSize);
+
+    @GET("/v1/notification/my-notification")
+    Observable<ResponseWrapper<ResponseListObj<NotificationResponse>>> getMyNotification(@Query("page") Integer pageNumber,
+                                                                                         @Query("size") Integer pageSize);
+
+    @GET("/v1/driver/my-cod")
+    Observable<ResponseWrapper<AccountCOD>> getAccountCOD();
+
+    @PUT("/v1/driver/update-cod")
+    Observable<ResponseGeneric> updateCOD(@Body AccountCOD accountCOD);
+
+    @GET("/v1/news/client-get/{id}")
+    Observable<ResponseWrapper<NewsResponse>> getNews(@Path("id") Long id);
 
 }

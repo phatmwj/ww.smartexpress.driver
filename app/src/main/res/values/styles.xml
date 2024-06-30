@@ -132,6 +132,7 @@
         <!-- navigation icon color -->
         <item name="colorControlNormal">@color/black</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/green_light_app</item>
     </style>
 
     <style name="AppButtonStyle" parent="Widget.AppCompat.Button.Colored">

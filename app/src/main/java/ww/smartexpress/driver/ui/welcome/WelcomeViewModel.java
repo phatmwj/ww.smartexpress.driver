@@ -7,6 +7,7 @@ import androidx.databinding.ObservableBoolean;
 
 import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.data.Repository;
+import ww.smartexpress.driver.ui.auth.AuthActivity;
 import ww.smartexpress.driver.ui.base.activity.BaseViewModel;
 import ww.smartexpress.driver.ui.home.HomeActivity;
 import ww.smartexpress.driver.ui.index.IndexActivity;
@@ -21,7 +22,7 @@ public class WelcomeViewModel extends BaseViewModel {
 
     public void doNext(){
         if(repository.getSharedPreferences().getToken().equals("NULL") || repository.getSharedPreferences().getToken().isEmpty()){
-            Intent intent = new Intent(application.getCurrentActivity(), IndexActivity.class);
+            Intent intent = new Intent(application.getCurrentActivity(), AuthActivity.class);
             application.getCurrentActivity().startActivity(intent);
             application.getCurrentActivity().finish();
         }else {

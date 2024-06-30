@@ -189,6 +189,11 @@
                         android:textColor="@color/gray"
                         android:text="Tổng quan"
                         android:layout_marginBottom="@dimen/_5sdp"/>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_marginLeft="@dimen/_25sdp"
+                        android:background="@color/gray_light"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_45sdp"

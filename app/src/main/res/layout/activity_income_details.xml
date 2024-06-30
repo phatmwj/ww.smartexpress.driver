@@ -12,25 +12,26 @@
             type="ww.smartexpress.driver.ui.fragment.income.details.IncomeDetailsViewModel" />
         <import type="android.view.View" />
         <import type="android.text.TextUtils" />
-        <import type="ww.smartexpress.driver.utils.DateUtils"></import>
-        <import type="ww.smartexpress.driver.utils.NumberUtils"></import>
+        <import type="ww.smartexpress.driver.utils.DateUtils"/>
+        <import type="ww.smartexpress.driver.utils.NumberUtils"/>
 
     </data>
 
-    <FrameLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/bg_app">
 
-            <LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
             android:orientation="vertical">
 
             <FrameLayout
                 android:id="@+id/frameLayout2"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@color/white"
                 android:padding="@dimen/_5sdp">
                 <ImageView
                     android:layout_width="wrap_content"
@@ -49,156 +50,175 @@
                     android:layout_weight="1"
                     android:text="@{vm.incomeTimeString}" />
             </FrameLayout>
-                <androidx.core.widget.NestedScrollView
+
+            <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-
                         <LinearLayout
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@color/white"
+                            android:paddingVertical="@dimen/_10sdp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/_12sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            android:background="@drawable/background_card_app"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:onClick="@{()->a.doAfter()}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:paddingRight="@dimen/_15sdp"
+                                android:paddingLeft="@dimen/_15sdp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_icon_expand_right" />
 
                             <TextView
                                 style="@style/app_text_b"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_10sdp"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:background="@drawable/background_text_gray"
-                                android:paddingHorizontal="@dimen/_30ssp"
                                 android:paddingVertical="@dimen/_5sdp"
+                                android:textStyle="italic"
+                                android:textSize="@dimen/_12ssp"
                                 android:maxLines="1"
                                 android:text="@{vm.incomeDateString}" />
+                            <ImageView
+                                android:onClick="@{()->a.doNext()}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:paddingRight="@dimen/_15sdp"
+                                android:paddingLeft="@dimen/_15sdp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_icon_expand" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_10sdp"
+                            android:background="@color/white"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/app_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_marginLeft="@dimen/_12sdp"
+                                android:text="Thống kê thu nhập"
+                                android:maxLines="1"/>
+
+                            <TextView
+                                android:layout_gravity="center"
+                                style="@style/app_text_big"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="@{NumberUtils.formatCurrency(vm.income.totalMoney)}"
+                                android:textColor="@color/active_green" />
+                            <FrameLayout
+                                android:id="@+id/layoutChart"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/_15sdp"
+                                android:background="@drawable/bg_state_done"
+                                android:paddingVertical="@dimen/_10sdp">
+<!--                                <com.github.mikephil.charting.charts.BarChart-->
+<!--                                    android:visibility="gone"-->
+<!--                                    android:id="@+id/barchart"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="@dimen/_100sdp"-->
+<!--                                    android:layout_marginHorizontal="@dimen/_20sdp" />-->
+
+                                <com.github.mikephil.charting.charts.LineChart
+                                    android:id="@+id/linechart"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_marginHorizontal="@dimen/_10sdp" />
+                            </FrameLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginVertical="@dimen/_15sdp"
-                                android:layout_marginHorizontal="@dimen/_20sdp"
-                                android:orientation="vertical">
+                                android:orientation="horizontal"
+                                android:layout_marginHorizontal="@dimen/_40sdp"
+                                android:layout_marginVertical="@dimen/_10sdp"
+                                android:weightSum="2">
                                 <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
-
-                                    <ImageView
-                                        android:onClick="@{()->vm.doAfter()}"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:paddingRight="@dimen/_15sdp"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/ic_icon_expand_right" />
+                                    android:layout_width="@dimen/_80sdp"
+                                    android:layout_height="@dimen/_80sdp"
+                                    android:background="@drawable/background_oval_white"
+                                    android:backgroundTint="#B36C94FC"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
 
                                     <TextView
                                         style="@style/app_text_big"
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:textSize="@dimen/_18ssp"
                                         android:gravity="center"
                                         android:maxLines="1"
-                                        android:text="@{NumberUtils.formatCurrency(vm.income.totalMoney)}"
-                                        android:textColor="@color/title_home_page" />
-                                    <ImageView
-                                        android:onClick="@{()->vm.doNext()}"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:paddingLeft="@dimen/_15sdp"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/ic_icon_expand" />
+                                        android:text="@{String.valueOf(vm.income.totalBookingCancel)}"
+                                        android:textColor="@color/white" />
+
+                                    <TextView
+                                        style="@style/app_title"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="@string/trip"
+                                        android:maxLines="1"
+                                        android:textSize="@dimen/_10ssp"
+                                        android:textColor="@color/white"/>
+                                </LinearLayout>
+                                <FrameLayout
+                                    android:layout_width="@dimen/_1sdp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2"/>
+                                <LinearLayout
+                                    android:layout_width="@dimen/_80sdp"
+                                    android:layout_height="@dimen/_80sdp"
+                                    android:gravity="center"
+                                    android:background="@drawable/background_oval_white"
+                                    android:backgroundTint="#B36C94FC"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        style="@style/app_text_big"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="@{vm.completeRate +'%'}"
+                                        android:maxLines="1"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_18ssp"/>
+                                    <TextView
+                                        style="@style/app_title"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="@string/completed"
+                                        android:maxLines="1"
+                                        android:textSize="@dimen/_10ssp"
+                                        android:textColor="@color/white"/>
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
 
-                        <com.github.mikephil.charting.charts.BarChart
-                            android:id="@+id/barchart"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_100sdp"
+
+                        <LinearLayout
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginHorizontal="@dimen/_20sdp"/>
-
-                        <FrameLayout
-                            android:id="@+id/underline_bar_chart"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_marginTop="@dimen/_15sdp"
-                            android:background="@drawable/background_underline" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginVertical="@dimen/_15sdp"
-                            android:weightSum="2">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-                                <TextView
-                                    style="@style/app_text_big"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="@{String.valueOf(vm.income.totalBookingCancel)}"
-                                    android:maxLines="1"
-                                    android:textColor="@color/title_home_page"/>
-                                <TextView
-                                    style="@style/app_title"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_5sdp"
-                                    android:gravity="center"
-                                    android:text="@string/trip"
-                                    android:maxLines="1"
-                                    android:textColor="#D1424242"/>
-                            </LinearLayout>
-                            <FrameLayout
-                                android:layout_width="@dimen/_1sdp"
-                                android:layout_height="match_parent"
-                                android:layout_marginVertical="@dimen/_10sdp"
-                                android:background="@drawable/background_solid_gray"/>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-                                <TextView
-                                    style="@style/app_text_big"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="@{vm.completeRate +'%'}"
-                                    android:maxLines="1"
-                                    android:textColor="@color/title_home_page"/>
-                                <TextView
-                                    style="@style/app_title"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_5sdp"
-                                    android:gravity="center"
-                                    android:text="@string/completed"
-                                    android:maxLines="1"
-                                    android:textColor="#D1424242"/>
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:background="@drawable/background_underline" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/white"
                             android:orientation="vertical">
                             <TextView
                                 style="@style/app_title"
@@ -206,20 +226,21 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:layout_marginLeft="@dimen/_12sdp"
-                                android:text="@string/trip_history"
+                                android:text="Chi tiết"
                                 android:maxLines="1"/>
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/rcTripHistory"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:paddingTop="@dimen/_10sdp"
-                                android:clipToPadding="false">
+                                android:clipToPadding="false"
+                                android:nestedScrollingEnabled="true">
                             </androidx.recyclerview.widget.RecyclerView>
                         </LinearLayout>
-
                     </LinearLayout>
 
                 </androidx.core.widget.NestedScrollView>
         </LinearLayout>
-    </FrameLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

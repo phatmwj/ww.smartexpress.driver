@@ -16,34 +16,39 @@
     </data>
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/bg_app">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
             android:orientation="vertical">
 
 
             <TextView
+                android:background="@color/white"
                 style="@style/app_text_big"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_gravity="left"
                 android:text="@string/notification_header"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/_18ssp"
+                android:paddingLeft="@dimen/_20sdp"
                 android:textColor="@color/black"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcNotification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:paddingTop="@dimen/_10sdp"
                 android:clipToPadding="false">
 
             </androidx.recyclerview.widget.RecyclerView>
+            <include layout="@layout/item_transaction_empty"
+                android:id="@+id/layout_empty"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent" />
         </LinearLayout>
     </FrameLayout>
 </layout>

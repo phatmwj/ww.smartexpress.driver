@@ -18,8 +18,10 @@ import dagger.Provides;
 import ww.smartexpress.driver.ui.fragment.activity.ActivityFragmentViewModel;
 import ww.smartexpress.driver.ui.fragment.home.HomeFragmentViewModel;
 import ww.smartexpress.driver.ui.fragment.income.IncomeFragmentViewModel;
+import ww.smartexpress.driver.ui.fragment.login.LoginFragmentViewModel;
 import ww.smartexpress.driver.ui.fragment.notification.NotificationFragmentViewModel;
 import ww.smartexpress.driver.ui.fragment.profile.ProfileFragmentViewModel;
+import ww.smartexpress.driver.ui.fragment.signup.SignupFragmentViewModel;
 
 @Module
 public class FragmentModule {
@@ -75,6 +77,22 @@ public class FragmentModule {
         Supplier<ActivityFragmentViewModel> supplier = () -> new ActivityFragmentViewModel(repository, (MVVMApplication) application);
         ViewModelProviderFactory<ActivityFragmentViewModel> factory = new ViewModelProviderFactory<>(ActivityFragmentViewModel.class, supplier);
         return new ViewModelProvider(fragment, factory).get(ActivityFragmentViewModel.class);
+    }
+
+    @Provides
+    @FragmentScope
+    LoginFragmentViewModel provideLoginFragmentViewModel(Repository repository, Context application){
+        Supplier<LoginFragmentViewModel> supplier = () -> new LoginFragmentViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<LoginFragmentViewModel> factory = new ViewModelProviderFactory<>(LoginFragmentViewModel.class, supplier);
+        return new ViewModelProvider(fragment, factory).get(LoginFragmentViewModel.class);
+    }
+
+    @Provides
+    @FragmentScope
+    SignupFragmentViewModel provideSignupFragmentViewModel(Repository repository, Context application){
+        Supplier<SignupFragmentViewModel> supplier = () -> new SignupFragmentViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<SignupFragmentViewModel> factory = new ViewModelProviderFactory<>(SignupFragmentViewModel.class, supplier);
+        return new ViewModelProvider(fragment, factory).get(SignupFragmentViewModel.class);
     }
 
 }

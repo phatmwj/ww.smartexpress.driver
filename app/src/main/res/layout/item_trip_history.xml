@@ -15,251 +15,256 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/_10sdp"
-        android:paddingRight="@dimen/_10sdp"
         android:paddingBottom="@dimen/_5sdp"
         android:elevation="@dimen/_5sdp">
 
-        <LinearLayout
-            android:elevation="@dimen/_2sdp"
-            android:background="@drawable/bg_corners_app"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="@dimen/_10sdp">
+            android:layout_marginVertical="@dimen/_5sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            app:cardCornerRadius="@dimen/_5sdp">
 
             <LinearLayout
+                android:elevation="@dimen/_2sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-                <TextView
-                    style="@style/montserrat_medium_gray_11ssp"
-                    android:textSize="@dimen/_9ssp"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{DateUtils.dateFormat(ivm.createdDate)}"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:layout_weight="1">
-
-                </TextView>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:orientation="horizontal"
-                    android:layout_gravity="end">
-
-                    <LinearLayout
-                        android:layout_width="@dimen/_5sdp"
-                        android:layout_height="@dimen/_5sdp"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:background="@{ivm.state == 300 ? @drawable/item_circle_dot_green : ivm.state== -100 ? @drawable/item_circle_dot_red: @drawable/item_circle_dot_yellow}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/textView3"
-                        app:layout_constraintTop_toTopOf="parent" />
-
+                    android:gravity="center_vertical">
                     <TextView
-                        android:id="@+id/textView3"
-                        style="@style/montserrat_medium_black_11ssp"
-                        android:layout_width="wrap_content"
+                        style="@style/montserrat_medium_gray_11ssp"
+                        android:textSize="@dimen/_9ssp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
+                        android:text="@{DateUtils.dateFormat(ivm.createdDate)}"
                         android:maxLines="1"
-                        android:text="@{ivm.state == 300 ? @string/completed : ivm.state == -100? @string/canceled : @string/processing}"
-                        android:textColor="@{ivm.state == 300 ? @color/green : ivm.state == -100 ? @color/cancel_color: @color/yellow}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:ellipsize="end"
+                        android:layout_weight="1">
 
                     </TextView>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:layout_gravity="end">
+
+                        <LinearLayout
+                            android:layout_width="@dimen/_5sdp"
+                            android:layout_height="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:background="@{ivm.state == 300 ? @drawable/item_circle_dot_green : ivm.state== -100 ? @drawable/item_circle_dot_red: @drawable/item_circle_dot_yellow}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/textView3"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            style="@style/montserrat_medium_black_11ssp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@{ivm.state == 300 ? @string/completed : ivm.state == -100? @string/canceled : @string/processing}"
+                            android:textColor="@{ivm.state == 300 ? @color/green : ivm.state == -100 ? @color/cancel_color: @color/yellow}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </TextView>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    style="@style/montserrat_medium_gray_11ssp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:maxLines="1"
-                    android:layout_weight="1"
-                    android:textSize="@dimen/_12ssp"
-                    android:text="@{ivm.service.name}" />
-                <TextView
-                    style="@style/montserrat_medium_black_11ssp"
-                    android:textSize="@dimen/_12ssp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@{NumberUtils.formatCurrency(ivm.money-ivm.promotionMoney)}"
-                    android:maxLines="1"
-                    android:ellipsize="end">
-
-                </TextView>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="@dimen/_10sdp"
-                    android:src="@drawable/ic_icon_my_location">
-
-                </ImageView>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/text_style_montserrat"
-                        android:textSize="@dimen/_11ssp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="@color/white"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:text="@{ivm.pickupAddress}" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/_21sdp"
-                    android:layout_height="@dimen/_21sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
-                    android:src="@drawable/ic_icon_search_location">
-
-                </ImageView>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        style="@style/text_style_montserrat"
-                        android:textSize="@dimen/_11ssp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="@color/white"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:text="@{ivm.destinationAddress}" />
 
                 </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/orderDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingRight="@dimen/_10sdp"
-                    android:src="@drawable/ic_icon_package">
-
-                </ImageView>
-
                 <LinearLayout
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
+                    <TextView
+                        style="@style/montserrat_medium_gray_11ssp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:maxLines="1"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_12ssp"
+                        android:text="@{ivm.service.name}" />
+                    <TextView
+                        style="@style/montserrat_medium_black_11ssp"
+                        android:textSize="@dimen/_12ssp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@{NumberUtils.formatCurrency(ivm.money-ivm.promotionMoney)}"
+                        android:maxLines="1"
+                        android:ellipsize="end">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:weightSum="5">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:layout_marginRight="@dimen/_8sdp"
-                                android:text='@{NumberUtils.getSize(ivm.service.size) +"  "+ivm.service.weight+"Kg"}'
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                style="@style/text_style_montserrat"
-                                android:textSize="@dimen/_11ssp"
-                                android:textAlignment="textStart">
-                            </TextView>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:text=''
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                style="@style/text_style_montserrat"
-                                android:textSize="@dimen/_11ssp"
-                                android:textAlignment="textEnd">
-                            </TextView>
-                        </LinearLayout>
-                        <TextView
-                            android:visibility="@{ivm.isCod? View.VISIBLE : View.GONE}"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:layout_marginRight="@dimen/_8sdp"
-                            android:text='@{"Thu hộ: "+NumberUtils.formatCurrency(ivm.codPrice)}'
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            style="@style/text_style_montserrat"
-                            android:textSize="@dimen/_11ssp"
-                            android:textAlignment="textStart"/>
-
-                    </LinearLayout>
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_icon_expand"
-                        android:visibility="gone">
+                        android:paddingRight="@dimen/_10sdp"
+                        android:src="@drawable/ic_icon_my_location">
 
                     </ImageView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/text_style_montserrat"
+                            android:textSize="@dimen/_11ssp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/white"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:text="@{ivm.pickupAddress}" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/_21sdp"
+                        android:layout_height="@dimen/_21sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:src="@drawable/ic_icon_search_location">
+
+                    </ImageView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            style="@style/text_style_montserrat"
+                            android:textSize="@dimen/_11ssp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/white"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:text="@{ivm.destinationAddress}" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/orderDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:src="@drawable/ic_icon_package">
+
+                    </ImageView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="5">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="3"
+                                    android:layout_marginRight="@dimen/_8sdp"
+                                    android:text='@{NumberUtils.getSize(ivm.service.size) +"  "+ivm.service.weight+"Kg"}'
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
+                                    style="@style/text_style_montserrat"
+                                    android:textSize="@dimen/_11ssp"
+                                    android:textAlignment="textStart">
+                                </TextView>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:text=''
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
+                                    style="@style/text_style_montserrat"
+                                    android:textSize="@dimen/_11ssp"
+                                    android:textAlignment="textEnd">
+                                </TextView>
+                            </LinearLayout>
+                            <TextView
+                                android:visibility="@{ivm.isCod? View.VISIBLE : View.GONE}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                android:layout_marginRight="@dimen/_8sdp"
+                                android:text='@{"Thu hộ: "+NumberUtils.formatCurrency(ivm.codPrice)}'
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                style="@style/text_style_montserrat"
+                                android:textSize="@dimen/_11ssp"
+                                android:textAlignment="textStart"/>
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_icon_expand"
+                            android:visibility="gone">
+
+                        </ImageView>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

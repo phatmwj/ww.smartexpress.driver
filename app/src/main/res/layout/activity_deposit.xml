@@ -69,10 +69,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingHorizontal="@dimen/_10sdp">
+                android:orientation="vertical">
 
             <LinearLayout
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:elevation="@dimen/_2sdp"
                 android:layout_width="match_parent"
@@ -271,6 +271,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -309,7 +310,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_weight="1"
                         android:maxLines="1"
-                        android:text="MoMo Smart Express"
+                        android:text="MoMo"
                         android:textSize="@dimen/_11ssp"/>
 
                     <CheckBox
@@ -344,7 +345,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_weight="1"
                         android:maxLines="1"
-                        android:text="Payos Smart Express"
+                        android:text="Ngân hàng"
                         android:textSize="@dimen/_11ssp"/>
 
 

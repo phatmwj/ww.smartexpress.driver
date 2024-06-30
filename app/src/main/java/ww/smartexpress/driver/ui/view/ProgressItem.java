@@ -1,4 +1,4 @@
-package ww.smartexpress.driver.ui.wallet.transaction.item;
+package ww.smartexpress.driver.ui.view;
 
 import android.animation.Animator;
 import android.content.Context;

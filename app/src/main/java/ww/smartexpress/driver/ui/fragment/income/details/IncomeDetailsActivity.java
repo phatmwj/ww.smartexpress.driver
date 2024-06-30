@@ -1,10 +1,11 @@
 package ww.smartexpress.driver.ui.fragment.income.details;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -13,11 +14,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.mikephil.charting.charts.Chart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.text.ParseException;
@@ -27,10 +30,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import ww.smartexpress.driver.BR;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.data.model.api.response.Booking;
-import ww.smartexpress.driver.data.model.api.response.Trip;
 import ww.smartexpress.driver.databinding.ActivityIncomeDetailsBinding;
 import ww.smartexpress.driver.di.component.ActivityComponent;
 import ww.smartexpress.driver.ui.base.activity.BaseActivity;
@@ -62,6 +66,7 @@ public class IncomeDetailsActivity extends BaseActivity<ActivityIncomeDetailsBin
         super.onCreate(savedInstanceState);
 
         viewBinding.setLifecycleOwner(this);
+        tripAdapter = new TripAdapter();
 
         Intent intent = getIntent();
         int incomeStatistic = intent.getIntExtra("incomeTime",0);
@@ -71,38 +76,52 @@ public class IncomeDetailsActivity extends BaseActivity<ActivityIncomeDetailsBin
 
         if(incomeStatistic == 0){
             viewModel.incomeTimeString.set("Ngày");
-            viewBinding.barchart.setVisibility(View.GONE);
-            viewBinding.underlineBarChart.setVisibility(View.GONE);
+            viewBinding.layoutChart.setVisibility(View.GONE);
         }else if(incomeStatistic == 1){
             viewModel.incomeTimeString.set("Tuần");
-            viewBinding.barchart.setVisibility(View.VISIBLE);
-            viewBinding.underlineBarChart.setVisibility(View.VISIBLE);
-//            loadStatistic(noOfEmpWeek(), labelsWeek());
+            viewBinding.layoutChart.setVisibility(View.VISIBLE);
         }else if(incomeStatistic == 2){
             viewModel.incomeTimeString.set("Tháng");
-            viewBinding.barchart.setVisibility(View.VISIBLE);
-            viewBinding.underlineBarChart.setVisibility(View.VISIBLE);
-//            loadStatistic(noOfEmpMonth(), labelsMonth());
+            viewBinding.layoutChart.setVisibility(View.VISIBLE);
         }
-        viewModel.statistic();
-        tripAdapter = new TripAdapter();
         viewModel.bookingList.observe(this, bookings -> {
-            tripAdapter.setBookings(bookings);
             if(bookings == null){
                 moneyList = new ArrayList<>();
             }
             try {
                 if(viewModel.incomeTime.get() == 1){
-                    loadStatistic(noOfEmpWeek(), labelsWeek());
+                    loadStatistic2(noOfEmpWeek(),labelsWeek());
                 } else if(viewModel.incomeTime.get() == 2){
-                    loadStatistic(noOfEmpMonth(), labelsMonth());
+                    loadStatistic2(noOfEmpMonth(), labelsMonth());
                 }
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
         });
-        loadTrips();
 
+        getIncome();
+    }
+
+    private void getIncome(){
+        viewModel.showLoading();
+        viewModel.compositeDisposable.add(viewModel.getIncomeDetails()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    if(response.isResult()){
+                        viewModel.income.set(response.getData());
+                        viewModel.getActivityRate();
+                        getMyBooking();
+                    }else {
+                        viewModel.showErrorMessage(response.getMessage());
+                        viewModel.hideLoading();
+                    }
+                },error->{
+                    viewModel.showErrorMessage(application.getString(R.string.newtwork_error));
+                    error.printStackTrace();
+                    viewModel.hideLoading();
+                })
+        );
     }
 
     public void loadTrips(){
@@ -116,50 +135,61 @@ public class IncomeDetailsActivity extends BaseActivity<ActivityIncomeDetailsBin
         });
     }
 
-
-    private void loadStatistic(ArrayList noOfEmp, ArrayList<String> labels){
+    @SuppressLint("ResourceAsColor")
+    private void loadStatistic2(ArrayList noOfEmp, ArrayList<String> labels){
 
         //
-        BarDataSet bardataset = new BarDataSet(noOfEmp, "No Of Employee");
+        LineDataSet bardataset = new LineDataSet(noOfEmp, "No Of Employee");
         bardataset.setDrawValues(false);
         bardataset.setDrawIcons(false);
-        bardataset.setColors(ContextCompat.getColor(this,R.color.bar_chart));
-        BarData data = new BarData(bardataset);
+        bardataset.setColors(ContextCompat.getColor(this,R.color.green_light_app));
+        LineData data = new LineData(bardataset);
         bardataset.setValueTextColor(ContextCompat.getColor(this,R.color.bar_chart_label));
 
         //
-        XAxis xAxis = viewBinding.barchart.getXAxis();
+        XAxis xAxis = viewBinding.linechart.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
         xAxis.setGranularity(1f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setLabelCount(labels.size());
         xAxis.setTextColor(ContextCompat.getColor(this,R.color.bar_chart_label));
         xAxis.setTypeface(ResourcesCompat.getFont(this, R.font.montserrat_medium));
-        xAxis.setDrawAxisLine(false);
+        xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(false);
 
         //
 
-        YAxis leftYAxis = viewBinding.barchart.getAxisLeft();
-        leftYAxis.setDrawAxisLine(false);
+        YAxis leftYAxis = viewBinding.linechart.getAxisLeft();
+        leftYAxis.setDrawAxisLine(true);
         leftYAxis.setDrawGridLines(false);
-        leftYAxis.setDrawLabels(false);
+        leftYAxis.setDrawLabels(true);
+        leftYAxis.setAxisMinimum(0);
         leftYAxis.setTextColor(ContextCompat.getColor(this,R.color.bar_chart_label));
-        YAxis rightYAxis = viewBinding.barchart.getAxisRight();
+
+        YAxis rightYAxis = viewBinding.linechart.getAxisRight();
         rightYAxis.setDrawAxisLine(false);
         rightYAxis.setDrawGridLines(false);
         rightYAxis.setDrawLabels(false);
         rightYAxis.setTextColor(ContextCompat.getColor(this,R.color.bar_chart_label));
 
         //
-        viewBinding.barchart.getDescription().setEnabled(false);
-        viewBinding.barchart.setHighlightPerTapEnabled(false);
-        viewBinding.barchart.setDragEnabled(false);
-        viewBinding.barchart.animateY(1000);
-        viewBinding.barchart.setScaleEnabled(false);
-        viewBinding.barchart.getLegend().setEnabled(false);
-        viewBinding.barchart.setData(data);
-        viewBinding.barchart.invalidate();
+        Description description = new Description();
+        description.setText("(t)");
+        viewBinding.linechart.setDescription(description);
+        viewBinding.linechart.getDescription().setEnabled(true);
+
+        viewBinding.linechart.setHighlightPerTapEnabled(false);
+        viewBinding.linechart.setDragEnabled(false);
+        viewBinding.linechart.animateY(0);
+        viewBinding.linechart.setScaleEnabled(false);
+        viewBinding.linechart.getLegend().setEnabled(false);
+        viewBinding.linechart.setData(data);
+
+        viewBinding.linechart.setNoDataText("");
+        viewBinding.linechart.setNoDataTextColor(R.color.white);
+        Paint p = viewBinding.linechart.getPaint(Chart.PAINT_INFO);
+        p.setColor(R.color.white);
+        viewBinding.linechart.invalidate();
 
     }
     public void staticIncomeInWeek() throws ParseException {
@@ -177,11 +207,46 @@ public class IncomeDetailsActivity extends BaseActivity<ActivityIncomeDetailsBin
             totalDateMoney = 0;
             for(Booking booking : viewModel.bookingList.getValue()){
                 if(isDateInRange(booking.getCreatedDate(), DateUtils.dateStartFormat(date),DateUtils.dateEndFormat(date))){
-                    totalDateMoney += booking.getMoney();
+                    totalDateMoney += booking.getMoney()*booking.getRatioShare()/100;
                 }
             }
             moneyList.add(totalDateMoney);
         }
+
+        for(int i = 0; i< moneyList.size(); i++){
+            Log.d("TAG", "staticIncomeInWeek: "+ moneyList.get(i));
+        }
+    }
+
+    public void getMyBooking(){
+        viewModel.showLoading();
+        viewModel.compositeDisposable.add(viewModel.getBookings()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    if(response.isResult()){
+                        viewModel.bookingList.setValue(response.getData().getContent());
+                        if(response.getData().getContent() != null && response.getData().getContent().size()!= 0){
+                            if(viewModel.pageNumber.get() == 0){
+                                tripAdapter.setBookings(response.getData().getContent());
+                                loadTrips();
+                            }else {
+
+                            }
+                        }else {
+                            tripAdapter.setBookings(response.getData().getContent());
+                            loadTrips();
+                        }
+                    }else {
+                        viewModel.showErrorMessage(response.getMessage());
+                    }
+                    viewModel.hideLoading();
+                },error->{
+                    viewModel.showErrorMessage(application.getString(R.string.newtwork_error));
+                    error.printStackTrace();
+                    viewModel.hideLoading();
+                })
+        );
     }
 
     public void statisticIncomeInMonth() throws ParseException {
@@ -199,12 +264,14 @@ public class IncomeDetailsActivity extends BaseActivity<ActivityIncomeDetailsBin
             totalDateMoney = 0;
             for(Booking booking : viewModel.bookingList.getValue()){
                 if(isDateInRange(booking.getCreatedDate(), DateUtils.startWeekFormat(date),DateUtils.endWeekFormat(date))){
-                    totalDateMoney += booking.getMoney();
+                    totalDateMoney += booking.getMoney()*booking.getRatioShare()/100;
                 }
             }
             moneyList.add(totalDateMoney);
         }
-        Log.d("TAG", "statisticIncomeInMonth: "+ moneyList.toArray());
+        for(int i = 0; i< moneyList.size(); i++){
+            Log.d("TAG", "staticIncomeInWeek: "+ moneyList.get(i));
+        }
     }
     private boolean isDateInRange(String date, String startDate, String endDate) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -274,5 +341,42 @@ public class IncomeDetailsActivity extends BaseActivity<ActivityIncomeDetailsBin
         labels.add("Tuần 3");
         labels.add("Tuần 4");
         return labels;
+    }
+
+    public void doNext(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(viewModel.currentDate.get());
+        if(viewModel.incomeTime.get()== 0){
+            calendar.add(Calendar.DAY_OF_MONTH,1);
+            viewModel.currentDate.set(calendar.getTime());
+        }
+        if(viewModel.incomeTime.get()==1){
+            calendar.add(Calendar.WEEK_OF_YEAR,1);
+            viewModel.currentDate.set(calendar.getTime());
+        }
+        if(viewModel.incomeTime.get()==2){
+            calendar.add(Calendar.MONTH,1);
+            viewModel.currentDate.set(calendar.getTime());
+        }
+//        statistic();
+        getIncome();
+    }
+    public void doAfter(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(viewModel.currentDate.get());
+        if(viewModel.incomeTime.get()== 0){
+            calendar.add(Calendar.DAY_OF_MONTH,-1);
+            viewModel.currentDate.set(calendar.getTime());
+        }
+        if(viewModel.incomeTime.get()==1){
+            calendar.add(Calendar.WEEK_OF_YEAR,-1);
+            viewModel.currentDate.set(calendar.getTime());
+        }
+        if(viewModel.incomeTime.get()==2){
+            calendar.add(Calendar.MONTH,-1);
+            viewModel.currentDate.set(calendar.getTime());
+        }
+//        statistic();
+        getIncome();
     }
 }

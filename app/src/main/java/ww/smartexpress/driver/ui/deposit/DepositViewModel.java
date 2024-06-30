@@ -85,6 +85,7 @@ public class DepositViewModel extends BaseViewModel {
                             Intent intent = new Intent(application.getCurrentActivity(), QrcodeActivity.class);
                             intent.putExtra("paymentInfo", response.getData().getPaymentInfo());
                             application.getCurrentActivity().startActivity(intent);
+//                            openMoMoDeeplink("https://dl.vietqr.io/pay?app=bidv&ba=CAS0585858714@vcb&am=790000");
                             showSuccessMessage(response.getMessage());
                         }else {
                             hideLoading();
@@ -102,11 +103,12 @@ public class DepositViewModel extends BaseViewModel {
 
     private void openMoMoDeeplink(String deeplink) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(deeplink));
-        if (intent.resolveActivity(application.getPackageManager()) != null) {
-            application.getCurrentActivity().startActivity(intent);
-        } else {
-            showWarningMessage("MoMo app is not installed");
-        }
+        application.getCurrentActivity().startActivity(intent);
+//        if (intent.resolveActivity(application.getPackageManager()) != null) {
+//            application.getCurrentActivity().startActivity(intent);
+//        } else {
+//            showWarningMessage("MoMo app is not installed");
+//        }
     }
     public void onPayos(Boolean b){
         if (b){

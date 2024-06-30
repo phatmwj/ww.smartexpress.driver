@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.databinding.ObservableField;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
@@ -15,7 +13,6 @@ import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.helpers.EmptyViewHelper;
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import ww.smartexpress.driver.BR;
@@ -24,7 +21,7 @@ import ww.smartexpress.driver.data.model.api.response.WalletTransaction;
 import ww.smartexpress.driver.databinding.ActivityTransactionBinding;
 import ww.smartexpress.driver.di.component.ActivityComponent;
 import ww.smartexpress.driver.ui.base.activity.BaseActivity;
-import ww.smartexpress.driver.ui.wallet.transaction.item.ProgressItem;
+import ww.smartexpress.driver.ui.view.ProgressItem;
 import ww.smartexpress.driver.ui.wallet.transaction.item.TransactionItem;
 
 public class TransactionActivity extends BaseActivity<ActivityTransactionBinding, TransactionViewModel>

@@ -33,9 +33,13 @@ public class Constants {
     public static final int BOOKING_STATE_PICKUP_SUCCESS = 200 ;
     public static final int BOOKING_STATE_DONE = 300 ;
 
-    public static final Integer NOTIFICATION_KIND_DEPOSIT_SUCCESSFULLY = 1;
-    public static final Integer NOTIFICATION_KIND_APPROVE_PAYOUT = 2;
-    public static final Integer NOTIFICATION_KIND_REJECT_PAYOUT = 3;
+    public static final int NOTIFICATION_KIND_DEPOSIT_SUCCESSFULLY = 1;
+    public static final int NOTIFICATION_KIND_APPROVE_PAYOUT = 2;
+    public static final int NOTIFICATION_KIND_REJECT_PAYOUT = 3;
+
+    public static final int NOTIFICATION_KIND_SYSTEM = 4;
+    public static final int NOTIFICATION_KIND_PROMOTION = 5;
+    public static final int NOTIFICATION_KIND_WARNING = 6;
 
     private Constants() {
 

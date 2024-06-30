@@ -17,18 +17,19 @@
     </data>
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/bg_app">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
             android:orientation="vertical">
 
             <FrameLayout
                 android:id="@+id/frameLayout2"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@color/white"
                 android:padding="@dimen/_5sdp">
 
                 <ImageView
@@ -55,78 +56,44 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/background_corners_top"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:onClick="@{(v)->vm.statisticDate()}"
-                    style="@style/app_text_b"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10ssp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:background="@{vm.statisticTime==0 ? @drawable/background_time_underline:null}"
-                    android:textColor="@{vm.statisticTime==0 ? @color/green_light_app:@color/app_text}"
-                    android:maxLines="1"
-                    android:text="@string/date_time" />
-                <TextView
-                    android:onClick="@{(v)->vm.statisticWeek()}"
-                    style="@style/app_text_b"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10ssp"
-                    android:background="@{vm.statisticTime==1 ? @drawable/background_time_underline:null}"
-                    android:textColor="@{vm.statisticTime==1 ? @color/green_light_app:@color/app_text}"
-                    android:maxLines="1"
-                    android:text="@string/week_time" />
-                <TextView
-                    android:onClick="@{(v)->vm.statisticMonth()}"
-                    style="@style/app_text_b"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10ssp"
-                    android:background="@{vm.statisticTime==2 ? @drawable/background_time_underline:null}"
-                    android:textColor="@{vm.statisticTime==2 ? @color/green_light_app:@color/app_text}"
-                    android:maxLines="1"
-                    android:text="@string/month_time" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:background="@drawable/background_corners_bottom"
+                android:paddingBottom="@dimen/_10sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:background="@drawable/bg_corners_app"
+                android:elevation="@dimen/_2sdp"
                 android:orientation="vertical">
 
-                <TextView
-                    style="@style/app_text_b"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.tabs.TabLayout
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    style="@style/CustomTabLayoutStyle"
+                    app:tabSelectedTextColor="@color/green_light_app"
+                    android:background="@color/white"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:background="@drawable/background_text_gray"
-                    android:paddingHorizontal="@dimen/_30ssp"
-                    android:paddingVertical="@dimen/_5sdp"
-                    android:maxLines="1"
-                    android:text="@{vm.incomeDateString}" />
+                    app:tabTextColor="@color/black"
+                    app:tabIndicatorColor="@color/green_light_app"
+                    app:tabMode="fixed"
+                    app:tabGravity="fill">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ngày" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tuần" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tháng" />
+                </com.google.android.material.tabs.TabLayout>
+
                 <LinearLayout
+                    android:paddingVertical="@dimen/_10sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -139,31 +106,18 @@
                         android:layout_gravity="center"
                         android:src="@drawable/ic_icon_expand_right" />
 
-                    <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_15sdp"
-                        android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
                     <TextView
-                        style="@style/app_title"
+                        style="@style/app_text_b"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/_5sdp"
+                        android:textStyle="italic"
+                        android:textSize="@dimen/_12ssp"
                         android:maxLines="1"
-                        android:text="@string/accept_rate" />
-                    <TextView
-                        style="@style/app_text_big"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:maxLines="1"
-                        android:text="@{vm.acceptRate+'%'}"
-                        android:textColor="@color/app_text"/>
-
-                </LinearLayout>
+                        android:text="@{vm.incomeDateString}" />
                     <ImageView
                         android:onClick="@{()->vm.doNext()}"
                         android:layout_width="wrap_content"
@@ -174,74 +128,109 @@
                         android:src="@drawable/ic_icon_expand" />
                 </LinearLayout>
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
-                    android:background="@drawable/background_underline" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_15sdp"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_15sdp"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:background="@drawable/bg_corners_app"
+                    android:backgroundTint="#B36C94FC"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/_15sdp"
+                    android:paddingVertical="@dimen/_15sdp">
 
                     <TextView
                         style="@style/app_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:maxLines="1"
-                        android:text="@string/cancel_rate" />
+                        android:maxLines="2"
+                        android:text="Tỉ lệ\nnhận chuyến"
+                        android:textColor="@color/white" />
+
                     <TextView
                         style="@style/app_text_big"
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="@dimen/_60sdp"
+                        android:background="@drawable/background_oval_white"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text='@{vm.acceptRate+"%"}'
+                        android:textAlignment="center"
+                        android:textColor="@color/active_green"
+                        android:textSize="@dimen/_18ssp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:paddingHorizontal="@dimen/_15sdp"
+                    android:paddingVertical="@dimen/_15sdp"
+                    android:background="@drawable/bg_corners_app"
+                    android:backgroundTint="#B3F44336"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <TextView
+                        style="@style/app_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:maxLines="2"
                         android:layout_weight="1"
+                        android:text="Tỉ lệ\nhủy chuyến"
+                        android:textColor="@color/white"/>
+                    <TextView
+                        style="@style/app_text_big"
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="@dimen/_60sdp"
                         android:maxLines="1"
+                        android:background="@drawable/background_oval_white"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textSize="@dimen/_18ssp"
                         android:text="@{vm.cancelRate+'%'}"
                         android:textColor="#FF0000"/>
 
                 </LinearLayout>
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
-                    android:background="@drawable/background_underline" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_15sdp"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_15sdp"
-                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:paddingHorizontal="@dimen/_15sdp"
+                    android:paddingVertical="@dimen/_15sdp"
+                    android:background="@drawable/bg_corners_app"
+                    android:backgroundTint="#990FC458"
+                    android:orientation="horizontal"
                     android:gravity="center">
 
                     <TextView
                         style="@style/app_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:maxLines="2"
                         android:layout_weight="1"
-                        android:maxLines="1"
-                        android:text="@string/complete_rate" />
+                        android:text="Tỉ lệ\nhoàn thành"
+                        android:textColor="@color/white"/>
                     <TextView
                         style="@style/app_text_big"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="@dimen/_60sdp"
                         android:maxLines="1"
+                        android:background="@drawable/background_oval_white"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textSize="@dimen/_18ssp"
                         android:text="@{vm.completeRate+'%'}"
                         android:textColor="#31C548"/>
 
                 </LinearLayout>
-
-
-
-
             </LinearLayout>
+
         </LinearLayout>
     </FrameLayout>
 </layout>

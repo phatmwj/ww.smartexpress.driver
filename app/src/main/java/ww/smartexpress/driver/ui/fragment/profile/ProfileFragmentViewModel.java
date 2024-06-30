@@ -26,6 +26,7 @@ import ww.smartexpress.driver.data.model.room.UserEntity;
 import ww.smartexpress.driver.databinding.DialogLogoutBinding;
 import ww.smartexpress.driver.ui.achievement.AchievementActivity;
 import ww.smartexpress.driver.ui.allbike.AllBikeServiceActivity;
+import ww.smartexpress.driver.ui.auth.AuthActivity;
 import ww.smartexpress.driver.ui.award.AwardActivity;
 import ww.smartexpress.driver.ui.base.fragment.BaseFragmentViewModel;
 import ww.smartexpress.driver.ui.history.TripHistoryActivity;
@@ -85,7 +86,7 @@ public class ProfileFragmentViewModel extends BaseFragmentViewModel {
 
         dialogLogoutBinding.btnLogout.setOnClickListener(view -> {
             repository.getSharedPreferences().removeKey(PreferencesService.KEY_BEARER_TOKEN);
-            Intent intent = new Intent(application.getCurrentActivity(), IndexActivity.class);
+            Intent intent = new Intent(application.getCurrentActivity(), AuthActivity.class);
             application.getCurrentActivity().startActivity(intent);
             application.getCurrentActivity().finish();
             dialog.dismiss();

@@ -4,10 +4,12 @@ import ww.smartexpress.driver.di.module.ActivityModule;
 import ww.smartexpress.driver.di.scope.ActivityScope;
 import ww.smartexpress.driver.ui.achievement.AchievementActivity;
 import ww.smartexpress.driver.ui.allbike.AllBikeServiceActivity;
+import ww.smartexpress.driver.ui.auth.AuthActivity;
 import ww.smartexpress.driver.ui.award.AwardActivity;
 import ww.smartexpress.driver.ui.bank.BankActivity;
 import ww.smartexpress.driver.ui.booking.details.BookingDetailsActivity;
 import ww.smartexpress.driver.ui.chat.ChatActivity;
+import ww.smartexpress.driver.ui.cod.CodActivity;
 import ww.smartexpress.driver.ui.deposit.DepositActivity;
 import ww.smartexpress.driver.ui.fragment.income.details.IncomeDetailsActivity;
 import ww.smartexpress.driver.ui.history.TripHistoryActivity;
@@ -17,6 +19,7 @@ import ww.smartexpress.driver.ui.login.LoginActivity;
 import ww.smartexpress.driver.ui.main.MainActivity;
 
 import dagger.Component;
+import ww.smartexpress.driver.ui.notification.details.NotificationDetailsActivity;
 import ww.smartexpress.driver.ui.password.forget.ForgetPasswordActivity;
 import ww.smartexpress.driver.ui.password.otp.ForgetPasswordOTPActivity;
 import ww.smartexpress.driver.ui.password.renew.RenewPasswordActivity;
@@ -84,5 +87,11 @@ public interface ActivityComponent {
 
     void inject(BankActivity bankActivity);
     void inject(TransactionActivity transactionActivity);
+
+    void inject(AuthActivity authActivity);
+
+    void inject(CodActivity codActivity);
+
+    void inject(NotificationDetailsActivity notificationDetailsActivity);
 }
 

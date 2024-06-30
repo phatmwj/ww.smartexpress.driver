@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
+import okhttp3.RequestBody;
 import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.constant.Constants;
 import ww.smartexpress.driver.data.Repository;
@@ -15,6 +16,7 @@ import ww.smartexpress.driver.data.model.api.response.ChatMessage;
 import ww.smartexpress.driver.data.model.api.response.Customer;
 import ww.smartexpress.driver.data.model.api.response.MessageChat;
 import ww.smartexpress.driver.data.model.api.response.RoomResponse;
+import ww.smartexpress.driver.data.model.api.response.UploadFileResponse;
 import ww.smartexpress.driver.data.websocket.Command;
 import ww.smartexpress.driver.data.websocket.Message;
 import ww.smartexpress.driver.ui.base.activity.BaseViewModel;
@@ -52,6 +54,7 @@ public class ChatViewModel extends BaseViewModel {
         chatMessage.setRoomId(roomId.get());
         chatMessage.setBookingId(bookingId.get());
         chatMessage.setMessageId(String.valueOf((new Date()).getTime()));
+        chatMessage.setAvatar("avatar");
 
         Message message1 = new Message();
         message1.setCmd(Command.CM_SEND_MESSAGE);
@@ -77,6 +80,10 @@ public class ChatViewModel extends BaseViewModel {
                 .doOnNext(res ->{
                     messageChatList.set(res.getData().getChatDetails());
                 });
+    }
+
+    public Observable<ResponseWrapper<UploadFileResponse>> uploadImage(RequestBody requestBody){
+        return repository.getApiService().uploadFile(requestBody);
     }
 
 

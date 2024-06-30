@@ -12,11 +12,13 @@ import ww.smartexpress.driver.data.model.api.response.BookingDetails;
 import ww.smartexpress.driver.di.scope.ActivityScope;
 import ww.smartexpress.driver.ui.achievement.AchievementViewModel;
 import ww.smartexpress.driver.ui.allbike.AllBikeServiceViewModel;
+import ww.smartexpress.driver.ui.auth.AuthViewModel;
 import ww.smartexpress.driver.ui.award.AwardViewModel;
 import ww.smartexpress.driver.ui.bank.BankViewModel;
 import ww.smartexpress.driver.ui.base.activity.BaseActivity;
 import ww.smartexpress.driver.ui.booking.details.BookingDetailsViewModel;
 import ww.smartexpress.driver.ui.chat.ChatViewModel;
+import ww.smartexpress.driver.ui.cod.CodViewModel;
 import ww.smartexpress.driver.ui.deposit.DepositViewModel;
 import ww.smartexpress.driver.ui.fragment.income.details.IncomeDetailsViewModel;
 import ww.smartexpress.driver.ui.history.TripHistoryViewModel;
@@ -24,6 +26,7 @@ import ww.smartexpress.driver.ui.home.HomeViewModel;
 import ww.smartexpress.driver.ui.index.IndexViewModel;
 import ww.smartexpress.driver.ui.login.LoginViewModel;
 import ww.smartexpress.driver.ui.main.MainViewModel;
+import ww.smartexpress.driver.ui.notification.details.NotificationDetailsViewModel;
 import ww.smartexpress.driver.ui.password.forget.ForgetPasswordViewModel;
 import ww.smartexpress.driver.ui.password.otp.ForgetPasswordOTPViewModel;
 import ww.smartexpress.driver.ui.password.renew.RenewPasswordViewModel;
@@ -281,5 +284,29 @@ public class ActivityModule {
         Supplier<TransactionViewModel> supplier = () -> new TransactionViewModel(repository, (MVVMApplication) application);
         ViewModelProviderFactory<TransactionViewModel> factory = new ViewModelProviderFactory<>(TransactionViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(TransactionViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    AuthViewModel provideAuthViewModel(Repository repository, Context application) {
+        Supplier<AuthViewModel> supplier = () -> new AuthViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<AuthViewModel> factory = new ViewModelProviderFactory<>(AuthViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(AuthViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    CodViewModel provideCodViewModel(Repository repository, Context application) {
+        Supplier<CodViewModel> supplier = () -> new CodViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<CodViewModel> factory = new ViewModelProviderFactory<>(CodViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(CodViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    NotificationDetailsViewModel provideNotificationDetailsViewModel(Repository repository, Context application) {
+        Supplier<NotificationDetailsViewModel> supplier = () -> new NotificationDetailsViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<NotificationDetailsViewModel> factory = new ViewModelProviderFactory<>(NotificationDetailsViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(NotificationDetailsViewModel.class);
     }
 }

@@ -132,6 +132,7 @@
                     android:paddingHorizontal="@dimen/_15sdp"
                     android:orientation="vertical">
                     <TextView
+                        android:visibility="gone"
                         android:layout_marginTop="@dimen/_3sdp"
                         style="@style/app_text_b"
                         android:textSize="@dimen/_13ssp"
@@ -142,6 +143,7 @@
                         android:text="Nạp/ Rút"
                         android:layout_marginBottom="@dimen/_5sdp"/>
                     <FrameLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
                         android:background="@color/gray_light"/>
@@ -284,6 +286,83 @@
                 <LinearLayout
                     android:background="@color/white"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_marginTop="@dimen/_3sdp"
+                        style="@style/app_text_b"
+                        android:textSize="@dimen/_13ssp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="Tài khoản COD"
+                        android:layout_marginLeft="@dimen/_15sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"/>
+                    <FrameLayout
+                        android:layout_marginHorizontal="@dimen/_15sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/gray_light"/>
+
+                    <LinearLayout
+                        android:onClick="@{()->a.navigateCOD()}"
+                        android:paddingVertical="@dimen/_10sdp"
+                        android:paddingHorizontal="@dimen/_15sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/cash_on_delivery" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                style="@style/app_text_b"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/_10sdp"
+                                android:layout_weight="1"
+                                android:maxLines="1"
+                                android:text="Số dư hiện tại" />
+
+                            <TextView
+                                style="@style/app_text_b"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/_10sdp"
+                                android:layout_weight="1"
+                                android:maxLines="1"
+                                android:textSize="@dimen/_16ssp"
+                                android:textColor="@color/black"
+                                android:text='@{NumberUtils.formatCurrency(vm.accountCOD.maxCOD)}' />
+
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_icon_expand"
+                            app:tint="@color/app_text" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:background="@color/white"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:onClick="@{()->vm.navigateBank()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -297,7 +376,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:maxLines="1"
-                        android:text="Tài khoản"
+                        android:text="Tài khoản khác"
                         android:layout_marginLeft="@dimen/_15sdp"
                         android:layout_marginBottom="@dimen/_5sdp"/>
                     <FrameLayout
@@ -314,11 +393,10 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
                             android:layout_gravity="center"
-                            android:src="@drawable/baseline_other_houses_24"
-                            app:tint="@color/app_text" />
+                            android:src="@drawable/bank"/>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
