@@ -81,7 +81,11 @@
                         android:layout_height="wrap_content"
                         android:text="Tháng" />
                 </com.google.android.material.tabs.TabLayout>
-
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:background="@drawable/background_underline" />
                 <LinearLayout
                     android:paddingVertical="@dimen/_10sdp"
                     android:layout_width="match_parent"
@@ -149,7 +153,7 @@
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_weight="1"
                             android:maxLines="1"
-                            android:text="Phí trước thuế"
+                            android:text="Tổng tiền"
                             android:textColor="#D1424242"/>
 
                         <TextView
@@ -179,7 +183,7 @@
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_weight="1"
                             android:maxLines="1"
-                            android:text="Thuế"
+                            android:text="Số chuyến đi"
                             android:textColor="#D1424242"/>
                         <TextView
                             style="@style/app_title"
@@ -190,71 +194,10 @@
                             android:layout_marginBottom="@dimen/_15sdp"
                             android:layout_weight="1"
                             android:maxLines="1"
-                            android:text="@{NumberUtils.formatCurrency(vm.income.totalBookingMoney - vm.income.totalMoney)}"
+                            android:text="@{String.valueOf(vm.income.totalBooking)}"
                             android:textColor="#CFFF0000"/>
                     </LinearLayout>
-                    <LinearLayout
-                        android:visibility="gone"
-                        android:layout_width="@dimen/_125sdp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/layout_pre_tax_fee"
-                        android:background="@drawable/background_card_app"
-                        android:orientation="vertical">
-                        <TextView
-                            style="@style/app_text_b"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_weight="1"
-                            android:maxLines="1"
-                            android:text="@string/tax"
-                            android:textColor="#D1424242"/>
-                        <TextView
-                            style="@style/app_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginBottom="@dimen/_15sdp"
-                            android:layout_weight="1"
-                            android:maxLines="1"
-                            android:text="@string/money_10"
-                            android:textColor="#CFFF0000"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:visibility="gone"
-                        android:layout_width="@dimen/_125sdp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_below="@+id/layoutTotal"
-                        android:background="@drawable/background_card_app"
-                        android:orientation="vertical">
-                        <TextView
-                            style="@style/app_text_b"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_weight="1"
-                            android:maxLines="1"
-                            android:text="@string/discount_percent"
-                            android:textColor="#D1424242"/>
-                        <TextView
-                            style="@style/app_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginBottom="@dimen/_15sdp"
-                            android:layout_weight="1"
-                            android:maxLines="1"
-                            android:text="@string/money_50"
-                            android:textColor="@color/green_light_app"/>
-                    </LinearLayout>
+
                 </RelativeLayout>
 
                 <TextView
@@ -268,13 +211,10 @@
                     android:text="@string/income_description"
                     android:textColor="#979696"/>
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
-                    android:background="@drawable/background_underline" />
+
 
                 <TextView
+                    android:visibility="gone"
                     style="@style/app_text_b"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -282,7 +222,6 @@
                     android:paddingVertical="@dimen/_15sdp"
                     android:layout_weight="1"
                     android:maxLines="1"
-                    android:text="@{@string/completed +' '+ vm.income.totalBookingCancel+' '+@string/trip_count}"
                     android:textColor="#D1424242"/>
 
             </LinearLayout>

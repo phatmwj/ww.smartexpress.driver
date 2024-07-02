@@ -32,9 +32,11 @@
             android:elevation="@dimen/_15sdp"
             android:layout_gravity="top"
             app:cardElevation="@dimen/_2sdp">
-            <FrameLayout
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_marginVertical="@dimen/_8sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp">
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -43,14 +45,54 @@
                     android:src="@{vm.user.avatar}">
                 </de.hdodenhof.circleimageview.CircleImageView>
 
-                <TextView
-                    android:id="@+id/tvState"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@{vm.state==1 ? @string/online : @string/offline}"
-                    style="@style/title"
-                    android:layout_gravity="center">
-                </TextView>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/app_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@{vm.user.fullName}"
+                        android:textSize="@dimen/_12ssp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_icon_star" />
+
+                        <TextView
+                            android:textSize="@dimen/_10ssp"
+                            style="@style/app_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:text="@{String.valueOf(vm.user.averageRating)}" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tvState"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:text="@{vm.state==1 ? @string/online : @string/offline}"-->
+<!--                    style="@style/title"-->
+<!--                    android:layout_gravity="center">-->
+<!--                </TextView>-->
 
                 <com.kyleduo.switchbutton.SwitchButton
                     android:id="@+id/switchState"
@@ -68,7 +110,7 @@
                 </com.kyleduo.switchbutton.SwitchButton>
 
 
-            </FrameLayout>
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <TextView

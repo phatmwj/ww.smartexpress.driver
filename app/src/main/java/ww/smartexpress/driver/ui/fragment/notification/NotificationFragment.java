@@ -94,16 +94,14 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
     public boolean onItemClick(View view, int position) {
         NotificationResponse notificationResponse = (NotificationResponse) mFlexibleAdapter.getItem(position);
         Log.d("TAG", "onItemClick: "+notificationResponse.getMsg());
-
+        Intent intent;
         switch (notificationResponse.getKind()){
             case Constants.NOTIFICATION_KIND_PROMOTION:
-                Intent intent = new Intent(getContext(), NotificationDetailsActivity.class);
+            case Constants.NOTIFICATION_KIND_WARNING:
+            case Constants.NOTIFICATION_KIND_SYSTEM:
+                intent = new Intent(getContext(), NotificationDetailsActivity.class);
                 intent.putExtra("messageNoti", notificationResponse.getMsg());
                 startActivity(intent);
-                break;
-            case Constants.NOTIFICATION_KIND_WARNING:
-                break;
-            case Constants.NOTIFICATION_KIND_SYSTEM:
                 break;
             case Constants.NOTIFICATION_KIND_APPROVE_PAYOUT:
                 break;

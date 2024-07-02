@@ -65,6 +65,10 @@ public class ShippingViewModel extends BaseViewModel {
         return application;
     }
 
+    public void back(){
+        application.getCurrentActivity().finish();
+    }
+
     public void openChat(){
         Intent intent = new Intent(application.getCurrentActivity(), ChatActivity.class);
         intent.putExtra("codeBooking", booking.get().getCode());

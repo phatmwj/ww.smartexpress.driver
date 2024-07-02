@@ -167,7 +167,7 @@
                                         android:textSize="@dimen/_18ssp"
                                         android:gravity="center"
                                         android:maxLines="1"
-                                        android:text="@{String.valueOf(vm.income.totalBookingCancel)}"
+                                        android:text="@{String.valueOf(vm.income.totalBooking)}"
                                         android:textColor="@color/white" />
 
                                     <TextView

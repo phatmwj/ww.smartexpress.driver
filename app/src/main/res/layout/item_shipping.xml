@@ -366,7 +366,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_weight="3"
                                             android:layout_marginRight="@dimen/_8sdp"
-                                            android:text='@{size +"  "+booking.service.weight+"kg"}'
+                                            android:text='@{booking.service.name}'
                                             android:maxLines="1"
                                             android:ellipsize="end"
                                             style="@style/montserrat_medium_light_gray_11ssp"

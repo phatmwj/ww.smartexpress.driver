@@ -108,6 +108,8 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
     Bitmap photo;
     DialogShippingImgBinding dialogBinding;
     BottomSheetBehavior sheetBehavior;
+
+    private float zoom = 16;
     @Getter
     private String bookingId;
 
@@ -169,7 +171,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
+//                viewBinding.buttonMiddle.setTranslationY(-slideOffset*bottomSheet.getHeight());
             }
         });
 
@@ -196,31 +198,25 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
         currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
         if (currentLocationMarker == null) {
             currentLocationMarker = mMap.addMarker(new MarkerOptions().position(currentLocation).title("Driver current location"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, zoom));
         } else {
             currentLocationMarker.setPosition(currentLocation);
         }
         if (viewModel.status.get() == Constants.BOOKING_ACCEPTED) {
             Log.d("TAG", "onLocationChanged: " +1111);
             BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
-            if (polyline != null) {
-                polyline.remove();
-            }
             if (destinationMarker == null) {
                 destinationMarker = mMap.addMarker(new MarkerOptions().position(customerLocation).title(viewModel.booking.get().getPickupAddress()).icon(desIc));
             } else {
                 destinationMarker.setVisible(true);
                 destinationMarker.setPosition(customerLocation);
             }
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16));
+//            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16));
             loadMapDirection(currentLocation, customerLocation);
 //            viewModel.isShowDirection.set(true);
         }
         if (viewModel.status.get() == Constants.BOOKING_PICKUP) {
             Log.d("TAG", "onLocationChanged: " +2222);
-            if (polyline != null) {
-                polyline.remove();
-            }
             BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
             if (destinationMarker == null) {
                 destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation).title(viewModel.booking.get().getDestinationAddress()).icon(desIc));
@@ -228,7 +224,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                 destinationMarker.setVisible(true);
                 destinationMarker.setPosition(destinationLocation);
             }
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16));
+//            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16));
             loadMapDirection(currentLocation, destinationLocation);
 //            viewModel.isShowDirection.set(true);
         }
@@ -250,6 +246,10 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
             destinationLocation = new LatLng(currentBooking.getDestinationLat(), currentBooking.getDestinationLong());
         });
 
+        mMap.setOnCameraIdleListener(() -> {
+            zoom = mMap.getCameraPosition().zoom;
+        });
+
         viewBinding.cardBooking.btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -266,9 +266,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                         } else {
                             destinationMarker.setVisible(true);
                             destinationMarker.setPosition(customerLocation);
-                        }
-                        if (polyline != null) {
-                            polyline.remove();
                         }
                         if (currentLocation != null) {
                             loadMapDirection(currentLocation, customerLocation);
@@ -391,7 +388,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                     if (status.equals("OK")) {
 
                         JsonArray routes = response.getAsJsonArray("routes");
-                        ArrayList<LatLng> points;
+                        ArrayList<LatLng> points = null;
                         PolylineOptions polylineOptions = null;
 
                         for (int i = 0; i < routes.size(); i++) {
@@ -419,7 +416,11 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                             polylineOptions.geodesic(true);
                         }
 
-                        polyline = mMap.addPolyline(polylineOptions);
+                        if(polyline == null){
+                            polyline = mMap.addPolyline(polylineOptions);
+                        }else {
+                            polyline.setPoints(points);
+                        }
                         Log.d("TAG", "loadMapDirection: ");
 
                     }
@@ -452,9 +453,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                         }
                         if (viewModel.status.get() == Constants.BOOKING_ACCEPTED) {
                             BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
-                            if (polyline != null) {
-                                polyline.remove();
-                            }
                             if (destinationMarker == null) {
                                 destinationMarker = mMap.addMarker(new MarkerOptions().position(customerLocation).title(viewModel.booking.get().getPickupAddress()).icon(desIc));
                             } else {
@@ -465,9 +463,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
 //                            viewModel.isShowDirection.set(true);
                         }
                         if (viewModel.status.get() == Constants.BOOKING_PICKUP ) {
-                            if (polyline != null) {
-                                polyline.remove();
-                            }
                             BitmapDescriptor desIc = BitmapDescriptorFactory.fromResource(R.drawable.location_flag);
                             if (destinationMarker == null) {
                                 destinationMarker = mMap.addMarker(new MarkerOptions().position(destinationLocation).title(viewModel.booking.get().getDestinationAddress()).icon(desIc));
@@ -611,9 +606,6 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
                     break;
                 case Constants.BOOKING_ACCEPTED:
                     updateBooking(Constants.BOOKING_STATE_PICKUP_SUCCESS);
-                    if (polyline != null) {
-                        polyline.remove();
-                    }
                     if (destinationMarker != null) {
                         destinationMarker.setVisible(true);
                     }
@@ -712,6 +704,12 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
         super.onBackPressed();
         if(viewModel.status.get() == Constants.BOOKING_VISIBLE){
             handler.removeCallbacks(runnable);
+        }
+    }
+
+    public void moveCamToCurrentLocation(){
+        if(currentLocation!= null){
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, zoom));
         }
     }
 }

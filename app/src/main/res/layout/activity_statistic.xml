@@ -91,6 +91,11 @@
                         android:layout_height="wrap_content"
                         android:text="Tháng" />
                 </com.google.android.material.tabs.TabLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:background="@drawable/background_underline"/>
 
                 <LinearLayout
                     android:paddingVertical="@dimen/_10sdp"
@@ -133,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     android:background="@drawable/bg_corners_app"
-                    android:backgroundTint="#B36C94FC"
+                    android:backgroundTint="@color/app_light_color"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingHorizontal="@dimen/_15sdp"

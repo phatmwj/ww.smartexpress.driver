@@ -1,8 +1,10 @@
 package ww.smartexpress.driver.data.model.api.response;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -51,6 +53,7 @@ public class NotificationResponse extends AbstractFlexibleItem<NotificationRespo
         return new NotificationViewHolder(view, adapter);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void bindViewHolder(FlexibleAdapter<IFlexible> adapter, NotificationViewHolder holder, int position, List<Object> payloads) {
         Context context = holder.itemView.getContext();
@@ -89,6 +92,14 @@ public class NotificationResponse extends AbstractFlexibleItem<NotificationRespo
         }
         holder.message.setText(message);
         holder.title.setText(title);
+        if(state == 0){
+            holder.statusImage.setVisibility(View.VISIBLE);
+//            holder.notiLayout.setBackgroundColor(R.color.bg_app);
+
+        }else {
+            holder.statusImage.setVisibility(View.GONE);
+//            holder.notiLayout.setBackgroundColor(R.color.bg_app);
+        }
 //        Glide.with(context)
 //                .load(BuildConfig.MEDIA_URL+ "/v1/file/download" + notificationServer.getBanner())
 //                .placeholder(R.drawable.bank_card)
@@ -106,6 +117,13 @@ public class NotificationResponse extends AbstractFlexibleItem<NotificationRespo
 
         @BindView(R.id.image)
         ImageView image;
+
+        @BindView(R.id.imgStatus)
+        ImageView statusImage;
+
+        @BindView(R.id.noti_layout)
+        LinearLayout notiLayout;
+
         public NotificationViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);

@@ -116,7 +116,7 @@ public class IncomeDetailsViewModel extends BaseViewModel {
 //    }
 
     public Observable<ResponseWrapper<ResponseListObj<Booking>>> getBookings(){
-        return repository.getApiService().getMyBooking(DateUtils.convertToUTC(endDate.get()), DateUtils.convertToUTC(startDate.get()), pageNumber.get(),pageSize.get(),
+        return repository.getApiService().getMyBooking(DateUtils.convertToUTC(endDate.get()), DateUtils.convertToUTC(startDate.get()), pageNumber.get(),1000,
                 bookingState.get());
     }
 

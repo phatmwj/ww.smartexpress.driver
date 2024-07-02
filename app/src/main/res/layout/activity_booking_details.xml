@@ -424,7 +424,7 @@
                                 style="@style/trip_information_text_medium"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Tỉ lệ chia xẻ" />
+                                android:text="Tỉ lệ chia sẻ" />
 
                             <TextView
                                 style="@style/trip_information_text_medium"
@@ -602,6 +602,7 @@
                                     android:layout_height="match_parent"
                                     android:background="@color/white"
                                     android:maxLines="1"
+                                    android:textColor="@color/black"
                                     android:text='@{vm.booking.senderName+" - "+vm.booking.senderPhone}' />
                                     android:ellipsize="end"/>
                             </LinearLayout>
@@ -652,8 +653,92 @@
                                     android:layout_height="match_parent"
                                     android:background="@color/white"
                                     android:maxLines="1"
+                                    android:textColor="@color/black"
                                     android:text='@{vm.booking.consigneeName+" - "+vm.booking.consigneePhone}' />
                                     android:ellipsize="end"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginHorizontal="@dimen/_10sdp"
+                            android:id="@+id/orderDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:paddingRight="@dimen/_10sdp"
+                                android:src="@drawable/ic_icon_package">
+
+                            </ImageView>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="1">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:weightSum="5">
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="3"
+                                            android:layout_marginRight="@dimen/_8sdp"
+                                            android:text='@{vm.booking.service.name}'
+                                            android:maxLines="1"
+                                            android:ellipsize="end"
+                                            style="@style/trip_information_text_medium"
+                                            android:textSize="@dimen/_11ssp"
+                                            android:textAlignment="textStart">
+                                        </TextView>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="2"
+                                            android:text=''
+                                            android:maxLines="1"
+                                            android:ellipsize="end"
+                                            style="@style/text_style_montserrat"
+                                            android:textSize="@dimen/_11ssp"
+                                            android:textAlignment="textEnd">
+                                        </TextView>
+                                    </LinearLayout>
+                                    <TextView
+                                        android:visibility="@{vm.booking.isCod? View.VISIBLE : View.GONE}"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="3"
+                                        android:layout_marginRight="@dimen/_8sdp"
+                                        android:text='@{"Thu hộ: "+NumberUtils.formatCurrency(vm.booking.codPrice)}'
+                                        android:maxLines="1"
+                                        android:ellipsize="end"
+                                        style="@style/text_style_montserrat"
+                                        android:textSize="@dimen/_11ssp"
+                                        android:textAlignment="textStart"/>
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_icon_expand"
+                                    android:visibility="gone">
+
+                                </ImageView>
                             </LinearLayout>
                         </LinearLayout>
 

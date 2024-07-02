@@ -26,7 +26,6 @@
 
 
             <TextView
-                android:background="@color/white"
                 style="@style/app_text_big"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
@@ -38,6 +37,7 @@
                 android:textColor="@color/black"/>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:background="@color/bg_app"
                 android:id="@+id/rcNotification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

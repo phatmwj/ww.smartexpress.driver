@@ -284,41 +284,58 @@ public class IncomeDetailsActivity extends BaseActivity<ActivityIncomeDetailsBin
     }
 
     private ArrayList noOfEmpWeek() throws ParseException {
-        staticIncomeInWeek();
+//        staticIncomeInWeek();
         ArrayList noOfEmp = new ArrayList();
-        if( moneyList.size() == 0){
-            noOfEmp.add(new BarEntry(0f,0));
-            noOfEmp.add(new BarEntry(1f, 0));
-            noOfEmp.add(new BarEntry(2f, 0));
-            noOfEmp.add(new BarEntry(3f, 0));
-            noOfEmp.add(new BarEntry(4f,0));
-            noOfEmp.add(new BarEntry(5f, 0));
-            noOfEmp.add(new BarEntry(6f, 0));
-        }else{
-            noOfEmp.add(new BarEntry(0f,moneyList.get(0).longValue()));
-            noOfEmp.add(new BarEntry(1f, moneyList.get(1).longValue()));
-            noOfEmp.add(new BarEntry(2f, moneyList.get(2).longValue()));
-            noOfEmp.add(new BarEntry(3f, moneyList.get(3).longValue()));
-            noOfEmp.add(new BarEntry(4f, moneyList.get(4).longValue()));
-            noOfEmp.add(new BarEntry(5f, moneyList.get(5).longValue()));
-            noOfEmp.add(new BarEntry(6f, moneyList.get(6).longValue()));
-        }
+        List<Double> moneyOfDate = viewModel.income.get().getTotalMoneyOfDays();
+//        if( moneyList.size() == 0){
+//            noOfEmp.add(new BarEntry(0f,0));
+//            noOfEmp.add(new BarEntry(1f, 0));
+//            noOfEmp.add(new BarEntry(2f, 0));
+//            noOfEmp.add(new BarEntry(3f, 0));
+//            noOfEmp.add(new BarEntry(4f,0));
+//            noOfEmp.add(new BarEntry(5f, 0));
+//            noOfEmp.add(new BarEntry(6f, 0));
+//        }else{
+            noOfEmp.add(new BarEntry(0f,moneyOfDate.get(0).longValue()));
+            noOfEmp.add(new BarEntry(1f, moneyOfDate.get(1).longValue()));
+            noOfEmp.add(new BarEntry(2f, moneyOfDate.get(2).longValue()));
+            noOfEmp.add(new BarEntry(3f, moneyOfDate.get(3).longValue()));
+            noOfEmp.add(new BarEntry(4f, moneyOfDate.get(4).longValue()));
+            noOfEmp.add(new BarEntry(5f, moneyOfDate.get(5).longValue()));
+            noOfEmp.add(new BarEntry(6f, moneyOfDate.get(6).longValue()));
+//        }
         return noOfEmp;
     }
     private ArrayList noOfEmpMonth() throws ParseException {
-        statisticIncomeInMonth();
+//        statisticIncomeInMonth();
         ArrayList noOfEmp = new ArrayList();
-        if( moneyList.size() == 0){
-            noOfEmp.add(new BarEntry(0f,0));
-            noOfEmp.add(new BarEntry(1f, 0));
-            noOfEmp.add(new BarEntry(2f, 0));
-            noOfEmp.add(new BarEntry(3f, 0));
-        }else {
-            noOfEmp.add(new BarEntry(0f, moneyList.get(0).longValue()));
-            noOfEmp.add(new BarEntry(1f, moneyList.get(1).longValue()));
-            noOfEmp.add(new BarEntry(2f, moneyList.get(2).longValue()));
-            noOfEmp.add(new BarEntry(3f, moneyList.get(3).longValue()));
+        List<Double> moneyOfDate = viewModel.income.get().getTotalMoneyOfDays();
+        Double moneyOfWeed1 = 0.0;
+        Double moneyOfWeed2 = 0.0;
+        Double moneyOfWeed3 = 0.0;
+        Double moneyOfWeed4 = 0.0;
+        for(int i=0; i<7;i++){
+            moneyOfWeed1 += moneyOfDate.get(i);
         }
+        for(int i=7; i<14;i++){
+            moneyOfWeed2 += moneyOfDate.get(i);
+        }
+        for(int i=14; i<21;i++){
+            moneyOfWeed3 += moneyOfDate.get(i);
+        }
+        moneyOfWeed4 = viewModel.income.get().getTotalMoney() - moneyOfWeed2 - moneyOfWeed1 - moneyOfWeed3;
+//        if( moneyList.size() == 0){
+//            noOfEmp.add(new BarEntry(0f,0));
+//            noOfEmp.add(new BarEntry(1f, 0));
+//            noOfEmp.add(new BarEntry(2f, 0));
+//            noOfEmp.add(new BarEntry(3f, 0));
+//        }else {
+
+            noOfEmp.add(new BarEntry(0f, moneyOfWeed1.longValue()));
+            noOfEmp.add(new BarEntry(1f, moneyOfWeed2.longValue()));
+            noOfEmp.add(new BarEntry(2f, moneyOfWeed3.longValue()));
+            noOfEmp.add(new BarEntry(3f, moneyOfWeed4.longValue()));
+//        }
         return noOfEmp;
     }
 

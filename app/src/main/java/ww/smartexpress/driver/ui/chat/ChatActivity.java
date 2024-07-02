@@ -408,7 +408,7 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewMode
 
     public void sendImageMessage() {
 
-        viewModel.showLoading();
+//        viewModel.showLoading();
         // Upload image if necessary
         if (photo != null) {
             // Upload avatar then update profile
@@ -437,9 +437,9 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewMode
                             closeLib();
                             cancelCrop();
                         }
-                        viewModel.hideLoading();
+//                        viewModel.hideLoading();
                     },error ->{
-                        viewModel.hideLoading();
+//                        viewModel.hideLoading();
                             })
             );
 
