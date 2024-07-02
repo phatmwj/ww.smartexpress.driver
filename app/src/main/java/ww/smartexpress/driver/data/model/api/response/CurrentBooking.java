@@ -45,4 +45,5 @@ public class CurrentBooking {
     private String senderName;
     private String senderPhone;
     private Integer paymentKind;
+    private Integer ratioShare;
 }

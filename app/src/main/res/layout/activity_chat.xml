@@ -17,21 +17,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg_app">
+
         <LinearLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/frameLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                android:elevation="@dimen/_5sdp"
-                android:orientation="horizontal"
-                android:gravity="center"
                 android:background="@color/white"
+                android:elevation="@dimen/_5sdp"
+                android:gravity="center"
+                android:orientation="horizontal"
                 android:padding="@dimen/_5sdp">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -39,29 +41,34 @@
                     android:onClick="@{()->vm.back()}"
                     android:paddingLeft="@dimen/_5ssp"
                     android:paddingRight="@dimen/_20ssp"
-                    android:src="@drawable/ic_icon_back"/>
+                    android:src="@drawable/ic_icon_back" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
-                    android:src="@{vm.customerAvatar}"/>
+                    android:src="@{vm.customerAvatar}" />
 
                 <TextView
-                    android:layout_marginLeft="@dimen/_10sdp"
                     style="@style/app_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_weight="1"
                     android:text="@{vm.customerName}" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|center"
                     android:paddingLeft="@dimen/_5ssp"
                     android:paddingRight="@dimen/_12ssp"
-                    android:src="@drawable/ic_icon_call"/>
+                    android:src="@drawable/ic_icon_call" />
             </LinearLayout>
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcChat"
@@ -76,89 +83,175 @@
                 android:id="@+id/mainLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/background_corners_top"
                 android:orientation="horizontal"
-                android:paddingVertical="@dimen/_8sdp"
-                android:background="@drawable/background_corners_top">
+                android:paddingVertical="@dimen/_8sdp">
+
                 <ImageView
-                    android:onClick="@{()->a.openImagePicker()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:onClick="@{()->a.openLib()}"
                     android:paddingLeft="@dimen/_12ssp"
                     android:paddingRight="@dimen/_10ssp"
-                    android:layout_gravity="center"
                     android:src="@drawable/baseline_photo_library_24"
                     app:tint="@color/green_light_app" />
+
                 <ImageView
-                    android:onClick="@{()->a.takeFromGallery()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:onClick="@{()->a.takePictureCamera()}"
                     android:paddingRight="@dimen/_12sdp"
-                    android:src="@drawable/ic_icon_camera"/>
+                    android:src="@drawable/ic_icon_camera" />
 
                 <EditText
+                    android:id="@+id/txtMsg"
                     style="@style/information_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_edittext_chat"
                     android:hint="Aa"
                     android:inputType="text"
-                    android:layout_weight="1"
                     android:maxLines="1"
                     android:paddingHorizontal="@dimen/_10sdp"
-                    android:textColorHint="@color/grey_text"
-                    android:text="@={vm.message}">
+                    android:text="@={vm.message}"
+                    android:textColorHint="@color/grey_text">
 
                 </EditText>
 
                 <ImageView
-                    android:onClick="@{()->vm.sendMessage()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|center"
+                    android:onClick="@{()->vm.sendMessage()}"
                     android:paddingLeft="@dimen/_12ssp"
                     android:paddingRight="@dimen/_12ssp"
                     android:src="@drawable/ic_icon_send_message" />
 
             </LinearLayout>
+
         </LinearLayout>
         <LinearLayout
+            android:visibility="@{vm.isImageLoaded? View.VISIBLE : View.GONE}"
             android:background="@color/white"
             android:id="@+id/bottomSheet"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/_15sdp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center"
-            app:behavior_peekHeight="0dp"
-            app:behavior_hideable="true"
+            app:behavior_peekHeight="@dimen/_200sdp"
+            app:behavior_hideable="false"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+            <FrameLayout
+                android:visibility ="@{vm.isBottomSheetExpanded? View.VISIBLE : View.GONE}"
+                android:id="@+id/tabTitleLib"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_gravity="left|center"
+                    android:onClick="@{()->a.closeLib()}"
+                    android:paddingLeft="@dimen/_5ssp"
+                    android:paddingRight="@dimen/_20ssp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_icon_delete" />
+
+                <TextView
+                    style="@style/app_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/gray"
+                    android:text="Tất cả ảnh" />
+
+            </FrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bg_app" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:visibility="@{vm.isImageSelected? View.VISIBLE : View.GONE}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_15sdp">
+
+            <TextView
+                android:onClick="@{()->a.openCrop()}"
+                android:id="@+id/btnCancel"
+                style="@style/app_text_b"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="@drawable/background_button_stroke_green"
+                android:gravity="center"
+                android:text="Chỉnh sửa"
+                android:textAllCaps="false"
+                android:textColor="@color/green_light_app" />
+
+            <TextView
+                android:onClick="@{()->a.sendImageMessage()}"
+                android:id="@+id/btnConfirm"
+                style="@style/app_text_b"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@drawable/background_button_app"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="Gửi"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/layout_crop_image"
+            android:visibility="@{vm.isCropView? View.VISIBLE : View.GONE}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#90000000">
             <ImageView
-                android:layout_marginTop="@dimen/_15sdp"
-                android:id="@+id/imageView"
-                android:layout_width="@dimen/_130sdp"
-                android:layout_height="@dimen/_130sdp"/>
+                android:layout_gravity="center"
+                android:id="@+id/imageCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_marginHorizontal="@dimen/_20sdp"/>
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="@dimen/_15sdp"
+                android:layout_marginHorizontal="@dimen/_25sdp"
                 android:layout_marginTop="@dimen/_15sdp">
 
                 <TextView
-                    android:id="@+id/btnCancel"
+                    android:onClick="@{()->a.cancelCrop()}"
                     style="@style/app_text_b"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:background="@drawable/background_button_stroke_green"
                     android:gravity="center"
-                    android:text="@string/cancel"
+                    android:text="Hủy"
                     android:textAllCaps="false"
                     android:textColor="@color/green_light_app" />
 
                 <TextView
-                    android:id="@+id/btnConfirm"
+                    android:onClick="@{()->a.sendImageMessage()}"
                     style="@style/app_text_b"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="wrap_content"
@@ -171,7 +264,7 @@
                     android:textColor="@color/white" />
             </FrameLayout>
 
-        </LinearLayout>
+        </FrameLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

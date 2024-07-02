@@ -18,8 +18,8 @@ public final class BindingUtils {
         }
         Glide.with(view.getContext())
                 .load(BuildConfig.MEDIA_URL+ "/v1/file/download" + url)
-                .error(R.drawable.user_avatar)
-                .placeholder(R.drawable.user_avatar)
+                .error(R.drawable.ic_xml_grey600_48dp)
+                .placeholder(R.drawable.ic_xml_grey600_48dp)
                 .into(view);
     }
 

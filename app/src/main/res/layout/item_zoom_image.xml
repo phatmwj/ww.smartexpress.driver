@@ -16,7 +16,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="@dimen/_270sdp"
-            android:layout_height="@dimen/_270sdp"
+            android:layout_height="wrap_content"
             android:elevation="0dp"
             app:cardCornerRadius="@dimen/_8sdp"
             app:cardElevation="0dp"
@@ -30,6 +30,8 @@
                 android:id="@+id/picture"
                 android:src="@{url}"
                 android:layout_width="match_parent"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
                 android:layout_height="match_parent" />
         </androidx.cardview.widget.CardView>
 

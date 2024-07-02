@@ -11,7 +11,8 @@
             name="vm"
             type="ww.smartexpress.driver.ui.booking.details.BookingDetailsViewModel" />
         <import type="android.view.View" />
-        <import type="ww.smartexpress.driver.utils.NumberUtils"></import>
+
+        <import type="ww.smartexpress.driver.utils.NumberUtils" />
         <import type="ww.smartexpress.driver.utils.DateUtils"></import>
         <import type="android.text.TextUtils"></import>
 
@@ -302,7 +303,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="right"
                                 android:gravity="right"
-                                android:text='@{NumberUtils.formatCurrency(vm.booking.promotionMoney)}' />
+                                android:text='@{"-"+NumberUtils.formatCurrency(vm.booking.promotionMoney)}' />
                         </FrameLayout>
 
                         <FrameLayout
@@ -366,6 +367,104 @@
                                 android:layout_weight="1"
                                 android:gravity="right"
                                 android:text='@{NumberUtils.formatCurrency(vm.booking.money - vm.booking.promotionMoney)}'
+                                android:maxLines="1"
+                                android:ellipsize="end"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="@{vm.booking.state == 300 ? View.VISIBLE : View.GONE}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/trip_information_text_bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:text="Thu nhập"
+                            android:textColor="@color/gray"/>
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="@color/gray_light" />
+
+                        <FrameLayout
+                            android:layout_marginHorizontal="@dimen/_20sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_10sdp">
+                            <TextView
+                                style="@style/trip_information_text_medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Tổng tiền" />
+
+                            <TextView
+                                style="@style/trip_information_text_medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:gravity="right"
+                                android:text='@{NumberUtils.formatCurrency(vm.booking.money)}' />
+                        </FrameLayout>
+                        <FrameLayout
+                            android:layout_marginHorizontal="@dimen/_20sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_10sdp">
+                            <TextView
+                                style="@style/trip_information_text_medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Tỉ lệ chia xẻ" />
+
+                            <TextView
+                                style="@style/trip_information_text_medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:gravity="right"
+                                android:text='@{"x"+vm.booking.ratioShare+"%"}' />
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_marginHorizontal="@dimen/_20sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/linearLayout1"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@color/gray_light" />
+
+                        <LinearLayout
+                            android:layout_marginHorizontal="@dimen/_20sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/trip_information_text_bold"
+                                android:textSize="@dimen/_12ssp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text='Tiền thu' /> />
+
+                            <TextView
+                                style="@style/trip_information_text_bold"
+                                android:textSize="@dimen/_12ssp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:text='@{NumberUtils.formatCurrency(vm.booking.money*vm.booking.ratioShare)}'
                                 android:maxLines="1"
                                 android:ellipsize="end"/>
                         </LinearLayout>

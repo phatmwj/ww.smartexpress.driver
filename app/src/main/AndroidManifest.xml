@@ -52,6 +52,11 @@
         android:windowSoftInputMode="adjustResize|stateHidden">
 
         <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+        <activity
             android:name="ww.smartexpress.driver.ui.qrcode.QrcodeActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:theme="@style/Welcome"
