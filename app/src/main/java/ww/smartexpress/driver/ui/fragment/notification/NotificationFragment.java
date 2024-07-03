@@ -101,7 +101,11 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
             case Constants.NOTIFICATION_KIND_SYSTEM:
                 intent = new Intent(getContext(), NotificationDetailsActivity.class);
                 intent.putExtra("messageNoti", notificationResponse.getMsg());
+                intent.putExtra("notificationId",notificationResponse.getId());
                 startActivity(intent);
+                notificationResponse.setState(1);
+                mFlexibleAdapter.updateItem(notificationResponse);
+                viewModel.totalUnread.set(viewModel.totalUnread.get()-1);
                 break;
             case Constants.NOTIFICATION_KIND_APPROVE_PAYOUT:
                 break;
@@ -131,14 +135,15 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
     }
 
     private void getMyNotification(){
-        if (viewModel.pageNumber.get() == 0){
-            viewModel.showLoading();
-        }
+//        if (viewModel.pageNumber.get() == 0){
+//            viewModel.showLoading();
+//        }
         viewModel.compositeDisposable.add(viewModel.getMyNotification()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
                     if(response.isResult()){
+                        viewModel.totalUnread.set(Math.toIntExact(response.getData().getTotalUnread()));
                         viewModel.pageTotal.set(response.getData().getTotalPages());
                         viewModel.totalElement.set(Math.toIntExact(response.getData().getTotalElements()));
                         if (response.getData().getContent()!=null){
@@ -172,5 +177,22 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
                     viewModel.hideLoading();
                 })
         );
+    }
+
+    public void readAllNotification(){
+        viewModel.compositeDisposable.add(viewModel.readAllNotification()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    getMyNotification();
+                },error->{
+                    error.printStackTrace();
+                })
+        );
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }

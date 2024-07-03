@@ -41,4 +41,5 @@
     <color name="bg_new">#D60FC458</color>
     <color name="bg_app">#F3F3F3</color>
     <color name="app_light_color">#B36C94FC</color>
+    <color name="app_light_color2">#1A6C94FC</color>
 </resources>

@@ -135,6 +135,7 @@
                     android:textColor="@color/active_green" />
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="@dimen/_12sdp">
@@ -201,26 +202,31 @@
                 </RelativeLayout>
 
                 <TextView
-                    android:visibility="gone"
                     style="@style/app_text_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:layout_gravity="center"
                     android:maxLines="1"
-                    android:text="@string/income_description"
+                    android:text="(Thu nhập từ giao hàng và các khoản khác)"
                     android:textColor="#979696"/>
 
-
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:background="@drawable/background_underline" />
 
                 <TextView
-                    android:visibility="gone"
                     style="@style/app_text_b"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:paddingVertical="@dimen/_15sdp"
+                    android:paddingVertical="@dimen/_10sdp"
                     android:layout_weight="1"
+                    android:text='@{"Hoàn thành "+vm.income.totalBooking+" đơn giao hàng."}'
                     android:maxLines="1"
                     android:textColor="#D1424242"/>
 

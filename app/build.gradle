@@ -207,5 +207,7 @@ dependencies {
     implementation 'com.github.Redman1037:TSnackBar:V2.0.0'
 
     implementation 'com.github.yalantis:ucrop:2.2.8'
+
+    implementation 'commons-validator:commons-validator:1.7'
 }
 apply plugin: 'com.google.gms.google-services'

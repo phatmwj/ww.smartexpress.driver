@@ -23,7 +23,6 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="0dp">
             <LinearLayout
-                android:background="#1A6C94FC"
                 android:id="@+id/noti_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,25 +46,25 @@
 
                     <TextView
                         android:id="@+id/tilte"
-                        style="@style/montserrat_medium_gray"
+                        style="@style/text_style_semibold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:textSize="@dimen/_10ssp"
+                        android:textSize="@dimen/_9ssp"
                         android:textColor="@color/black"
                         android:textAllCaps="true"/>
 
                     <TextView
                         android:id="@+id/txtMsg"
-                        style="@style/montserrat_medium_gray"
+                        style="@style/text_style_montserrat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:textSize="@dimen/_12ssp"
+                        android:textSize="@dimen/_10ssp"
                         android:text="@{ivm.msg, default = @string/hot_news}"
                         android:textColor="@color/app_text" />
 

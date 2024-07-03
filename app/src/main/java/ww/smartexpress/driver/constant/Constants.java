@@ -41,6 +41,14 @@ public class Constants {
     public static final int NOTIFICATION_KIND_PROMOTION = 5;
     public static final int NOTIFICATION_KIND_WARNING = 6;
 
+    public static final Integer REQUEST_OTP_KIND_PHONE = 1;
+    public static final Integer REQUEST_OTP_KIND_EMAIL = 2;
+
+    public static final String VERIFY_OPTION = "VERIFY_OPTION";
+    public static final String KEY_USER_ID = "KEY_USER_ID";
+    public static final String OTP = "OTP";
+    public static final String PHONE_NUMBER_REGEX = "^(?!0987654321)(0[3|5|7|8|9])([0-9]{8})$";
+
     private Constants() {
 
     }

@@ -18,12 +18,14 @@ import ww.smartexpress.driver.data.model.api.request.DepositRequest;
 import ww.smartexpress.driver.data.model.api.request.DriverStateRequest;
 import ww.smartexpress.driver.data.model.api.request.EventBookingRequest;
 import ww.smartexpress.driver.data.model.api.request.ForgetPassRequest;
+import ww.smartexpress.driver.data.model.api.request.ForgetPasswordRequest;
 import ww.smartexpress.driver.data.model.api.request.IncomeRequest;
 import ww.smartexpress.driver.data.model.api.request.LoginRequest;
 import ww.smartexpress.driver.data.model.api.request.PayoutRequest;
 import ww.smartexpress.driver.data.model.api.request.PositionRequest;
 import ww.smartexpress.driver.data.model.api.request.RegisterRequest;
 import ww.smartexpress.driver.data.model.api.request.ResetPassRequest;
+import ww.smartexpress.driver.data.model.api.request.ResetPasswordRequest;
 import ww.smartexpress.driver.data.model.api.request.UpdateBookingRequest;
 import ww.smartexpress.driver.data.model.api.request.UpdateProfileRequest;
 import ww.smartexpress.driver.data.model.api.response.AccountCOD;
@@ -34,6 +36,7 @@ import ww.smartexpress.driver.data.model.api.response.BankListResponse;
 import ww.smartexpress.driver.data.model.api.response.Booking;
 import ww.smartexpress.driver.data.model.api.response.CategoryResponse;
 import ww.smartexpress.driver.data.model.api.response.CurrentBooking;
+import ww.smartexpress.driver.data.model.api.response.CustomerIdResponse;
 import ww.smartexpress.driver.data.model.api.response.DriverServiceResponse;
 import ww.smartexpress.driver.data.model.api.response.ForgetPassResponse;
 import ww.smartexpress.driver.data.model.api.response.IncomeResponse;
@@ -44,6 +47,7 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 import ww.smartexpress.driver.data.model.api.response.MomoPaymentResponse;
 import ww.smartexpress.driver.data.model.api.response.NewsResponse;
+import ww.smartexpress.driver.data.model.api.response.NotificationRead;
 import ww.smartexpress.driver.data.model.api.response.NotificationResponse;
 import ww.smartexpress.driver.data.model.api.response.Payment;
 import ww.smartexpress.driver.data.model.api.response.PayosPaymentResponse;
@@ -169,5 +173,17 @@ public interface ApiService {
 
     @GET("/v1/news/client-get/{id}")
     Observable<ResponseWrapper<NewsResponse>> getNews(@Path("id") Long id);
+    @POST("/v1/driver/request-forget-password")
+    @Headers({"IgnoreAuth:1"})
+    Observable<ResponseWrapper<CustomerIdResponse>> forgetPassword(@Body ForgetPasswordRequest request);
 
+    @POST("/v1/driver/reset-password")
+    @Headers({"IgnoreAuth:1"})
+    Observable<ResponseWrapper<String>> resetPassword(@Body ResetPasswordRequest request);
+
+    @PUT("/v1/notification/read")
+    Observable<ResponseGeneric> readNotification(@Body NotificationRead notificationRead);
+
+    @PUT("/v1/notification/read-all")
+    Observable<ResponseGeneric> readAllNotification();
 }

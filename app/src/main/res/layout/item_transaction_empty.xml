@@ -30,7 +30,7 @@
                 style="@style/montserrat_medium_79_gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bạn không có giao dịch nào ở đây">
+                android:text="Bạn không có hoạt động nào ở đây">
 
             </TextView>
         </LinearLayout>

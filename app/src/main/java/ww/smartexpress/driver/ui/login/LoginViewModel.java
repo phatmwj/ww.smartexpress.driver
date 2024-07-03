@@ -8,6 +8,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.R;
+import ww.smartexpress.driver.constant.Constants;
 import ww.smartexpress.driver.data.Repository;
 import ww.smartexpress.driver.data.model.api.request.LoginRequest;
 import ww.smartexpress.driver.ui.base.activity.BaseViewModel;
@@ -26,7 +27,10 @@ public class LoginViewModel extends BaseViewModel {
         isVisibility.set(!isVisibility.get());
     }
     public void forgetPw(){
+//        Intent intent = new Intent(getApplication().getCurrentActivity(), ForgetPasswordActivity.class);
+//        getApplication().getCurrentActivity().startActivity(intent);
         Intent intent = new Intent(getApplication().getCurrentActivity(), ForgetPasswordActivity.class);
+        intent.putExtra(Constants.VERIFY_OPTION, Constants.REQUEST_OTP_KIND_PHONE);
         getApplication().getCurrentActivity().startActivity(intent);
     }
     public void doLogin(){

@@ -21,7 +21,9 @@ import ww.smartexpress.driver.ui.main.MainActivity;
 import dagger.Component;
 import ww.smartexpress.driver.ui.notification.details.NotificationDetailsActivity;
 import ww.smartexpress.driver.ui.password.forget.ForgetPasswordActivity;
+import ww.smartexpress.driver.ui.password.forget.ResetForgetPasswordActivity;
 import ww.smartexpress.driver.ui.password.otp.ForgetPasswordOTPActivity;
+import ww.smartexpress.driver.ui.password.otp.VerifyForgetPasswordOTPActivity;
 import ww.smartexpress.driver.ui.password.renew.RenewPasswordActivity;
 import ww.smartexpress.driver.ui.payout.PayoutActivity;
 import ww.smartexpress.driver.ui.profile.edit.EditProfileActivity;
@@ -93,5 +95,9 @@ public interface ActivityComponent {
     void inject(CodActivity codActivity);
 
     void inject(NotificationDetailsActivity notificationDetailsActivity);
+
+    void inject(ResetForgetPasswordActivity resetForgetPasswordActivity);
+
+    void inject(VerifyForgetPasswordOTPActivity verifyForgetPasswordOTPActivity);
 }
 

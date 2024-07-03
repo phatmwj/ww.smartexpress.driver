@@ -160,4 +160,6 @@
     <string name="ship_state_accept">Đi lấy hàng nào!</string>
     <string name="ship_state_pickup">Đi giao hàng nào!</string>
     <string name="ship_state_new">Bạn có muốn nhận đơn này!</string>
+    <string name="invalid_pw">Mật khẩu không được chứa khoảng trắng</string>
+    <string name="network_error">Không thể kết nối, vui lòng kiểm tra kết nối mạng của bạn.</string>
 </resources>

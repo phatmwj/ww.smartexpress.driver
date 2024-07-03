@@ -28,7 +28,9 @@ import ww.smartexpress.driver.ui.login.LoginViewModel;
 import ww.smartexpress.driver.ui.main.MainViewModel;
 import ww.smartexpress.driver.ui.notification.details.NotificationDetailsViewModel;
 import ww.smartexpress.driver.ui.password.forget.ForgetPasswordViewModel;
+import ww.smartexpress.driver.ui.password.forget.ResetForgetPasswordViewModel;
 import ww.smartexpress.driver.ui.password.otp.ForgetPasswordOTPViewModel;
+import ww.smartexpress.driver.ui.password.otp.VerifyForgetPasswordOTPViewModel;
 import ww.smartexpress.driver.ui.password.renew.RenewPasswordViewModel;
 import ww.smartexpress.driver.ui.payout.PayoutViewModel;
 import ww.smartexpress.driver.ui.profile.ProfileViewModel;
@@ -308,5 +310,20 @@ public class ActivityModule {
         Supplier<NotificationDetailsViewModel> supplier = () -> new NotificationDetailsViewModel(repository, (MVVMApplication) application);
         ViewModelProviderFactory<NotificationDetailsViewModel> factory = new ViewModelProviderFactory<>(NotificationDetailsViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(NotificationDetailsViewModel.class);
+    }
+    @Provides
+    @ActivityScope
+    VerifyForgetPasswordOTPViewModel provideVerifyForgetPasswordOTPViewModel(Repository repository, Context application) {
+        Supplier<VerifyForgetPasswordOTPViewModel> supplier = () -> new VerifyForgetPasswordOTPViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<VerifyForgetPasswordOTPViewModel> factory = new ViewModelProviderFactory<>(VerifyForgetPasswordOTPViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(VerifyForgetPasswordOTPViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    ResetForgetPasswordViewModel provideResetForgetPasswordViewModel(Repository repository, Context application) {
+        Supplier<ResetForgetPasswordViewModel> supplier = () -> new ResetForgetPasswordViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<ResetForgetPasswordViewModel> factory = new ViewModelProviderFactory<>(ResetForgetPasswordViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(ResetForgetPasswordViewModel.class);
     }
 }

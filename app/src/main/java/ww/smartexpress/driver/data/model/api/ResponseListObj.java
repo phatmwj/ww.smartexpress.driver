@@ -10,4 +10,5 @@ public class ResponseListObj<T> {
     private Integer page;
     private Integer totalPages;
     private Long totalElements;
+    private Long totalUnread;
 }
