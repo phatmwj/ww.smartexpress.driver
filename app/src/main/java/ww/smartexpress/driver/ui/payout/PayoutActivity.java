@@ -44,6 +44,9 @@ public class PayoutActivity extends BaseActivity<ActivityPayoutBinding, PayoutVi
             viewModel.getRepository().getRoomService().userDao().findById(Long.valueOf(userId)).observe(this, userEntity -> {
                 Log.d("TAG", "onCreate: "+userEntity.toString());
                 viewModel.user.set(userEntity);
+                if(viewModel.user.get()!=null && viewModel.user.get().getBankCard() != null){
+                    viewModel.bankCard.set(ApiModelUtils.fromJson(viewModel.user.get().getBankCard(), BankCard.class));
+                }
             });
         }
         viewBinding.edtMoney.addTextChangedListener(new TextWatcher() {

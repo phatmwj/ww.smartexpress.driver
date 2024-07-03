@@ -13,7 +13,13 @@ public final class BindingUtils {
     @BindingAdapter("android:src")
     public static void setImageUrl(ImageView view, String url) {
         if (url == null){
-            view.setImageResource(R.drawable.user_avatar);
+            view.setImageResource(R.drawable.ic_xml_grey600_48dp);
+            return;
+        }
+        if(url.contains("https:")){
+            Glide.with(view.getContext())
+                    .load(url)
+                    .into(view);
             return;
         }
         Glide.with(view.getContext())

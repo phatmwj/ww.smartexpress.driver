@@ -49,6 +49,8 @@ public class BankViewModel extends BaseViewModel {
     public ObservableField<BankResponse> bank = new ObservableField<>();
 
     public ObservableField<UserEntity> user = new ObservableField<>();
+
+    Dialog dialog;
     public BankViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
     }
@@ -59,9 +61,13 @@ public class BankViewModel extends BaseViewModel {
     public void back(){
         application.getCurrentActivity().finish();
     }
-
+    public void showBankDialog(){
+        if(dialog!=null){
+            dialog.show();
+        }
+    }
     public void bankDialog(){
-        Dialog dialog = new Dialog(application.getCurrentActivity());
+        dialog = new Dialog(application.getCurrentActivity());
         DialogBankBinding mBinding = DataBindingUtil.inflate(LayoutInflater.from(application.getCurrentActivity()), R.layout.dialog_bank,null, false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -107,7 +113,6 @@ public class BankViewModel extends BaseViewModel {
                 filterListener(bankAdapter,mBinding.edtSearchFood.getText().toString());
             }
         });
-        dialog.show();
     }
 
     private void filterListener(BankAdapter bankAdapter, String text){
@@ -138,6 +143,25 @@ public class BankViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
                     bankResponseList.set(response.getData());
+
+                    String userId = repository.getSharedPreferences().getUserId();
+                    if(userId != null){
+                        repository.getRoomService().userDao().findById(Long.valueOf(userId)).observe(application.getCurrentActivity(), userEntity -> {
+                            user.set(userEntity);
+                            if(userEntity.getBankCard() != null){
+                                BankCard bankCard = ApiModelUtils.fromJson(userEntity.getBankCard(), BankCard.class);
+                                for (BankResponse bank: response.getData()) {
+                                    if(bank.getShort_name().equals(bankCard.getBankName())){
+                                        accountName.set(new AccountName(bankCard.getAccountName()));
+                                        accountNumber.set(bankCard.getAccountNumber());
+                                        brand.set(bankCard.getBranch());
+                                        this.bank.set(bank);
+                                        break;
+                                    }
+                                }
+                            }
+                        });
+                    }
                     bankDialog();
                     hideLoading();
                 },error->{

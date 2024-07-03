@@ -363,7 +363,6 @@
                 <LinearLayout
                     android:background="@color/white"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:onClick="@{()->vm.navigateBank()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -386,6 +385,7 @@
                         android:background="@color/gray_light"/>
 
                     <LinearLayout
+                        android:onClick="@{()->vm.navigateBank()}"
                         android:paddingVertical="@dimen/_10sdp"
                         android:paddingHorizontal="@dimen/_15sdp"
                         android:layout_width="match_parent"

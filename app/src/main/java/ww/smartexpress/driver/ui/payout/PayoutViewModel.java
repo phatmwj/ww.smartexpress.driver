@@ -1,5 +1,7 @@
 package ww.smartexpress.driver.ui.payout;
 
+import android.content.Intent;
+
 import androidx.databinding.ObservableField;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -8,7 +10,9 @@ import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.data.Repository;
 import ww.smartexpress.driver.data.model.api.request.PayoutRequest;
+import ww.smartexpress.driver.data.model.api.response.BankCard;
 import ww.smartexpress.driver.data.model.room.UserEntity;
+import ww.smartexpress.driver.ui.bank.BankActivity;
 import ww.smartexpress.driver.ui.base.activity.BaseViewModel;
 
 public class PayoutViewModel extends BaseViewModel {
@@ -16,6 +20,7 @@ public class PayoutViewModel extends BaseViewModel {
     public ObservableField<String> money = new ObservableField<>();
     public ObservableField<Integer> balance = new ObservableField<>(0);
     public ObservableField<UserEntity> user = new ObservableField<>();
+    public ObservableField<BankCard> bankCard = new ObservableField<>();
     public PayoutViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
     }
@@ -55,5 +60,10 @@ public class PayoutViewModel extends BaseViewModel {
                                 error.printStackTrace();
                             })
             );
+    }
+
+    public void navigateBank(){
+        Intent intent = new Intent(application.getCurrentActivity(), BankActivity.class);
+        application.getCurrentActivity().startActivity(intent);
     }
 }

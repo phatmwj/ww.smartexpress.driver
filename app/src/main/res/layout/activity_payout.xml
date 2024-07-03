@@ -314,7 +314,82 @@
                     android:text="Tài khoản nhận tiền"
                     android:textColor="@color/gray"/>
 
+                <LinearLayout
+                    android:onClick="@{()->vm.navigateBank()}"
+                    android:paddingVertical="@dimen/_10sdp"
+                    android:paddingHorizontal="@dimen/_15sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/bg_state_new"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/bank"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:visibility="@{vm.user.bankCard != null ? View.GONE : View.VISIBLE}"
+                            style="@style/app_text_b"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:text="Tài khoản ngân hàng" />
+
+                        <TextView
+                            android:visibility="@{vm.user.bankCard == null ? View.GONE : View.VISIBLE}"
+                            style="@style/app_text_b"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:text='@{vm.bankCard.bankName + " - " + vm.bankCard.accountName}' />
+                        <TextView
+                            android:visibility="@{vm.user.bankCard == null ? View.GONE : View.VISIBLE}"
+                            style="@style/app_text_b"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:text='@{"Số tài khoản: "+vm.bankCard.accountNumber}' />
+
+                        <TextView
+                            android:visibility="@{vm.user.bankCard != null ? View.GONE : View.VISIBLE}"
+                            style="@style/app_text_b"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:textColor="@color/green"
+                            android:textSize="@dimen/_10ssp"
+                            android:text="Bạn chưa có tài khoản ngân hàng" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_icon_expand"
+                        app:tint="@color/app_text" />
+
+                </LinearLayout>
+
                 <RadioGroup
+                    android:visibility="gone"
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/bg_corners_app"

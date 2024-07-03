@@ -69,6 +69,14 @@
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:visibility="@{vm.bank == null ? View.GONE :View.VISIBLE}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginHorizontal="@dimen/_40sdp"
+                    android:src="@{vm.bank.logo}"/>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_width="match_parent"
@@ -87,7 +95,7 @@
                     app:hintAnimationEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:onClick="@{()->vm.getBankList()}"
+                        android:onClick="@{()->vm.showBankDialog()}"
                         style="@style/information_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
