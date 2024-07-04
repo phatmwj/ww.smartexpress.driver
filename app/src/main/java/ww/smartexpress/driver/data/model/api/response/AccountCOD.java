@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountCOD {
-    private Double maxCOD;
+    private double maxCOD;
 }

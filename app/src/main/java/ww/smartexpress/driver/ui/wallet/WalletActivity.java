@@ -78,7 +78,7 @@ public class WalletActivity extends BaseActivity<ActivityWalletBinding, WalletVi
 
     public void navigateCOD(){
         Intent intent = new Intent(this, CodActivity.class);
-        intent.putExtra("maxCod", viewModel.accountCOD.get().getMaxCOD().intValue());
+        intent.putExtra("maxCod", (int) viewModel.accountCOD.get().getMaxCOD());
         activityResultLauncher.launch(intent);
     }
 }
