@@ -333,7 +333,7 @@
                                 android:layout_marginHorizontal="@dimen/_10sdp"
                                 android:layout_weight="1"
                                 android:maxLines="1"
-                                android:text="Số dư hiện tại" />
+                                android:text="Tiền ứng hộ" />
 
                             <TextView
                                 style="@style/app_text_b"

@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,14 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getMyNotification();
+        binding.swRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                viewModel.pageNumber.set(0);
+                getMyNotification();
+                binding.swRefresh.setRefreshing(false);
+            }
+        });
     }
 
     @Override
@@ -135,9 +144,9 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
     }
 
     private void getMyNotification(){
-//        if (viewModel.pageNumber.get() == 0){
-//            viewModel.showLoading();
-//        }
+        if (viewModel.pageNumber.get() == 0){
+            viewModel.showLoading();
+        }
         viewModel.compositeDisposable.add(viewModel.getMyNotification()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -184,6 +193,7 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
+                    viewModel.pageNumber.set(0);
                     getMyNotification();
                 },error->{
                     error.printStackTrace();
