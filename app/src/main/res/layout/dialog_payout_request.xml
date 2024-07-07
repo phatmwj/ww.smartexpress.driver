@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="ivm"
+            type="ww.smartexpress.driver.data.model.api.response.PayoutTransaction" />
+        <import type="android.text.TextUtils"></import>
+        <import type="android.view.View"></import>
+        <import type="ww.smartexpress.driver.utils.DateUtils"/>
+        <import type="ww.smartexpress.driver.utils.NumberUtils"/>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:id="@+id/layout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_12sdp"
+                android:paddingTop="@dimen/_15sdp">
+                <TextView
+                    style="@style/app_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Thông báo"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    style="@style/app_text_b"
+                    android:layout_marginVertical="@dimen/_5sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/_10ssp"
+                    android:textAlignment="center"
+                    android:text="Hiện tại bạn đang có yêu cầu rút tiền. Vui lòng xóa yêu cầu hiện tại nếu muốn tạo yêu cầu mới."
+                    android:textColor="@color/red_color"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_green_light_elevation"
+                    android:padding="@dimen/_10sdp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/createDate"
+                            android:text='@{DateUtils.dateFormat(ivm.createdDate)}'
+                            style="@style/small_information"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:maxLines="1">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/state"
+                            android:text='Đang xử lý'
+                            android:textColor="@color/yellow"
+                            style="@style/montserrat_medium_gray_11ssp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/desc"
+                            android:text='Rút tiền'
+                            style="@style/montserrat_medium_gray_11ssp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textSize="@dimen/_13ssp" />
+
+                        <TextView
+                            android:id="@+id/money"
+                            style="@style/montserrat_medium_gray_11ssp"
+                            android:text='@{"-" + NumberUtils.formatCurrency(ivm.money.doubleValue())}'
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/white"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_marginRight="@dimen/_25sdp"
+                        android:layout_weight="1"
+                        android:id="@+id/btnCancel"
+                        style="@style/app_text_b"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:background="@drawable/background_button_stroke_green"
+                        android:gravity="center"
+                        android:text="@string/cancel"
+                        android:textAllCaps="false"
+                        android:textColor="@color/green_light_app" />
+
+                    <TextView
+                        android:layout_marginLeft="@dimen/_25sdp"
+                        android:layout_weight="1"
+                        android:id="@+id/btnLogout"
+                        style="@style/app_text_b"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/background_button_solid_green"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="Xóa"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+</layout>

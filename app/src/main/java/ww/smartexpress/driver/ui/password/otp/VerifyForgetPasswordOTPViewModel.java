@@ -16,6 +16,7 @@ import ww.smartexpress.driver.constant.Constants;
 import ww.smartexpress.driver.data.Repository;
 import ww.smartexpress.driver.data.model.api.ResponseWrapper;
 import ww.smartexpress.driver.data.model.api.request.ForgetPasswordRequest;
+import ww.smartexpress.driver.data.model.api.response.CheckOtpRequest;
 import ww.smartexpress.driver.data.model.api.response.CustomerIdResponse;
 import ww.smartexpress.driver.ui.base.activity.BaseViewModel;
 import ww.smartexpress.driver.ui.password.forget.ResetForgetPasswordActivity;
@@ -105,5 +106,24 @@ public class VerifyForgetPasswordOTPViewModel extends BaseViewModel {
                 .doOnNext(response -> {
 
                 });
+    }
+
+    public void checkOtp(){
+
+        showLoading();
+        compositeDisposable.add(repository.getApiService().checkOtp(new CheckOtpRequest(otp1.get()+otp2.get()+otp3.get()+otp4.get(), userId.get()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    if(response.isResult() && response.getData() != null){
+                        verifyOTP();
+                    }else{
+                        showErrorMessage("Otp không chính xác, vui lòng nhập lại!");
+                    }
+                    hideLoading();
+                }, err -> {
+                    hideLoading();
+                    showErrorMessage(application.getString(R.string.newtwork_error));
+                }));
     }
 }

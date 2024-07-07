@@ -16,12 +16,16 @@ import androidx.databinding.Observable;
 import androidx.databinding.ObservableField;
 import androidx.fragment.app.DialogFragment;
 
+import lombok.Getter;
 import lombok.Setter;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.databinding.DialogConfirmPasswordBinding;
 
 public class PasswordDialog extends DialogFragment implements View.OnClickListener {
 
+    @Getter
+    @Setter
+    private Dialog dialog;
     @Setter
     private PasswordListener listener;
     public interface PasswordListener{
@@ -69,7 +73,7 @@ public class PasswordDialog extends DialogFragment implements View.OnClickListen
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog = super.onCreateDialog(savedInstanceState);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,

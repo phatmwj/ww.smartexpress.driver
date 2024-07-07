@@ -3,6 +3,7 @@ package ww.smartexpress.driver.data.remote;
 import com.google.gson.JsonObject;
 
 import okhttp3.RequestBody;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.PUT;
@@ -14,6 +15,7 @@ import ww.smartexpress.driver.data.model.api.ResponseWrapper;
 import ww.smartexpress.driver.data.model.api.request.CancelBookingRequest;
 import ww.smartexpress.driver.data.model.api.request.ChangeStateRequest;
 import ww.smartexpress.driver.data.model.api.request.ConfirmAccountNumberRequest;
+import ww.smartexpress.driver.data.model.api.request.ConfirmPasswordRequest;
 import ww.smartexpress.driver.data.model.api.request.DepositRequest;
 import ww.smartexpress.driver.data.model.api.request.DriverStateRequest;
 import ww.smartexpress.driver.data.model.api.request.EventBookingRequest;
@@ -35,6 +37,7 @@ import ww.smartexpress.driver.data.model.api.response.BankAccountResponse;
 import ww.smartexpress.driver.data.model.api.response.BankListResponse;
 import ww.smartexpress.driver.data.model.api.response.Booking;
 import ww.smartexpress.driver.data.model.api.response.CategoryResponse;
+import ww.smartexpress.driver.data.model.api.response.CheckOtpRequest;
 import ww.smartexpress.driver.data.model.api.response.CurrentBooking;
 import ww.smartexpress.driver.data.model.api.response.CustomerIdResponse;
 import ww.smartexpress.driver.data.model.api.response.DriverServiceResponse;
@@ -51,6 +54,7 @@ import ww.smartexpress.driver.data.model.api.response.NotificationRead;
 import ww.smartexpress.driver.data.model.api.response.NotificationResponse;
 import ww.smartexpress.driver.data.model.api.response.Payment;
 import ww.smartexpress.driver.data.model.api.response.PayosPaymentResponse;
+import ww.smartexpress.driver.data.model.api.response.PayoutTransaction;
 import ww.smartexpress.driver.data.model.api.response.ProfileResponse;
 import ww.smartexpress.driver.data.model.api.response.RegisterResponse;
 import ww.smartexpress.driver.data.model.api.response.RoomResponse;
@@ -193,4 +197,15 @@ public interface ApiService {
 
     @GET("/v1/wallet-transaction/get/{id}")
     Observable<ResponseWrapper<WalletTransaction>> getTransactionDetails(@Path("id") Long id);
+
+    @POST("v1/driver/confirm-password")
+    Observable<ResponseWrapper<String>> confirmPassword(@Body ConfirmPasswordRequest request);
+    @DELETE("/v1/request-pay-out/delete/{id}")
+    Observable<ResponseWrapper<String>> deletePayoutRequest(@Path("id") Long id);
+    @GET("/v1/request-pay-out/my-request")
+    Observable<ResponseWrapper<ResponseListObj<PayoutTransaction>>> getMyPayoutRequest (@Query("driverId") Long driverId, @Query("state") Integer state);
+
+    @POST("/v1/driver/check-otp")
+    @Headers({"IgnoreAuth:1"})
+    Observable<ResponseGeneric> checkOtp(@Body CheckOtpRequest request);
 }
