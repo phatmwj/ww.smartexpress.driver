@@ -13,6 +13,7 @@ import ww.smartexpress.driver.di.scope.ActivityScope;
 import ww.smartexpress.driver.ui.achievement.AchievementViewModel;
 import ww.smartexpress.driver.ui.allbike.AllBikeServiceViewModel;
 import ww.smartexpress.driver.ui.auth.AuthViewModel;
+import ww.smartexpress.driver.ui.await.AwaitViewModel;
 import ww.smartexpress.driver.ui.award.AwardViewModel;
 import ww.smartexpress.driver.ui.bank.BankViewModel;
 import ww.smartexpress.driver.ui.base.activity.BaseActivity;
@@ -40,6 +41,7 @@ import ww.smartexpress.driver.ui.signup.SignUpViewModel;
 import ww.smartexpress.driver.ui.splash.SplashViewModel;
 import ww.smartexpress.driver.ui.wallet.WalletViewModel;
 import ww.smartexpress.driver.ui.wallet.transaction.TransactionViewModel;
+import ww.smartexpress.driver.ui.wallet.transaction.details.TransactionDetailsViewModel;
 import ww.smartexpress.driver.ui.welcome.WelcomeViewModel;
 import ww.smartexpress.driver.ui.profile.edit.EditProfileViewModel;
 import ww.smartexpress.driver.ui.statistic.StatisticViewModel;
@@ -325,5 +327,21 @@ public class ActivityModule {
         Supplier<ResetForgetPasswordViewModel> supplier = () -> new ResetForgetPasswordViewModel(repository, (MVVMApplication) application);
         ViewModelProviderFactory<ResetForgetPasswordViewModel> factory = new ViewModelProviderFactory<>(ResetForgetPasswordViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(ResetForgetPasswordViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    AwaitViewModel provideAwaitViewModel(Repository repository, Context application) {
+        Supplier<AwaitViewModel> supplier = () -> new AwaitViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<AwaitViewModel> factory = new ViewModelProviderFactory<>(AwaitViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(AwaitViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    TransactionDetailsViewModel provideTransactionDetailsViewModel(Repository repository, Context application) {
+        Supplier<TransactionDetailsViewModel> supplier = () -> new TransactionDetailsViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<TransactionDetailsViewModel> factory = new ViewModelProviderFactory<>(TransactionDetailsViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(TransactionDetailsViewModel.class);
     }
 }

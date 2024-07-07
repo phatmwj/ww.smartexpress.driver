@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -21,6 +22,7 @@ import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.data.Repository;
 import ww.smartexpress.driver.data.local.prefs.PreferencesService;
 import ww.smartexpress.driver.data.model.api.response.ProfileResponse;
+import ww.smartexpress.driver.data.model.api.response.SettingResponse;
 import ww.smartexpress.driver.data.model.api.response.WalletResponse;
 import ww.smartexpress.driver.data.model.room.UserEntity;
 import ww.smartexpress.driver.databinding.DialogLogoutBinding;
@@ -41,9 +43,11 @@ public class ProfileFragmentViewModel extends BaseFragmentViewModel {
     public MutableLiveData<ProfileResponse> profile = new MutableLiveData<>();;
     public ObservableField<WalletResponse> wallet = new ObservableField<>();
     public ObservableField<UserEntity> user = new ObservableField<>();
+    public ObservableField<SettingResponse> settings = new ObservableField<>();
     public ProfileFragmentViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
         getMyWallet();
+        getHotline();
     }
     public Repository getRepository(){
         return repository;
@@ -127,5 +131,32 @@ public class ProfileFragmentViewModel extends BaseFragmentViewModel {
                     error.printStackTrace();
                 })
         );
+    }
+
+    public void getHotline(){
+        showLoading();
+        compositeDisposable.add(repository.getApiService().getSettings("support-hotline")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    if(response.isResult()){
+                        settings.set(response.getData());
+                        hideLoading();
+                    }else {
+                        hideLoading();
+                        showErrorMessage(response.getMessage());
+                    }
+                },error->{
+                    hideLoading();
+                    showErrorMessage(application.getString(R.string.newtwork_error));
+                    error.printStackTrace();
+                })
+        );
+    }
+
+    public void callSystem(){
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse("tel:" + settings.get().getSettingValue()));
+        application.getCurrentActivity().startActivity(callIntent);
     }
 }

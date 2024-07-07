@@ -8,8 +8,11 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.R;
+import ww.smartexpress.driver.constant.ErrorCode;
 import ww.smartexpress.driver.data.Repository;
 import ww.smartexpress.driver.data.model.api.request.LoginRequest;
+import ww.smartexpress.driver.ui.await.AwaitActivity;
+import ww.smartexpress.driver.ui.await.AwaitViewModel;
 import ww.smartexpress.driver.ui.base.fragment.BaseFragmentViewModel;
 import ww.smartexpress.driver.ui.home.HomeActivity;
 import ww.smartexpress.driver.ui.password.forget.ForgetPasswordActivity;
@@ -49,8 +52,16 @@ public class LoginFragmentViewModel extends BaseFragmentViewModel {
                         application.getCurrentActivity().finish();
                         hideLoading();
                     }else {
+                        switch (response.getCode()){
+                            case ErrorCode.DRIVER_ERROR_NOT_ACTIVE:
+                                Intent intent = new Intent(application.getCurrentActivity(), AwaitActivity.class);
+                                application.getCurrentActivity().startActivity(intent);
+                                break;
+                            default:
+                                showErrorMessage(response.getMessage());
+                                break;
+                        }
                         hideLoading();
-                        showErrorMessage(response.getMessage());
                     }
                 },error->{
                     hideLoading();

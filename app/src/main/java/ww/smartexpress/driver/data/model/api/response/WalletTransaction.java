@@ -8,10 +8,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WalletTransaction {
-    private int money;
-    private int kind;
-    private int state;
+    private Long id;
+    private double money;
+    private Integer kind;
+    private Integer state;
+    private Integer status;
     private String createdDate;
     private int paymentKind;
     private String paymentInfo;
+    private CurrentBooking booking;
 }

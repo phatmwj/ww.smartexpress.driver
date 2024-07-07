@@ -1,16 +1,14 @@
 package ww.smartexpress.driver.ui.password.forget;
 
 import android.content.Intent;
-import android.util.Log;
 
 import androidx.databinding.ObservableField;
-
-import org.apache.commons.validator.routines.EmailValidator;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import ww.smartexpress.driver.MVVMApplication;
+import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.constant.Constants;
 import ww.smartexpress.driver.data.Repository;
 import ww.smartexpress.driver.data.model.api.ResponseWrapper;
@@ -37,24 +35,15 @@ public class ForgetPasswordViewModel extends BaseViewModel {
 
     public void doNext(){
         if(kind.get() == 1){
-            Log.d("TAG", "doNext: " + phone.get().trim().length());
             if(phone.get().trim().length() != 10){
                 showErrorMessage("Số điện thoại không hợp lệ");
                 return;
             }
         }
-//        else{
-//            if(!EmailValidator.getInstance().isValid(email.get().trim())){
-//                showErrorMessage("Email không hợp lệ");
-//                return;
-//            }
-//        }
-
         ForgetPasswordRequest request = ForgetPasswordRequest.builder()
                 .phone(phone.get())
                 .kind(kind.get())
                 .build();
-
         showLoading();
 
         compositeDisposable.add(requestForgetPassword(request)
@@ -66,16 +55,15 @@ public class ForgetPasswordViewModel extends BaseViewModel {
                         Intent intent = new Intent(getApplication().getCurrentActivity(), VerifyForgetPasswordOTPActivity.class);
                         intent.putExtra(Constants.KEY_USER_ID, response.getData().getUserId());
                         intent.putExtra(Constants.VERIFY_OPTION, kind.get());
+                        intent.putExtra("phone", phone.get());
                         getApplication().getCurrentActivity().startActivity(intent);
                         getApplication().getCurrentActivity().finish();
                     }else{
-                        showErrorMessage("Xảy ra lỗi, vui lòng thử lại!");
+                        showErrorMessage(response.getMessage());
                     }
                 }, err -> {
                     hideLoading();
-                    showErrorMessage("Không tìm thấy tài khoản. Vui lòng thử lại");
+                    showErrorMessage(application.getString(R.string.newtwork_error));
                 }));
-
-
     }
 }

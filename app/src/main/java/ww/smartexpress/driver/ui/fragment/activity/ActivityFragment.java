@@ -15,6 +15,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,10 +84,13 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
     String[] storagePermission;
     Bitmap photo;
     DialogShippingImgBinding dialogBinding;
-
     MVVMApplication mvvmApplication;
-
     Context context;
+    private Handler positionHandler = new Handler();
+
+    private Runnable positionRunnable;
+
+    private static final long CALL_UPDATE_POS_MINUTES = 4 * 60 * 1000;
 
     private final ActivityResultLauncher<IntentSenderRequest> locationSettingsLauncher =
             registerForActivityResult(new ActivityResultContracts.StartIntentSenderForResult(), result -> {
@@ -226,7 +230,23 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
             updateShippingChanged();
         });
 
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, this);
 
+        positionRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if(viewModel.state.get() == 1 ){
+                    Log.d("TAG", "run: ");
+                    viewModel.updatePosition();
+                    positionHandler.postDelayed(this, CALL_UPDATE_POS_MINUTES);
+                }
+            }
+        };
+        positionHandler.postDelayed(positionRunnable, CALL_UPDATE_POS_MINUTES);
         binding.switchState.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -236,9 +256,11 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
                 if (b) {
                     viewModel.state.set(1);
                     binding.switchState.setThumbDrawable(ContextCompat.getDrawable(getContext(), R.drawable.thumb_on));
+                    positionHandler.postDelayed(positionRunnable, CALL_UPDATE_POS_MINUTES);
                 } else {
                     viewModel.state.set(0);
                     binding.switchState.setThumbDrawable(ContextCompat.getDrawable(getContext(), R.drawable.thumb_off));
+                    positionHandler.removeCallbacks(positionRunnable);
                 }
                 viewModel.changeDriverState(new DriverStateRequest(viewModel.state.get()));
             }
@@ -273,6 +295,12 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
                 // Xử lý khi tab được chọn lại
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        positionHandler.removeCallbacks(positionRunnable);
     }
 
     private void updateShippingChanged(){

@@ -39,6 +39,7 @@ public class VerifyForgetPasswordOTPActivity extends BaseActivity<ActivityVerify
         Intent intent = getIntent();
         viewModel.userId.set(intent.getStringExtra(Constants.KEY_USER_ID));
         viewModel.kind.set(intent.getIntExtra(Constants.VERIFY_OPTION, 1));
+        viewModel.phone.set(getIntent().getStringExtra("phone"));
 
         viewBinding.layoutHeader.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

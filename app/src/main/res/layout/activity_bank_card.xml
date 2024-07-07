@@ -12,7 +12,8 @@
             type="ww.smartexpress.driver.ui.bank.BankViewModel" />
         <import type="android.view.View"/>
         <import type="ww.smartexpress.driver.utils.NumberUtils"/>
-        <import type="android.text.TextUtils"></import>
+
+        <import type="android.text.TextUtils" />
 
     </data>
 
@@ -154,13 +155,14 @@
                     app:hintAnimationEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:onClick="@{()->vm.getAccountName()}"
                         style="@style/information_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:focusable="false"
                         android:importantForAccessibility="yes"
-                        android:inputType="text"
+                        android:inputType="none"
                         android:maxLines="1"
                         android:text="@{vm.accountName.accountName}" />
                 </com.google.android.material.textfield.TextInputLayout>

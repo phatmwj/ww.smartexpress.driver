@@ -5,6 +5,7 @@ import ww.smartexpress.driver.di.scope.ActivityScope;
 import ww.smartexpress.driver.ui.achievement.AchievementActivity;
 import ww.smartexpress.driver.ui.allbike.AllBikeServiceActivity;
 import ww.smartexpress.driver.ui.auth.AuthActivity;
+import ww.smartexpress.driver.ui.await.AwaitActivity;
 import ww.smartexpress.driver.ui.award.AwardActivity;
 import ww.smartexpress.driver.ui.bank.BankActivity;
 import ww.smartexpress.driver.ui.booking.details.BookingDetailsActivity;
@@ -35,6 +36,7 @@ import ww.smartexpress.driver.ui.signup.SignUpActivity;
 import ww.smartexpress.driver.ui.splash.SplashActivity;
 import ww.smartexpress.driver.ui.wallet.WalletActivity;
 import ww.smartexpress.driver.ui.wallet.transaction.TransactionActivity;
+import ww.smartexpress.driver.ui.wallet.transaction.details.TransactionDetailsActivity;
 import ww.smartexpress.driver.ui.welcome.WelcomeActivity;
 
 @ActivityScope
@@ -99,5 +101,9 @@ public interface ActivityComponent {
     void inject(ResetForgetPasswordActivity resetForgetPasswordActivity);
 
     void inject(VerifyForgetPasswordOTPActivity verifyForgetPasswordOTPActivity);
+
+    void inject(AwaitActivity awaitActivity);
+
+    void inject(TransactionDetailsActivity transactionDetailsActivity);
 }
 

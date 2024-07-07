@@ -16,6 +16,9 @@ public class DateUtils {
     }
 
     public static String dateFormat(String dateString){
+        if(dateString == null){
+            return "";
+        }
         SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         inputFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");

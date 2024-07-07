@@ -14,11 +14,16 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import eu.davidea.viewholders.FlexibleViewHolder;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.data.model.api.response.WalletTransaction;
 import ww.smartexpress.driver.utils.DateUtils;
 import ww.smartexpress.driver.utils.NumberUtils;
 
+@Data
 public class TransactionItem extends AbstractFlexibleItem<TransactionItem.TransactionViewHolder> {
 
     private WalletTransaction walletTransaction;

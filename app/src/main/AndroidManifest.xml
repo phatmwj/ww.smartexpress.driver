@@ -61,6 +61,18 @@
             android:exported="true">
 
         </activity>
+        <activity
+            android:name=".ui.await.AwaitActivity"
+            android:theme="@style/Welcome"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".ui.wallet.transaction.details.TransactionDetailsActivity"
+            android:theme="@style/Welcome"
+            android:exported="true">
+
+        </activity>
 
         <activity
             android:name=".ui.password.otp.VerifyForgetPasswordOTPActivity"

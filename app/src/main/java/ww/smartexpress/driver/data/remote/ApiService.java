@@ -56,6 +56,7 @@ import ww.smartexpress.driver.data.model.api.response.RegisterResponse;
 import ww.smartexpress.driver.data.model.api.response.RoomResponse;
 import ww.smartexpress.driver.data.model.api.response.ServiceOnlineResponse;
 import ww.smartexpress.driver.data.model.api.response.ServiceResponse;
+import ww.smartexpress.driver.data.model.api.response.SettingResponse;
 import ww.smartexpress.driver.data.model.api.response.UploadFileResponse;
 import ww.smartexpress.driver.data.model.api.response.WalletResponse;
 import ww.smartexpress.driver.data.model.api.response.WalletTransaction;
@@ -186,4 +187,10 @@ public interface ApiService {
 
     @PUT("/v1/notification/read-all")
     Observable<ResponseGeneric> readAllNotification();
+
+    @GET("/v1/settings/get-by-key/{key}")
+    Observable<ResponseWrapper<SettingResponse>> getSettings(@Path("key") String key);
+
+    @GET("/v1/wallet-transaction/get/{id}")
+    Observable<ResponseWrapper<WalletTransaction>> getTransactionDetails(@Path("id") Long id);
 }
