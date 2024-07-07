@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_edt"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_30ssp"
+            android:layout_marginTop="@dimen/_50ssp"
             bind:layout_constraintEnd_toEndOf="parent"
             bind:layout_constraintStart_toStartOf="parent"
             bind:layout_constraintTop_toBottomOf="@+id/layoutHeader"
@@ -99,7 +99,7 @@
                 android:id="@+id/imvResult"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
-                android:src="@drawable/ic_icon_tick"/>
+                android:src='@{vm.transaction.state == 0 ? @drawable/ic_icon_pending_yellow : vm.transaction.state == 1 ? @drawable/ic_icon_tick : @drawable/ic_icon_cancel_red}'/>
 
         </androidx.cardview.widget.CardView>
 
@@ -139,7 +139,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text='@{vm.transaction.kind == 0? "Nạp tiền vào ví": vm.transaction.kind==1?"Rút tiền từ ví":vm.transaction.kind ==3 || vm.transaction.kind == 5?"Nhận tiền giao hàng": vm.transaction.kind==6?"Hoàn tiền đơn hàng": "Chi tiền đơn hàng"}'
+                        android:text='@{vm.transaction.kind.equals(0)? "Nạp tiền vào ví": vm.transaction.kind.equals(1)?"Rút tiền từ ví":vm.transaction.kind.equals(3) || vm.transaction.kind.equals(5)?"Nhận tiền giao hàng": vm.transaction.kind.equals(6)?"Hoàn tiền đơn hàng": vm.transaction.kind.equals(4) ?"Chi tiền đơn hàng":"Chi tiền đơn hàng"}'
                         android:textAlignment="textEnd"
                         android:maxLines="1"
                         android:ellipsize="end"
@@ -236,6 +236,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
