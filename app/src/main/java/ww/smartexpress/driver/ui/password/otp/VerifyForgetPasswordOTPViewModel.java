@@ -115,7 +115,7 @@ public class VerifyForgetPasswordOTPViewModel extends BaseViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
-                    if(response.isResult() && response.getData() != null){
+                    if(response.isResult()){
                         verifyOTP();
                     }else{
                         showErrorMessage("Otp không chính xác, vui lòng nhập lại!");

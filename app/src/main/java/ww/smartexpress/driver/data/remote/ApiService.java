@@ -1,5 +1,7 @@
 package ww.smartexpress.driver.data.remote;
 
+import androidx.databinding.ObservableField;
+
 import com.google.gson.JsonObject;
 
 import okhttp3.RequestBody;
@@ -54,6 +56,7 @@ import ww.smartexpress.driver.data.model.api.response.NotificationRead;
 import ww.smartexpress.driver.data.model.api.response.NotificationResponse;
 import ww.smartexpress.driver.data.model.api.response.Payment;
 import ww.smartexpress.driver.data.model.api.response.PayosPaymentResponse;
+import ww.smartexpress.driver.data.model.api.response.PayoutResponse;
 import ww.smartexpress.driver.data.model.api.response.PayoutTransaction;
 import ww.smartexpress.driver.data.model.api.response.ProfileResponse;
 import ww.smartexpress.driver.data.model.api.response.RegisterResponse;
@@ -208,4 +211,7 @@ public interface ApiService {
     @POST("/v1/driver/check-otp")
     @Headers({"IgnoreAuth:1"})
     Observable<ResponseGeneric> checkOtp(@Body CheckOtpRequest request);
+
+    @GET("/v1/request-pay-out/get/{id}")
+    Observable<ResponseWrapper<PayoutResponse>> getPayout(@Path("id") Long id);
 }

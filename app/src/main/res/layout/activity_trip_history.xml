@@ -19,7 +19,7 @@
         android:background="@color/bg_app">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,9 +59,11 @@
             </FrameLayout>
 
             <include
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:id="@+id/layout"
                 layout="@layout/item_booking_empty"
-                android:visibility="@{vm.isEmpty ? View.VISIBLE:View.GONE}"></include>
+                android:visibility="@{vm.isEmpty ? View.VISIBLE:View.GONE}" />
 
 <!--            <androidx.core.widget.NestedScrollView-->
 <!--                android:layout_width="match_parent"-->
@@ -94,7 +96,7 @@
                         android:paddingVertical="@dimen/_5sdp"
                         android:text="@string/show_more"
                         android:textSize="@dimen/_10ssp"
-                        android:visibility="@{vm.pageNumber+1 >= vm.pageTotal? View.GONE : View.VISIBLE}"/>
+                        android:visibility="gone"/>
                 </LinearLayout>
 <!--            </androidx.core.widget.NestedScrollView>-->
         </LinearLayout>

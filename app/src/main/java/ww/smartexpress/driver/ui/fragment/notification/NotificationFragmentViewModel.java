@@ -2,6 +2,7 @@ package ww.smartexpress.driver.ui.fragment.notification;
 
 import androidx.databinding.ObservableField;
 
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -22,6 +23,8 @@ public class NotificationFragmentViewModel extends BaseFragmentViewModel {
     public ObservableField<Integer> pageTotal = new ObservableField<>();
     public ObservableField<Integer> totalElement = new ObservableField<>();
     public ObservableField<Integer> totalUnread = new ObservableField<>();
+
+    public ObservableField<FlexibleAdapter> mFlexibleAdapter = new ObservableField<>();
     public NotificationFragmentViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
     }

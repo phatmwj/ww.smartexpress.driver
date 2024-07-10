@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="a"
+            type="ww.smartexpress.driver.ui.payout.details.PayoutDetailsActivity" />
+        <variable
+            name="vm"
+            type="ww.smartexpress.driver.ui.payout.details.PayoutDetailsViewModel" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.text.InputType" />
+        <import type="ww.smartexpress.driver.utils.DateUtils"/>
+        <import type="ww.smartexpress.driver.utils.NumberUtils"/>
+        <import type="android.view.View"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_light">
+
+        <FrameLayout
+            android:background="@color/white"
+            android:id="@+id/layoutHeader"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_icon_back"
+                android:layout_gravity="left|center_vertical"/>
+
+            <TextView
+                android:id="@+id/tvHeader"
+                style="@style/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:textSize="@dimen/_14ssp"
+                android:text="Kết quả giao dịch"/>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/llpayoutResponseMoney"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_edt"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_50ssp"
+            bind:layout_constraintEnd_toEndOf="parent"
+            bind:layout_constraintStart_toStartOf="parent"
+            bind:layout_constraintTop_toBottomOf="@+id/layoutHeader"
+            android:orientation="vertical"
+            android:backgroundTint="@color/white">
+
+            <TextView
+                style="@style/app_text_b"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:textSize="@dimen/_14ssp"
+                android:text='@{vm.payoutResponse.state == 0 ? "Đang xử lí" : vm.payoutResponse.state == 1 ? "Thành công":"Thất bại"}'
+                android:textColor='@{vm.payoutResponse.state == 0 ? @color/yellow : vm.payoutResponse.state == 1 ? @color/green_light_app:@color/red_color}'
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text='@{vm.payoutResponse.kind== 1 ||vm.payoutResponse.kind== 2||vm.payoutResponse.kind== 4?"-"+ NumberUtils.formatCurrency(vm.payoutResponse.money):"+"+ NumberUtils.formatCurrency(vm.payoutResponse.money)}'
+                android:textAlignment="center"
+                style="@style/order_information_text_bold"
+                android:textSize="@dimen/_20ssp"/>
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            bind:cardCornerRadius="@dimen/_50sdp"
+            bind:layout_constraintBottom_toTopOf="@+id/llpayoutResponseMoney"
+            bind:layout_constraintEnd_toEndOf="parent"
+            bind:layout_constraintStart_toStartOf="parent"
+            bind:layout_constraintTop_toTopOf="@+id/llpayoutResponseMoney">
+
+            <ImageView
+                android:id="@+id/imvResult"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src='@{vm.payoutResponse.state == 0 ? @drawable/ic_icon_pending_yellow : vm.payoutResponse.state == 1 ? @drawable/ic_icon_tick : @drawable/ic_icon_cancel_red}'/>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:id="@+id/dashline"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_2sdp"
+            android:background="@drawable/dashed_border"
+            bind:layout_constraintTop_toBottomOf="@+id/llpayoutResponseMoney"
+            android:layout_marginHorizontal="@dimen/_15sdp">
+
+        </View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            bind:layout_constraintTop_toBottomOf="@+id/dashline"
+            android:background="@drawable/bg_edt"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:backgroundTint="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Dịch vụ"
+                        style="@style/info_text"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:text="Yêu cầu rút tiền"
+                        style="@style/app_text_b"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Thời gian giao dịch"
+                    style="@style/info_text"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    style="@style/app_text_b"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{DateUtils.dateFormat(vm.payoutResponse.modifiedDate)}"
+                    android:textAlignment="textEnd" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="@{vm.payoutResponse.state == 2 ? View.VISIBLE:View.GONE}"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lí do từ chối"
+                    style="@style/info_text"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    style="@style/app_text_b"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{vm.payoutResponse.note}"
+                    android:textAlignment="textEnd" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="@{vm.payoutResponse.state == 1 ? View.VISIBLE:View.GONE}"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Chi tiết"
+                    style="@style/info_text"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:src="@{vm.payoutResponse.image}"
+                    android:scaleType="fitXY"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Số thẻ/TK"
+                    style="@style/info_text"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Vietinbank"
+                    android:textAlignment="textEnd"
+                    style="@style/app_text_b"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/_15sdp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tvToNewpayoutResponse"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_btn_stroke_small"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/_10sdp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:textFontWeight="700"
+                        android:textAlignment="center"
+                        android:textColor="@color/app_text"
+                        android:layout_weight="1"
+                        android:text="Tạo giao dịch mới"
+                        android:layout_marginRight="@dimen/_10sdp"/>
+
+                    <TextView
+                        android:id="@+id/tvToHome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_enabled_background"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/_10sdp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:textFontWeight="700"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:layout_weight="1"
+                        android:text="Màn hình chính"
+                        android:layout_marginLeft="@dimen/_10sdp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

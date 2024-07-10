@@ -40,7 +40,7 @@
                         android:text="@string/notification_header"
                         android:gravity="center_vertical"
                         android:textSize="@dimen/_16ssp"
-                        android:paddingLeft="@dimen/_20sdp"
+                        android:paddingStart="@dimen/_20sdp"
                         android:textColor="@color/black"/>
                     <TextView
                         android:visibility="@{vm.totalUnread == null || vm.totalUnread==0 ? View.GONE : View.VISIBLE}"
@@ -51,19 +51,19 @@
                         android:text='@{"("+vm.totalUnread+")"}'
                         android:textSize="@dimen/_16ssp"
                         android:gravity="center_vertical"
-
                         android:textColor="@color/red_color"/>
+
                     <TextView
-                        android:onClick="@{()->f.readAllNotification()}"
+                        android:id="@+id/readAll"
                         style="@style/text_style_montserrat"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:paddingVertical="@dimen/_5sdp"
+                        android:layout_weight="1"
                         android:gravity="center|right"
-                        android:text=""
-                        android:textColor="@color/green_light_app"/>
+                        android:paddingVertical="@dimen/_5sdp"
+                        android:text="Đánh dấu tất cả đã đọc"
+                        android:textColor="@color/green_light_app" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -76,6 +76,7 @@
 
                 </androidx.recyclerview.widget.RecyclerView>
                 <include layout="@layout/item_transaction_empty"
+                    android:visibility="@{vm.mFlexibleAdapter != null &amp;&amp; vm.mFlexibleAdapter.getItemCount()>0 ? View.GONE : View.VISIBLE}"
                     android:id="@+id/layout_empty"
                     android:layout_height="match_parent"
                     android:layout_width="match_parent" />

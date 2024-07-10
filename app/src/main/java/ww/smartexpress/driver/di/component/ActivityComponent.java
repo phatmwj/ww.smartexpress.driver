@@ -27,6 +27,7 @@ import ww.smartexpress.driver.ui.password.otp.ForgetPasswordOTPActivity;
 import ww.smartexpress.driver.ui.password.otp.VerifyForgetPasswordOTPActivity;
 import ww.smartexpress.driver.ui.password.renew.RenewPasswordActivity;
 import ww.smartexpress.driver.ui.payout.PayoutActivity;
+import ww.smartexpress.driver.ui.payout.details.PayoutDetailsActivity;
 import ww.smartexpress.driver.ui.profile.edit.EditProfileActivity;
 import ww.smartexpress.driver.ui.qrcode.QrcodeActivity;
 import ww.smartexpress.driver.ui.shipping.ShippingActivity;
@@ -105,5 +106,7 @@ public interface ActivityComponent {
     void inject(AwaitActivity awaitActivity);
 
     void inject(TransactionDetailsActivity transactionDetailsActivity);
+
+    void inject(PayoutDetailsActivity payoutDetailsActivity);
 }
 

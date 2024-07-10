@@ -34,6 +34,7 @@ import ww.smartexpress.driver.ui.password.otp.ForgetPasswordOTPViewModel;
 import ww.smartexpress.driver.ui.password.otp.VerifyForgetPasswordOTPViewModel;
 import ww.smartexpress.driver.ui.password.renew.RenewPasswordViewModel;
 import ww.smartexpress.driver.ui.payout.PayoutViewModel;
+import ww.smartexpress.driver.ui.payout.details.PayoutDetailsViewModel;
 import ww.smartexpress.driver.ui.profile.ProfileViewModel;
 import ww.smartexpress.driver.ui.qrcode.QrcodeViewModel;
 import ww.smartexpress.driver.ui.shipping.ShippingViewModel;
@@ -343,5 +344,13 @@ public class ActivityModule {
         Supplier<TransactionDetailsViewModel> supplier = () -> new TransactionDetailsViewModel(repository, (MVVMApplication) application);
         ViewModelProviderFactory<TransactionDetailsViewModel> factory = new ViewModelProviderFactory<>(TransactionDetailsViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(TransactionDetailsViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    PayoutDetailsViewModel providePayoutDetailsViewModel(Repository repository, Context application) {
+        Supplier<PayoutDetailsViewModel> supplier = () -> new PayoutDetailsViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<PayoutDetailsViewModel> factory = new ViewModelProviderFactory<>(PayoutDetailsViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(PayoutDetailsViewModel.class);
     }
 }

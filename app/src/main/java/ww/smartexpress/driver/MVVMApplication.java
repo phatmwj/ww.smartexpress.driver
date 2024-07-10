@@ -1,10 +1,18 @@
 package ww.smartexpress.driver;
 
 import android.app.Application;
+import android.app.Dialog;
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.OnLifecycleEvent;
@@ -23,12 +31,15 @@ import ww.smartexpress.driver.data.model.api.response.BookingId;
 import ww.smartexpress.driver.data.model.api.response.ChatMessage;
 import ww.smartexpress.driver.data.model.api.response.DepositMessage;
 import ww.smartexpress.driver.data.model.api.response.DepositSuccess;
+import ww.smartexpress.driver.data.model.api.response.NewsNotification;
+import ww.smartexpress.driver.data.model.api.response.TransactionMessage;
 import ww.smartexpress.driver.data.model.other.ToastMessage;
 import ww.smartexpress.driver.data.websocket.Command;
 import ww.smartexpress.driver.data.websocket.Message;
 import ww.smartexpress.driver.data.websocket.SocketEventModel;
 import ww.smartexpress.driver.data.websocket.SocketListener;
 import ww.smartexpress.driver.data.websocket.WebSocketLiveData;
+import ww.smartexpress.driver.databinding.ItemMarqueeNewsBinding;
 import ww.smartexpress.driver.di.component.AppComponent;
 import ww.smartexpress.driver.di.component.DaggerAppComponent;
 import ww.smartexpress.driver.others.MyTimberDebugTree;
@@ -283,9 +294,65 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
                 toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Yêu cầu rút "+NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" bị từ chối vì: "+depositMessage.getReason());
                 toastMessage.showMessage(currentActivity);
                 break;
+            case 4: case 5: case 6://NOTIFICATION_KIND_SYSTEM
+                showMarqueeDialog(message);
+                break;
             default:
                 break;
         }
+
+    }
+
+
+    public void showMarqueeDialog(Message message) {
+        Dialog marqueeDialog = new Dialog(getCurrentActivity(), R.style.FullScreenDialog);
+        TransactionMessage tm = message.getDataObject(TransactionMessage.class);
+        NewsNotification newsNotification = ApiModelUtils.fromJson(tm.getMessage(), NewsNotification.class);
+        ItemMarqueeNewsBinding binding = DataBindingUtil.inflate(
+                LayoutInflater.from(this), R.layout.item_marquee_news, null, false);
+        marqueeDialog.setContentView(binding.getRoot());
+
+        binding.setIvm(newsNotification);
+        String title = "";
+        switch (newsNotification.getKind()){
+            case 4:
+                title = "Thông báo hệ thống: " + newsNotification.getDescription();
+                binding.marqueeText.setText(title);
+                break;
+            case 5:
+                title = "Khuyến mãi: " + newsNotification.getDescription();
+                binding.marqueeText.setText(title);
+                break;
+            case 6:
+                title = "Cảnh báo: " + newsNotification.getDescription();
+                binding.marqueeText.setText(title);
+                break;
+            default:
+                break;
+        }
+
+        binding.marqueeText.setSelected(true);
+
+        Window window = marqueeDialog.getWindow();
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        layoutParams.gravity = Gravity.TOP;
+        layoutParams.y = 0;
+        layoutParams.dimAmount = 0.0f;
+        window.setAttributes(layoutParams);
+        marqueeDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        marqueeDialog.getWindow().setGravity(Gravity.TOP);
+        marqueeDialog.setCanceledOnTouchOutside(false);
+        marqueeDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+        marqueeDialog.show();
+
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                marqueeDialog.dismiss();
+            }
+        }, 20000); // Thời gian tính bằng mili giây (ở đây là 20 giây)
 
     }
 

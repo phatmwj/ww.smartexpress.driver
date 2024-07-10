@@ -162,21 +162,21 @@
             android:paddingTop="@dimen/_10sdp"
             android:id="@+id/rc_shipping"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:clipToPadding="false"/>
         <androidx.recyclerview.widget.RecyclerView
             android:visibility="@{vm.stateBooking == 100 ? View.VISIBLE : View.GONE}"
             android:paddingTop="@dimen/_10sdp"
             android:id="@+id/rc_shippingStateAccepted"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:clipToPadding="false"/>
         <androidx.recyclerview.widget.RecyclerView
             android:visibility="@{vm.stateBooking == 200 ? View.VISIBLE : View.GONE}"
             android:paddingTop="@dimen/_10sdp"
             android:id="@+id/rc_shippingStatePickup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:clipToPadding="false"/>
 
     </LinearLayout>

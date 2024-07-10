@@ -8,14 +8,14 @@
     <FrameLayout
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/bg_app">
         <LinearLayout
+            android:layout_marginTop="@dimen/_150sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/_50sdp">
+            android:gravity="center">
 
             <ImageView
                 android:layout_width="@dimen/_180sdp"
@@ -26,7 +26,6 @@
             </ImageView>
 
             <TextView
-                android:layout_marginTop="@dimen/_20sdp"
                 style="@style/montserrat_medium_79_gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

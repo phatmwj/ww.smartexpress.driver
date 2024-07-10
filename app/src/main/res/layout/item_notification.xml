@@ -7,10 +7,17 @@
         <variable
             name="ivm"
             type="ww.smartexpress.driver.data.model.api.response.NotificationResponse" />
+        <variable
+            name="title"
+            type="java.lang.String" />
+        <variable
+            name="msg"
+            type="java.lang.String" />
 
         <import type="ww.smartexpress.driver.utils.NumberUtils" />
 
         <import type="ww.smartexpress.driver.utils.DateUtils" />
+        <import type="android.view.View"/>
     </data>
 
     <LinearLayout
@@ -26,6 +33,7 @@
                 android:id="@+id/noti_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@{ivm.state == 1 ? @color/bg_app : @color/app_light_color2}"
                 android:gravity="center"
                 android:orientation="horizontal">
                 <ImageView
@@ -52,6 +60,7 @@
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        android:text="@{title}"
                         android:textSize="@dimen/_9ssp"
                         android:textColor="@color/black"
                         android:textAllCaps="true"/>
@@ -65,7 +74,7 @@
                         android:ellipsize="end"
                         android:maxLines="2"
                         android:textSize="@dimen/_10ssp"
-                        android:text="@{ivm.msg, default = @string/hot_news}"
+                        android:text="@{msg, default = @string/hot_news}"
                         android:textColor="@color/app_text" />
 
                     <TextView
@@ -81,6 +90,7 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:visibility="@{ivm.state == 0 ? View.VISIBLE : View.GONE }"
                     android:id="@+id/imgStatus"
                     android:layout_width="@dimen/_6sdp"
                     android:layout_height="@dimen/_6sdp"

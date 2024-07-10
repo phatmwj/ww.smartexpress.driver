@@ -2,14 +2,12 @@ package ww.smartexpress.driver.data.model.api.response;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import androidx.annotation.NonNull;
 
 import java.util.List;
 
@@ -22,7 +20,6 @@ import eu.davidea.viewholders.FlexibleViewHolder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ww.smartexpress.driver.BuildConfig;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.constant.Constants;
 import ww.smartexpress.driver.data.model.api.ApiModelUtils;
@@ -53,17 +50,14 @@ public class NotificationResponse extends AbstractFlexibleItem<NotificationRespo
 
     @Override
     public NotificationViewHolder createViewHolder(View view, FlexibleAdapter<IFlexible> adapter) {
-        return new NotificationViewHolder(view, adapter);
+        return new NotificationViewHolder(ItemNotificationBinding.bind(view), adapter);
     }
 
     @SuppressLint("ResourceAsColor")
     @Override
     public void bindViewHolder(FlexibleAdapter<IFlexible> adapter, NotificationViewHolder holder, int position, List<Object> payloads) {
         Context context = holder.itemView.getContext();
-        ItemNotificationBinding itemNotificationBinding = ItemNotificationBinding.inflate(LayoutInflater.from(context), null,false);
-        itemNotificationBinding.setIvm(this);
-        itemNotificationBinding.executePendingBindings();
-        holder.date.setText(DateUtils.dateFormat(modifiedDate));
+
         NotificationMessage notificationMessage = ApiModelUtils.fromJson(msg, NotificationMessage.class);
         NotificationServer notificationServer = ApiModelUtils.fromJson(msg, NotificationServer.class);
         String message = "";
@@ -96,44 +90,19 @@ public class NotificationResponse extends AbstractFlexibleItem<NotificationRespo
             default:;
                 break;
         }
-        holder.message.setText(message);
-        holder.title.setText(title);
-        if(state == 0){
-            holder.statusImage.setVisibility(View.VISIBLE);
-            holder.notiLayout.setBackgroundColor(context.getResources().getColor(R.color.app_light_color2));
-
-        }else {
-            holder.statusImage.setVisibility(View.GONE);
-//            holder.notiLayout.setBackgroundColor(R.color.bg_app);
-            holder.notiLayout.setBackgroundColor(context.getResources().getColor(R.color.bg_app));
-        }
-//        Glide.with(context)
-//                .load(BuildConfig.MEDIA_URL+ "/v1/file/download" + notificationServer.getBanner())
-//                .placeholder(R.drawable.bank_card)
-//                .into(holder.image);
+        holder.binding.setIvm(this);
+        holder.binding.setTitle(title);
+        holder.binding.setMsg(message);
+        holder.binding.executePendingBindings();
     }
 
     public class NotificationViewHolder extends FlexibleViewHolder {
-        @BindView(R.id.txtDate)
-        TextView date;
-        @BindView(R.id.txtMsg)
-        TextView message;
 
-        @BindView(R.id.tilte)
-        TextView title;
+        ItemNotificationBinding binding;
 
-        @BindView(R.id.image)
-        ImageView image;
-
-        @BindView(R.id.imgStatus)
-        ImageView statusImage;
-
-        @BindView(R.id.noti_layout)
-        LinearLayout notiLayout;
-
-        public NotificationViewHolder(View view, FlexibleAdapter adapter) {
-            super(view, adapter);
-            ButterKnife.bind(this, view);
+        public NotificationViewHolder(@NonNull ItemNotificationBinding view, FlexibleAdapter adapter) {
+            super(view.getRoot(), adapter);
+            this.binding = view;
         }
     }
 }

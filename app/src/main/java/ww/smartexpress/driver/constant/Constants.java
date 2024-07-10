@@ -49,6 +49,10 @@ public class Constants {
     public static final String OTP = "OTP";
     public static final String PHONE_NUMBER_REGEX = "^(?!0987654321)(0[3|5|7|8|9])([0-9]{8})$";
 
+    public static final Integer REQUEST_PAY_OUT_STATE_INIT = 0;
+    public static final Integer REQUEST_PAY_OUT_STATE_APPROVE = 1;
+    public static final Integer REQUEST_PAY_OUT_STATE_REJECT = 2;
+
     private Constants() {
 
     }
