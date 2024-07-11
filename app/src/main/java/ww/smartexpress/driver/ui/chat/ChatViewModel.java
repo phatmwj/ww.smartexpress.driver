@@ -1,8 +1,10 @@
 package ww.smartexpress.driver.ui.chat;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -36,6 +38,7 @@ public class ChatViewModel extends BaseViewModel {
     public ObservableField<Long> customerId = new ObservableField<>(0L);
     public ObservableField<String> customerAvatar = new ObservableField<>();
     public ObservableField<String> customerName = new ObservableField<>();
+    public ObservableField<String> customerPhone = new ObservableField<>();
     public ObservableField<String> codeBooking = new ObservableField<>();
     public ObservableField<String> bookingId = new ObservableField<>();
     public ObservableField<String> roomId = new ObservableField<>();
@@ -145,6 +148,12 @@ public class ChatViewModel extends BaseViewModel {
         dialog.setCanceledOnTouchOutside(true);
 
         dialog.show();
+    }
+
+    public void callCustomer(){
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse("tel:" + customerPhone.get()));
+        application.getCurrentActivity().startActivity(callIntent);
     }
 
 

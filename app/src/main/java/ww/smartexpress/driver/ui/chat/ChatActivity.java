@@ -247,6 +247,7 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewMode
                         viewModel.customerId.set(response.getData().getCustomer().getId());
                         viewModel.customerAvatar.set(response.getData().getCustomer().getAvatar());
                         viewModel.customerName.set(response.getData().getCustomer().getName());
+                        viewModel.customerPhone.set(response.getData().getCustomer().getPhone());
                         loadMessages();
 //                        viewModel.showSuccessMessage(response.getMessage());
                     }else {

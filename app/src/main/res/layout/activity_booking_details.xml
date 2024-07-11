@@ -13,8 +13,10 @@
         <import type="android.view.View" />
 
         <import type="ww.smartexpress.driver.utils.NumberUtils" />
-        <import type="ww.smartexpress.driver.utils.DateUtils"></import>
-        <import type="android.text.TextUtils"></import>
+
+        <import type="ww.smartexpress.driver.utils.DateUtils" />
+
+        <import type="android.text.TextUtils" />
 
     </data>
     <FrameLayout
@@ -464,7 +466,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="right"
-                                android:text='@{NumberUtils.formatCurrency(vm.booking.money*vm.booking.ratioShare)}'
+                                android:text='@{NumberUtils.formatCurrency(vm.booking.money*vm.booking.ratioShare/100)}'
                                 android:maxLines="1"
                                 android:ellipsize="end"/>
                         </LinearLayout>

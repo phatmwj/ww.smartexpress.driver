@@ -394,7 +394,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_icon_logout" />
+                            android:src="@drawable/baseline_support_agent_24" />
 
                         <TextView
                             style="@style/app_text_b"
@@ -421,7 +421,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_icon_expand" />
+                            android:src="@drawable/ic_icon_call" />
 
                     </LinearLayout>
                     <FrameLayout
