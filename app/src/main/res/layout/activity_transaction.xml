@@ -46,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:textSize="@dimen/_14ssp"
                 android:text="Lịch sử giao dịch">
 
             </TextView>

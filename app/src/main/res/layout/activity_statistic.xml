@@ -138,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     android:background="@drawable/bg_corners_app"
-                    android:backgroundTint="@color/app_light_color"
+                    android:backgroundTint="#B3056ED3"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingHorizontal="@dimen/_15sdp"
@@ -162,7 +162,7 @@
                         android:maxLines="1"
                         android:text='@{vm.acceptRate+"%"}'
                         android:textAlignment="center"
-                        android:textColor="@color/active_green"
+                        android:textColor="#056ed3"
                         android:textSize="@dimen/_18ssp" />
 
                 </LinearLayout>

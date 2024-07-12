@@ -28,14 +28,15 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
+                    android:orientation="horizontal">
                     <TextView
                         style="@style/app_text_big"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_50sdp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:text="@string/notification_header"
                         android:gravity="center_vertical"
@@ -52,19 +53,15 @@
                         android:textSize="@dimen/_16ssp"
                         android:gravity="center_vertical"
                         android:textColor="@color/red_color"/>
-
-                    <TextView
-                        android:id="@+id/readAll"
-                        style="@style/text_style_montserrat"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_weight="1"
-                        android:gravity="center|right"
-                        android:paddingVertical="@dimen/_5sdp"
-                        android:text="Đánh dấu tất cả đã đọc"
-                        android:textColor="@color/green_light_app" />
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/readAll"
+                    style="@style/text_style_montserrat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:text="Đánh dấu tất cả đã đọc"
+                    android:textColor="@color/green_light_app" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:background="@color/bg_app"

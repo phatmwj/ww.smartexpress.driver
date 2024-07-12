@@ -332,10 +332,10 @@
 
                     <ImageView
                         android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_20sdp"
+                        android:layout_height="20dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/payos"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/bank_acc" />
 
                     <TextView
                         style="@style/app_text_b"

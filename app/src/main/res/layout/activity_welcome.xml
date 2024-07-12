@@ -25,7 +25,7 @@
             android:layout_height="@dimen/_100sdp"
             android:layout_above="@+id/linearLayout"
             android:layout_alignParentTop="true"
-            app:srcCompat="@drawable/image_delivery" />
+            app:srcCompat="@drawable/wellcome" />
 
         <LinearLayout
             android:id="@+id/linearLayout"

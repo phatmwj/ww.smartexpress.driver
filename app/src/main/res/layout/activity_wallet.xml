@@ -49,8 +49,16 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="Ví">
-
+`
             </TextView>
+            <ImageView
+                android:onClick="@{()->vm.navigateTransaction()}"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_gravity="center|right"
+                android:src="@drawable/baseline_history_24"
+                app:tint="@color/green_light_app" />
         </FrameLayout>
 
         <androidx.core.widget.NestedScrollView
@@ -78,7 +86,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/_8sdp"
                         android:orientation="vertical"
-                        android:background="@drawable/bank_card">
+                        android:background="@drawable/profile_bg">
                         <TextView
                             style="@style/title"
                             android:paddingHorizontal="@dimen/_10sdp"
@@ -154,11 +162,10 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
                             android:layout_gravity="center"
-                            android:src="@drawable/baseline_login_24"
-                            app:tint="@color/green_light_app"/>
+                            android:src="@drawable/deposit" />
 
                         <TextView
                             style="@style/app_text_b"
@@ -259,11 +266,10 @@
                         android:layout_height="@dimen/_45sdp"
                         android:orientation="horizontal">
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
                             android:layout_gravity="center"
-                            android:src="@drawable/baseline_logout_24"
-                            app:tint="@color/red_color"/>
+                            android:src="@drawable/payout" />
                         <TextView
                             style="@style/app_text_b"
                             android:layout_width="wrap_content"
@@ -299,6 +305,7 @@
                         android:layout_weight="1"
                         android:maxLines="1"
                         android:text="Tài khoản COD"
+                        android:textColor="@color/green_light_app"
                         android:layout_marginLeft="@dimen/_15sdp"
                         android:layout_marginBottom="@dimen/_5sdp"/>
                     <FrameLayout
@@ -375,6 +382,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:maxLines="1"
+                        android:textColor="@color/green_light_app"
                         android:text="Tài khoản khác"
                         android:layout_marginLeft="@dimen/_15sdp"
                         android:layout_marginBottom="@dimen/_5sdp"/>
@@ -440,7 +448,7 @@
                                 android:layout_marginHorizontal="@dimen/_10sdp"
                                 android:layout_weight="1"
                                 android:maxLines="1"
-                                android:textColor="@color/green"
+                                android:textColor="@color/app_light_color"
                                 android:textSize="@dimen/_10ssp"
                                 android:text="Bạn chưa có tài khoản ngân hàng" />
 
@@ -458,6 +466,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/white"
                     android:onClick="@{()->vm.navigateTransaction()}"

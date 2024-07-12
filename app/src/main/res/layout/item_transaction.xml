@@ -87,6 +87,7 @@
                         android:background="@color/white"
                         android:maxLines="1"
                         android:ellipsize="end"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp"/>
 
                 </LinearLayout>

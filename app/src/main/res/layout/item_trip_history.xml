@@ -101,6 +101,7 @@
                         android:maxLines="1"
                         android:layout_weight="1"
                         android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/green_light_app"
                         android:text="@{ivm.service.name}" />
                     <TextView
                         style="@style/montserrat_medium_black_11ssp"

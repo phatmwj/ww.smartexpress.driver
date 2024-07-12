@@ -83,12 +83,13 @@
                             android:maxLines="1"
                             android:paddingHorizontal="@dimen/_15sdp"
                             android:text="Khách hàng"
-                            android:textColor="@color/gray" />
+                            android:textColor="@color/green_light_app" />
 
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_1sdp"
-                            android:background="@color/gray_light" />
+                            android:layout_marginHorizontal="@dimen/_15sdp"
+                            android:background="@color/app_light_color2" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -260,11 +261,12 @@
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:paddingHorizontal="@dimen/_10sdp"
                             android:text="@string/payment"
-                            android:textColor="@color/gray"/>
+                            android:textColor="@color/green_light_app"/>
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_1sdp"
-                            android:background="@color/gray_light" />
+                            android:layout_marginHorizontal="@dimen/_15sdp"
+                            android:background="@color/app_light_color2"  />
 
                         <FrameLayout
                             android:layout_marginHorizontal="@dimen/_20sdp"
@@ -392,11 +394,12 @@
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:paddingHorizontal="@dimen/_10sdp"
                             android:text="Thu nhập"
-                            android:textColor="@color/gray"/>
+                            android:textColor="@color/green_light_app"/>
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_1sdp"
-                            android:background="@color/gray_light" />
+                            android:layout_marginHorizontal="@dimen/_15sdp"
+                            android:background="@color/app_light_color2"  />
 
                         <FrameLayout
                             android:layout_marginHorizontal="@dimen/_20sdp"
@@ -483,7 +486,7 @@
                         <TextView
                             android:layout_marginTop="@dimen/_3sdp"
                             android:layout_marginBottom="@dimen/_5sdp"
-                            android:textColor="@color/gray"
+                            android:textColor="@color/green_light_app"
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             style="@style/trip_information_text_bold"
                             android:layout_width="wrap_content"
@@ -493,7 +496,8 @@
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_1sdp"
-                            android:background="@color/gray_light" />
+                            android:layout_marginHorizontal="@dimen/_15sdp"
+                            android:background="@color/app_light_color2"  />
 
                         <LinearLayout
                             android:layout_marginHorizontal="@dimen/_20sdp"
@@ -758,7 +762,7 @@
                         <TextView
                             android:layout_marginTop="@dimen/_3sdp"
                             android:layout_marginBottom="@dimen/_5sdp"
-                            android:textColor="@color/gray"
+                            android:textColor="@color/green_light_app"
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             style="@style/trip_information_text_bold"
                             android:layout_width="wrap_content"

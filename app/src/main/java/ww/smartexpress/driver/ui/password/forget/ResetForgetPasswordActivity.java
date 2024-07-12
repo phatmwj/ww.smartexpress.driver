@@ -38,30 +38,5 @@ public class ResetForgetPasswordActivity extends BaseActivity<ActivityResetForge
         viewModel.userId.set(intent.getStringExtra(Constants.KEY_USER_ID));
         viewModel.otp.set(intent.getStringExtra(Constants.OTP));
 
-        viewModel.isVisibilityN.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
-            @Override
-            public void onPropertyChanged(Observable sender, int propertyId) {
-                if(!viewModel.isVisibilityN.get()){
-                    viewBinding.edtPW.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }else {
-                    viewBinding.edtPW.setTransformationMethod(null);;
-                }
-
-                viewBinding.edtPW.setSelection(viewBinding.edtPW.length());
-            }
-        });
-
-        viewModel.isVisibilityC.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
-            @Override
-            public void onPropertyChanged(Observable sender, int propertyId) {
-                if(!viewModel.isVisibilityC.get()){
-                    viewBinding.edtCPW.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }else {
-                    viewBinding.edtCPW.setTransformationMethod(null);;
-                }
-
-                viewBinding.edtCPW.setSelection(viewBinding.edtCPW.length());
-            }
-        });
     }
 }

@@ -21,10 +21,22 @@
         android:background="@color/bg_app">
 
         <FrameLayout
+            android:background="@drawable/background_corners_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_200sdp"
+                android:adjustViewBounds="true"
+                android:layout_gravity="top"
+                android:scaleType="fitXY"
+                android:src="@drawable/profile_bg"/>
+        </FrameLayout>
+
+        <FrameLayout
             android:id="@+id/frameLayout2"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:background="@color/white"
             android:padding="@dimen/_5sdp"
             android:layout_gravity="top">
 
@@ -36,7 +48,8 @@
                 android:onClick="@{()->vm.back()}"
                 android:paddingLeft="@dimen/_5ssp"
                 android:paddingRight="@dimen/_20ssp"
-                android:src="@drawable/ic_icon_back">
+                android:src="@drawable/ic_icon_back"
+                app:tint="@color/white">
 
             </ImageView>
 
@@ -47,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:text="Thông tin cá nhân">
 
             </TextView>
@@ -57,15 +71,21 @@
             android:onClick="@{()->a.hideKeyboard()}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_100sdp"
+            android:layout_marginTop="@dimen/_150sdp"
             android:orientation="vertical">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageViewAva"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_100sdp"
+            <FrameLayout
+                android:background="@drawable/background_oval_white"
+                android:layout_width="wrap_content"
+                android:padding="@dimen/_3sdp"
                 android:layout_gravity="center"
-                android:src="@{vm.avatar}" />
+                android:layout_height="wrap_content">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageViewAva"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:src="@{vm.avatar}" />
+            </FrameLayout>
+
             <TextView
                 style="@style/app_title"
                 android:layout_width="wrap_content"

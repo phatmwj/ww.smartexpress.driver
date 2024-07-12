@@ -320,7 +320,7 @@
                     android:paddingHorizontal="@dimen/_15sdp"
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:background="@drawable/bg_state_new"
+                    android:background="@drawable/bg_state_cancel"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -373,7 +373,7 @@
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:layout_weight="1"
                             android:maxLines="1"
-                            android:textColor="@color/green"
+                            android:textColor="@color/app_light_color"
                             android:textSize="@dimen/_10ssp"
                             android:text="Bạn chưa có tài khoản ngân hàng" />
 

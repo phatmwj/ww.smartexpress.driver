@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="line">
-            <stroke android:color="#CEDDB9" android:width="@dimen/_1sdp" android:dashGap="@dimen/_2sdp" android:dashWidth="@dimen/_5sdp">
+            <stroke android:color="@color/app_light_color" android:width="@dimen/_1sdp" android:dashGap="@dimen/_2sdp" android:dashWidth="@dimen/_5sdp">
             </stroke>
             <padding
                 android:bottom="5dp"

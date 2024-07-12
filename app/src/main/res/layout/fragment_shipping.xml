@@ -39,11 +39,19 @@
                 android:gravity="center"
                 android:layout_marginVertical="@dimen/_8sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="@dimen/_32sdp"
-                    android:layout_height="@dimen/_32sdp"
-                    android:src="@{vm.user.avatar}">
-                </de.hdodenhof.circleimageview.CircleImageView>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_2sdp"
+                    android:background="@drawable/background_oval_white"
+                    android:backgroundTint="@color/green_light_app"
+                    >
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:src="@{vm.user.avatar}">
+                    </de.hdodenhof.circleimageview.CircleImageView>
+                </FrameLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
