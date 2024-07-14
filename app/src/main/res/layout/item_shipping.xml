@@ -153,23 +153,45 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:gravity="center_vertical"
                         android:visibility="@{booking.state == Constants.BOOKING_STATE_BOOKING || booking.state == Constants.BOOKING_STATE_DONE || booking.state == Constants.BOOKING_STATE_CANCEL?View.GONE:View.VISIBLE}">
                         <LinearLayout
+
                             android:id="@+id/sendMessage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:gravity="center_vertical"
                             android:orientation="horizontal"
                             android:layout_weight="1">
 
-                            <ImageView
-                                android:id="@+id/imgMessage"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                            <FrameLayout
                                 android:layout_marginRight="@dimen/_10sdp"
-                                app:srcCompat="@drawable/ic_icon_message" />
+                                android:id="@+id/imageViewWithBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:layout_marginTop="@dimen/_3sdp"
+                                    android:id="@+id/imgMessage"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:srcCompat="@drawable/ic_icon_message" />
+
+                                <TextView
+                                    style="@style/montserrat_medium_gray"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:id="@+id/badge"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="end|top"
+                                    android:background="@drawable/badge_background"
+                                    android:gravity="center"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="@dimen/_10ssp"/>
+                            </FrameLayout>
 
                             <TextView
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/send_message"

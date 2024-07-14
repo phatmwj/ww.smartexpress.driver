@@ -109,6 +109,13 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
     @Getter
     @Setter
     private List<Long> notificationIdList = new ArrayList<>();
+    @Getter
+    @Setter
+    private Map<Long, Integer> roomMsgCount = new HashMap<>();
+
+    @Getter
+    @Setter
+    private List<Long> newMsgBookings = new ArrayList<>();
     @Override
     public void onCreate() {
         super.onCreate();
@@ -241,18 +248,36 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
             chatBookingId = Long.valueOf(chatMessage.getBookingId());
             if(currentActivity instanceof ChatActivity && Objects.equals(((ChatActivity) currentActivity).getBookingId(), chatBookingId)){
                 Intent intent = new Intent(currentActivity, ChatActivity.class);
-//            intent.putExtra("codeBooking", chatMessage.getCodeBooking());
-//            intent.putExtra("roomId", Long.valueOf(chatMessage.getRoomId()));
-//            intent.putExtra("bookingId", Long.valueOf(chatMessage.getBookingId()));
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 currentActivity.startActivity(intent);
             }else{
-                Intent intent = new Intent(currentActivity, ChatActivity.class);
-                intent.putExtra("codeBooking", chatMessage.getCodeBooking());
-                intent.putExtra("roomId", Long.valueOf(chatMessage.getRoomId()));
-                intent.putExtra("bookingId", Long.valueOf(chatMessage.getBookingId()));
-//            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                currentActivity.startActivity(intent);
+//                Intent intent = new Intent(currentActivity, ChatActivity.class);
+//                intent.putExtra("codeBooking", chatMessage.getCodeBooking());
+//                intent.putExtra("roomId", Long.valueOf(chatMessage.getRoomId()));
+//                intent.putExtra("bookingId", Long.valueOf(chatMessage.getBookingId()));
+//                currentActivity.startActivity(intent);
+                ToastMessage toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Bạn có tin nhắn mới!");
+                toastMessage.showMessage(currentActivity);
+                //
+
+
+                Integer i = roomMsgCount.get(chatBookingId);
+                if(i != null && i!=0){
+                    roomMsgCount.put(chatBookingId,i+1);
+                }else {
+                    roomMsgCount.put(chatBookingId, 1);
+                }
+//                detailsBookingId = chatBookingId;
+                if(currentActivity instanceof HomeActivity){
+                    Log.d("TAG", "navigateToChat: ");
+                    ((HomeActivity) currentActivity).onResume();
+                }
+                if(currentActivity instanceof ShippingActivity && ((ShippingActivity)currentActivity).getBookingId().equals(String.valueOf(chatBookingId))){
+                    Intent intent = new Intent(currentActivity, ShippingActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    currentActivity.startActivity(intent);
+                }
+                newMsgBookings.add(chatBookingId);
             }
         }
 

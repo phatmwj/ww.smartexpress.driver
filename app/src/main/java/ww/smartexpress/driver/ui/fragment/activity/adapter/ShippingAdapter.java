@@ -151,6 +151,17 @@ public class ShippingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             this.position = position;
             bookingId = bookingList.get(position).getId();
             mBinding.setBooking(bookingList.get(position));
+            //
+            if(application.getRoomMsgCount().get(bookingId)!=null && application.getRoomMsgCount().get(bookingId)>0){
+                mBinding.badge.setText(String.valueOf(application.getRoomMsgCount().get(bookingId)));
+                mBinding.badge.setVisibility(View.VISIBLE);
+            }else {
+                mBinding.badge.setVisibility(View.GONE);
+            }
+//            mBinding.badge.setText("0");
+//            mBinding.badge.setText(String.valueOf(application.getRoomMsgCount().get(bookingId)));
+
+                    //
             if(bookingList.get(position)!= null && bookingList.get(position).getService()!=null && bookingList.get(position).getService().getSize()!= null){
                 mBinding.setSize(getSize(bookingList.get(position).getService().getSize()));
             }

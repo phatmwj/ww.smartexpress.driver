@@ -112,6 +112,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
     private float zoom = 16;
     @Getter
     private String bookingId;
+    MVVMApplication application;
 
     @Override
     public int getLayoutId() {
@@ -234,7 +235,7 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
 //        getCurrentLocation();
-
+        application = (MVVMApplication) getApplication();
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -242,6 +243,12 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 20000, 0, this);
 
         viewModel.bookingValue.observe(this, currentBooking -> {
+            if(application.getRoomMsgCount().get(Long.valueOf(bookingId))!=null && application.getRoomMsgCount().get(Long.valueOf(bookingId))>0){
+                viewBinding.cardBooking.badge.setText(String.valueOf(application.getRoomMsgCount().get(Long.valueOf(bookingId))));
+                viewBinding.cardBooking.badge.setVisibility(View.VISIBLE);
+            }else {
+                viewBinding.cardBooking.badge.setVisibility(View.GONE);
+            }
             customerLocation = new LatLng(currentBooking.getPickupLat(), currentBooking.getPickupLong());
             destinationLocation = new LatLng(currentBooking.getDestinationLat(), currentBooking.getDestinationLong());
         });
@@ -696,6 +703,12 @@ public class ShippingActivity extends BaseActivity<ActivityShippingBinding, Ship
         if (viewModel.getApplication().getCancelBookingId()!=null) {
             viewModel.status.set(Constants.BOOKING_CUSTOMER_CANCEL);
             viewModel.getApplication().setDetailsBookingId(null);
+        }
+        if(application !=null && application.getRoomMsgCount().get(Long.valueOf(bookingId))!=null && application.getRoomMsgCount().get(Long.valueOf(bookingId))>0){
+            viewBinding.cardBooking.badge.setText(String.valueOf(application.getRoomMsgCount().get(Long.valueOf(bookingId))));
+            viewBinding.cardBooking.badge.setVisibility(View.VISIBLE);
+        }else {
+            viewBinding.cardBooking.badge.setVisibility(View.GONE);
         }
     }
 

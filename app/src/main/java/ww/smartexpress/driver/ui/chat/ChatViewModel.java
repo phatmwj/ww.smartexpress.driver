@@ -16,7 +16,9 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.RequestBody;
 import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.R;
@@ -26,6 +28,7 @@ import ww.smartexpress.driver.data.model.api.ResponseWrapper;
 import ww.smartexpress.driver.data.model.api.response.ChatMessage;
 import ww.smartexpress.driver.data.model.api.response.Customer;
 import ww.smartexpress.driver.data.model.api.response.MessageChat;
+import ww.smartexpress.driver.data.model.api.response.RoomListResponse;
 import ww.smartexpress.driver.data.model.api.response.RoomResponse;
 import ww.smartexpress.driver.data.model.api.response.UploadFileResponse;
 import ww.smartexpress.driver.data.websocket.Command;
@@ -60,6 +63,7 @@ public class ChatViewModel extends BaseViewModel {
 
     public void back(){
         application.getCurrentActivity().onBackPressed();
+        getRoomRead(Long.valueOf(bookingId.get()));
     }
 
     public void sendMessage(){
@@ -154,6 +158,24 @@ public class ChatViewModel extends BaseViewModel {
         Intent callIntent = new Intent(Intent.ACTION_DIAL);
         callIntent.setData(Uri.parse("tel:" + customerPhone.get()));
         application.getCurrentActivity().startActivity(callIntent);
+    }
+
+
+    public void getRoomRead(Long id){
+        compositeDisposable.add(repository.getApiService().getReadRoom(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    if(response.isResult()){
+                        application.getRoomMsgCount().remove(Long.valueOf(bookingId.get()));
+                    }else {
+                        showErrorMessage(response.getMessage());
+                    }
+                },error->{
+                    showErrorMessage(application.getString(R.string.newtwork_error));
+                    error.printStackTrace();
+                })
+        );
     }
 
 

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.Observer;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -27,6 +28,7 @@ import ww.smartexpress.driver.data.model.api.request.EventBookingRequest;
 import ww.smartexpress.driver.data.model.api.request.PositionRequest;
 import ww.smartexpress.driver.data.model.api.request.UpdateBookingRequest;
 import ww.smartexpress.driver.data.model.api.response.CurrentBooking;
+import ww.smartexpress.driver.data.model.api.response.RoomListResponse;
 import ww.smartexpress.driver.data.model.api.response.UploadFileResponse;
 import ww.smartexpress.driver.data.model.room.UserEntity;
 import ww.smartexpress.driver.ui.base.fragment.BaseFragmentViewModel;
@@ -52,6 +54,7 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
 
     public ObservableField<String> image = new ObservableField<>();
     public MutableLiveData<Integer> stateBooking = new MutableLiveData<>();
+
     public ActivityFragmentViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
 
@@ -62,6 +65,8 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
         getCurrentBooking(200);
 
         getStateDriver();
+
+        loadRoomList();
     }
 
     public void updatePosition(){
@@ -389,5 +394,25 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
         application.getCurrentActivity().startActivity(intent);
     }
 
+    public void loadRoomList(){
+        compositeDisposable.add(repository.getApiService().getRoomList(0,100)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    if(response.isResult()){
+                        if(response.getData()!=null && response.getData().size() >0){
+                            for (RoomListResponse roomListResponse: response.getData()){
+                                application.getRoomMsgCount().put(roomListResponse.getId(), roomListResponse.getAmount());
+                            }
+                        }
+                    }else {
+                        showErrorMessage(response.getMessage());
+                    }
+                },error->{
+                    showErrorMessage(application.getString(R.string.newtwork_error));
+                    error.printStackTrace();
+                })
+        );
+    }
 
 }

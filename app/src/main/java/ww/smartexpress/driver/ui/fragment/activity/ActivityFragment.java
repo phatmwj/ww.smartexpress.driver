@@ -175,9 +175,12 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
             Integer pos = viewModel.positionUpdate.get();
             Integer state = currentBooking.getState();
             Long id = currentBooking.getId();
+            Log.d("GTAG0", "onViewCreated: ");
             if(pos!= null){
+                Log.d("GTAG1", "onViewCreated: ");
                 switch (state){
                     case Constants.BOOKING_STATE_DRIVER_ACCEPT:
+                        Log.d("GTAG", "onViewCreated: ");
                         shippingAdapter.updateItem(currentBooking.getId() ,currentBooking);
                         if(shippingAdapter1.getMapIdPos().get(id) == null){
                             shippingAdapter1.addItem(currentBooking);
@@ -216,7 +219,7 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
 
                 }
                 if(viewModel.stateBooking.getValue() == null){
-                    binding.rcShipping.smoothScrollToPosition(pos);
+//                    binding.rcShipping.smoothScrollToPosition(pos);
                 }
                 viewModel.positionUpdate.set(null);
                 updateShippingChanged();
@@ -354,6 +357,7 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
             @Override
             public void navigate_chat(int position, Long bookingId) {
                 int pos = adapter.getMapIdPos().get(bookingId);
+                mvvmApplication.setDetailsBookingId(bookingId);
                 viewModel.positionUpdate.set(adapter.getMapIdPos().get(bookingId));
                 viewModel.openChat(adapter.getBookingList().get(pos).getCode(), adapter.getBookingList().get(pos).getRoom().getId(),adapter.getBookingList().get(pos).getId());
             }
@@ -729,19 +733,30 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
             viewModel.loadCancelBooking(Long.parseLong(mvvmApplication.getCancelBookingId()));
             mvvmApplication.setCancelBookingId(null);
             binding.switchState.setClickable(true);
-
-//            TSnackbar tSnackbar = TSnackbar.make(binding.layoutMain, "Thông báo nè", TSnackbar.LENGTH_INDEFINITE)
-//                    .setAction("Action", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//
-//                        }
-//                    });
-//            View snackbarView = tSnackbar.getView();
-//            snackbarView.setBackgroundColor(Color.YELLOW);
-//            tSnackbar.show();
         }
         if(mvvmApplication.getDetailsBookingId()!= null){
+//            if(viewModel.stateBooking.getValue() == null){
+//                Log.d("RTAG1", "onResume: ");
+//                viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(mvvmApplication.getDetailsBookingId()));
+//                viewModel.loadBooking(mvvmApplication.getDetailsBookingId());
+//                mvvmApplication.setDetailsBookingId(null);
+//                return;
+//            }
+//            switch (viewModel.stateBooking.getValue()){
+//                case 100:
+//                    Log.d("RTAG2", "onResume: ");
+//                    viewModel.positionUpdate.set(shippingAdapter1.getMapIdPos().get(mvvmApplication.getDetailsBookingId()));
+//                    break;
+//                case 200:
+//                    Log.d("RTAG3", "onResume: ");
+//                    viewModel.positionUpdate.set(shippingAdapter2.getMapIdPos().get(mvvmApplication.getDetailsBookingId()));
+//                    break;
+//                default:
+//                    Log.d("RTAG4", "onResume: ");
+//                    viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(mvvmApplication.getDetailsBookingId()));
+//                    break;
+//            }
+//            Log.d("RTAG5", "onResume: ");
             viewModel.loadBooking(mvvmApplication.getDetailsBookingId());
             mvvmApplication.setDetailsBookingId(null);
         }
@@ -751,6 +766,33 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
             }
             mvvmApplication.setDeleteBookingId(null);
         }
+        if(mvvmApplication.getNewMsgBookings()!=null && mvvmApplication.getNewMsgBookings().size()>0){
+            for (Long id:mvvmApplication.getNewMsgBookings()) {
+                checkMsg(id);
+            }
+            mvvmApplication.getNewMsgBookings().clear();
+        }
+    }
+
+    private void checkMsg(Long id){
+        if(viewModel.stateBooking.getValue() == null){
+            Log.d("RTAG1", "onResume: ");
+            viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(id));
+            viewModel.loadBooking(id);
+            return;
+        }
+        switch (viewModel.stateBooking.getValue()){
+            case 100:
+                viewModel.positionUpdate.set(shippingAdapter1.getMapIdPos().get(id));
+                break;
+            case 200:
+                viewModel.positionUpdate.set(shippingAdapter2.getMapIdPos().get(id));
+                break;
+            default:
+                viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(id));
+                break;
+        }
+        viewModel.loadBooking(id);
     }
 
     void deleteBooking(Long bookingId){
@@ -761,10 +803,10 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
             shippingAdapter1.removeItem(bookingId);
         }
         if(shippingAdapter.getBookingList().size() !=0){
-            binding.rcShipping.smoothScrollToPosition(shippingAdapter.getMapIdPos().get(bookingId)-1);
+//            binding.rcShipping.smoothScrollToPosition(shippingAdapter.getMapIdPos().get(bookingId)-1);
         }
         if(shippingAdapter1.getBookingList().size() != 0){
-            binding.rcShippingStateAccepted.smoothScrollToPosition(shippingAdapter1.getMapIdPos().get(bookingId)-1);
+//            binding.rcShippingStateAccepted.smoothScrollToPosition(shippingAdapter1.getMapIdPos().get(bookingId)-1);
         }
         viewModel.positionUpdate.set(null);
         updateShippingChanged();

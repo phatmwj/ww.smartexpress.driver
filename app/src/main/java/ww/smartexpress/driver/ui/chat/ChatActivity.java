@@ -248,6 +248,7 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewMode
                         viewModel.customerAvatar.set(response.getData().getCustomer().getAvatar());
                         viewModel.customerName.set(response.getData().getCustomer().getName());
                         viewModel.customerPhone.set(response.getData().getCustomer().getPhone());
+                        viewModel.getRoomRead(response.getData().getId());
                         loadMessages();
 //                        viewModel.showSuccessMessage(response.getMessage());
                     }else {
@@ -275,6 +276,7 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewMode
             viewModel.messageChat.setValue(messageChat1);
             ((MVVMApplication) getApplication()).setChatMessage(null);
         }
+        viewModel.getRoomRead(Long.valueOf(viewModel.bookingId.get()));
     }
 
     @Override

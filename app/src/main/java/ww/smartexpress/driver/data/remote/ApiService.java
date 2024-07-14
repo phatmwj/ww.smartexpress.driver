@@ -4,6 +4,8 @@ import androidx.databinding.ObservableField;
 
 import com.google.gson.JsonObject;
 
+import java.util.List;
+
 import okhttp3.RequestBody;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -60,6 +62,7 @@ import ww.smartexpress.driver.data.model.api.response.PayoutResponse;
 import ww.smartexpress.driver.data.model.api.response.PayoutTransaction;
 import ww.smartexpress.driver.data.model.api.response.ProfileResponse;
 import ww.smartexpress.driver.data.model.api.response.RegisterResponse;
+import ww.smartexpress.driver.data.model.api.response.RoomListResponse;
 import ww.smartexpress.driver.data.model.api.response.RoomResponse;
 import ww.smartexpress.driver.data.model.api.response.ServiceOnlineResponse;
 import ww.smartexpress.driver.data.model.api.response.ServiceResponse;
@@ -216,4 +219,11 @@ public interface ApiService {
     Observable<ResponseWrapper<PayoutResponse>> getPayout(@Path("id") Long id);
     @GET("/v1/notification/get/{id}")
     Observable<ResponseWrapper<NotificationResponse>> getNotification(@Path("id") Long id);
+
+    @GET("/v1/room/my-room")
+    Observable<ResponseWrapper<List<RoomListResponse>>> getRoomList(@Query("page") Integer pageNumber,
+                                                                    @Query("size") Integer pageSize);
+
+    @GET("/v1/room/read-room/{id}")
+    Observable<ResponseGeneric> getReadRoom(@Path("id") Long id);
 }

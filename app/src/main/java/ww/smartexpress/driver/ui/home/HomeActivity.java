@@ -194,5 +194,8 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
         if(notificationFragment != null){
             notificationFragment.onResume();
         }
+        if(activityFragment != null){
+            activityFragment.onResume();
+        }
     }
 }
