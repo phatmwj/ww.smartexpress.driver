@@ -2,11 +2,13 @@ package ww.smartexpress.driver;
 
 import android.app.Application;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,7 +22,9 @@ import androidx.lifecycle.ProcessLifecycleOwner;
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -39,6 +43,7 @@ import ww.smartexpress.driver.data.websocket.Message;
 import ww.smartexpress.driver.data.websocket.SocketEventModel;
 import ww.smartexpress.driver.data.websocket.SocketListener;
 import ww.smartexpress.driver.data.websocket.WebSocketLiveData;
+import ww.smartexpress.driver.databinding.DialogNotificationBinding;
 import ww.smartexpress.driver.databinding.ItemMarqueeNewsBinding;
 import ww.smartexpress.driver.di.component.AppComponent;
 import ww.smartexpress.driver.di.component.DaggerAppComponent;
@@ -101,6 +106,9 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
     @Getter
     @Setter
     private DepositMessage depositMessage = null;
+    @Getter
+    @Setter
+    private List<Long> notificationIdList = new ArrayList<>();
     @Override
     public void onCreate() {
         super.onCreate();
@@ -271,6 +279,10 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
         depositMessage = ApiModelUtils.fromJson(depositSuccess.getMessage(),DepositMessage.class);
         Intent intent ;
         ToastMessage toastMessage;
+        notificationIdList.add(depositMessage.getNotificationId());
+        if(currentActivity instanceof HomeActivity){
+            ((HomeActivity) currentActivity).onResume();
+        }
         switch (depositSuccess.getKind()){
             case 1:
                 if(currentActivity instanceof WalletActivity || currentActivity instanceof QrcodeActivity){
@@ -278,6 +290,7 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
                     intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     currentActivity.startActivity(intent);
                 }
+                //binding.setTitle("Bạn đã nạp thành công "+ NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" vào ví");
                 toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Bạn đã nạp thành công "+ NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" vào ví");
                 toastMessage.showMessage(currentActivity);
                 break;
@@ -295,11 +308,15 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
                 toastMessage.showMessage(currentActivity);
                 break;
             case 4: case 5: case 6://NOTIFICATION_KIND_SYSTEM
-                showMarqueeDialog(message);
+                toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Bạn có thông báo mới!");
+                toastMessage.showMessage(currentActivity);
+//                showMarqueeDialog(message);
                 break;
             default:
                 break;
         }
+
+
 
     }
 
@@ -385,4 +402,5 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
     public void onPingFailure() {
 
     }
+
 }

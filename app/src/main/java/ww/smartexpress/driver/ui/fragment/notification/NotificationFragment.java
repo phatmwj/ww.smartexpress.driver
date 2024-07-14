@@ -23,6 +23,7 @@ import eu.davidea.flexibleadapter.helpers.EmptyViewHelper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import ww.smartexpress.driver.BR;
+import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.constant.Constants;
 import ww.smartexpress.driver.data.model.api.response.Notification;
@@ -33,6 +34,7 @@ import ww.smartexpress.driver.databinding.FragmentNotificationBinding;
 import ww.smartexpress.driver.di.component.FragmentComponent;
 import ww.smartexpress.driver.ui.base.fragment.BaseFragment;
 import ww.smartexpress.driver.ui.fragment.notification.adapter.NotificationAdapter;
+import ww.smartexpress.driver.ui.home.HomeActivity;
 import ww.smartexpress.driver.ui.notification.details.NotificationDetailsActivity;
 import ww.smartexpress.driver.ui.payout.details.PayoutDetailsActivity;
 import ww.smartexpress.driver.ui.payout.details.PayoutDetailsViewModel;
@@ -45,6 +47,8 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
 
 
 //    public FlexibleAdapter mFlexibleAdapter;
+    MVVMApplication mvvmApplication;
+
     @Override
     public int getBindingVariable() {
         return BR.vm;
@@ -73,6 +77,7 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mvvmApplication = (MVVMApplication) getActivity().getApplication();
         getMyNotification();
         binding.swRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -169,6 +174,7 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
 
     private void getMyNotification(){
         if (viewModel.pageNumber.get() == 0){
+            mvvmApplication.getNotificationIdList().clear();
             viewModel.showLoading();
         }
         viewModel.compositeDisposable.add(viewModel.getMyNotification()
@@ -181,7 +187,6 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
                         viewModel.totalElement.set(Math.toIntExact(response.getData().getTotalElements()));
                         if (response.getData().getContent()!=null){
                             if(viewModel.pageNumber.get() == 0){
-
                                 viewModel.mFlexibleAdapter.set(new FlexibleAdapter(response.getData().getContent(), this));
 
                                 if(viewModel.totalElement.get()> viewModel.pageSize.get()){
@@ -220,6 +225,7 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
                 .subscribe(response -> {
                     viewModel.pageNumber.set(0);
                     getMyNotification();
+                    ((HomeActivity) getActivity()).onResume();
                 },error->{
                     error.printStackTrace();
                 })
@@ -229,5 +235,37 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("TAG", "onResume: notificationFg");
+        if (mvvmApplication.getNotificationIdList().size()>0){
+//            List<Long> notificationIds = mvvmApplication.getNotificationIdList();
+            Log.d("TAG", "onResume: thông báo nè");
+            Handler handler = new Handler();
+            try {
+                for(int i = 0; i<mvvmApplication.getNotificationIdList().size();i++){
+                    int notiIdPos = i;
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            viewModel.compositeDisposable.add(viewModel.getNotificationById(mvvmApplication.getNotificationIdList().get(0))
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(response -> {
+                                        viewModel.mFlexibleAdapter.get().addItem(0, response.getData());
+                                        viewModel.mFlexibleAdapter.get().smoothScrollToPosition(0);
+                                        mvvmApplication.getNotificationIdList().remove(0);
+                                        viewModel.totalUnread.set(viewModel.totalUnread.get()+1);
+                                    },error->{
+                                        error.printStackTrace();
+                                    })
+                            );
+                        }
+                    },100);
+                }
+            }finally {
+//                mvvmApplication.getNotificationIdList().clear();
+            }
+
+            // xóa danh sach list
+        }
     }
 }

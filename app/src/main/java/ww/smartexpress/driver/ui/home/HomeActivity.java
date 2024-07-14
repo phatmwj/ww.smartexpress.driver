@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.navigation.NavigationBarView;
 
 import ww.smartexpress.driver.BR;
@@ -32,6 +33,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
     private NotificationFragment notificationFragment;
 
     private ActivityFragment activityFragment;
+    BadgeDrawable badge;
 
     @Override
     public int getLayoutId() {
@@ -63,6 +65,16 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
             viewBinding.navigationView.setSelectedItemId(R.id.home);
         }
 //        viewBinding.navigationView.setSelectedItemId(R.id.home);
+        int menuItemId = viewBinding.navigationView.getMenu().getItem(2).getItemId();
+        viewModel.totalUnread.observe(this, i ->{
+            if(i == 0){
+                viewBinding.navigationView.getOrCreateBadge(menuItemId);
+                viewBinding.navigationView.removeBadge(menuItemId);
+            }else {
+                badge = viewBinding.navigationView.getOrCreateBadge(menuItemId);
+                badge.setNumber(i);
+            }
+        });
     }
 
     @Override
@@ -147,6 +159,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
         else{
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.hide(activeFragment).show(notificationFragment).commit();
+            notificationFragment.onResume();
         }
         activeFragment = notificationFragment;
     }
@@ -171,6 +184,15 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
             replaceFragmentActivity();
         }else {
             viewBinding.navigationView.setSelectedItemId(R.id.home);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.getMyNotification();
+        if(notificationFragment != null){
+            notificationFragment.onResume();
         }
     }
 }

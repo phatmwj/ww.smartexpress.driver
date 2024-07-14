@@ -49,4 +49,8 @@ public class NotificationFragmentViewModel extends BaseFragmentViewModel {
         );
     }
 
+    public Observable<ResponseWrapper<NotificationResponse>> getNotificationById(Long id){
+        return repository.getApiService().getNotification(id);
+    }
+
 }

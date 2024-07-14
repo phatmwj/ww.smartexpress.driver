@@ -1,25 +1,36 @@
 package ww.smartexpress.driver.ui.home;
 
 import androidx.databinding.ObservableField;
+import androidx.lifecycle.MutableLiveData;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.helpers.EmptyViewHelper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.R;
 import ww.smartexpress.driver.constant.Constants;
 import ww.smartexpress.driver.data.Repository;
+import ww.smartexpress.driver.data.model.api.ResponseListObj;
+import ww.smartexpress.driver.data.model.api.ResponseWrapper;
+import ww.smartexpress.driver.data.model.api.response.NotificationResponse;
 import ww.smartexpress.driver.data.model.api.response.ProfileResponse;
 import ww.smartexpress.driver.data.model.room.UserEntity;
 import ww.smartexpress.driver.ui.base.activity.BaseViewModel;
+import ww.smartexpress.driver.ui.view.ProgressItem;
 
 public class HomeViewModel extends BaseViewModel {
 
     public ObservableField<ProfileResponse> profile = new ObservableField<>();
+    public MutableLiveData<Integer> totalUnread = new MutableLiveData<>(0);
 
     public HomeViewModel(Repository repository, MVVMApplication application) {
         super(repository, application);
 //        loadProfile();
 //        getCurrentBooking();
+        getMyNotification();
     }
 
     public void loadProfile(){
@@ -66,6 +77,22 @@ public class HomeViewModel extends BaseViewModel {
                         showSuccessMessage(response.getMessage());
                     }else {
                         showErrorMessage(response.getMessage());
+                    }
+                },error->{
+                    showErrorMessage(application.getString(R.string.newtwork_error));
+                    error.printStackTrace();
+                })
+        );
+    }
+
+    public void getMyNotification(){
+        compositeDisposable.add(repository.getApiService().getMyNotification(0,10)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    if(response.isResult()){
+                        totalUnread.setValue(Math.toIntExact(response.getData().getTotalUnread()));
+                    }else {
                     }
                 },error->{
                     showErrorMessage(application.getString(R.string.newtwork_error));

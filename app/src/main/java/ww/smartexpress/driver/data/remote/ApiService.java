@@ -214,4 +214,6 @@ public interface ApiService {
 
     @GET("/v1/request-pay-out/get/{id}")
     Observable<ResponseWrapper<PayoutResponse>> getPayout(@Path("id") Long id);
+    @GET("/v1/notification/get/{id}")
+    Observable<ResponseWrapper<NotificationResponse>> getNotification(@Path("id") Long id);
 }
