@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class LoginRequest {
     private String password;
     private String phone;
+    private Boolean isBooking;
 }

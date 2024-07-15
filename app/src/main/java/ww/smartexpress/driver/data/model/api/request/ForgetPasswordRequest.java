@@ -14,4 +14,5 @@ import lombok.Setter;
 public class ForgetPasswordRequest {
     private String phone;
     private Integer kind;
+    private Boolean isBooking;
 }

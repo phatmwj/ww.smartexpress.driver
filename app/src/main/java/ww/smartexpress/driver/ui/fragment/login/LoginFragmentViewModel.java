@@ -40,7 +40,7 @@ public class LoginFragmentViewModel extends BaseFragmentViewModel {
             return;
         }
         showLoading();
-        compositeDisposable.add(repository.getApiService().login(new LoginRequest(password.get().trim(), phone.get()))
+        compositeDisposable.add(repository.getApiService().login(new LoginRequest(password.get().trim(), phone.get(),false))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {

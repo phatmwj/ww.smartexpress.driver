@@ -20,5 +20,6 @@ public class UpdateProfileRequest {
     private String bankCard;
 
     private String identificationCard;
+    private Boolean isBooking;
 
 }

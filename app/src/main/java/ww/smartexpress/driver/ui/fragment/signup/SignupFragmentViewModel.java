@@ -41,7 +41,7 @@ public class SignupFragmentViewModel extends BaseFragmentViewModel {
             showErrorMessage(application.getString(R.string.empty_password_error));
             return;
         }
-        RegisterRequest request = new RegisterRequest(fullName.get(), password.get(), phone.get());
+        RegisterRequest request = new RegisterRequest(fullName.get(), password.get(), phone.get(),false);
         showLoading();
         compositeDisposable.add(repository.getApiService().register(request)
                 .subscribeOn(Schedulers.io())
