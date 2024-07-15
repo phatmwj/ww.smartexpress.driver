@@ -12,6 +12,8 @@ import ww.smartexpress.driver.data.Repository;
 import ww.smartexpress.driver.data.model.api.request.RegisterRequest;
 import ww.smartexpress.driver.ui.base.fragment.BaseFragmentViewModel;
 import ww.smartexpress.driver.ui.login.LoginActivity;
+import ww.smartexpress.driver.ui.password.otp.VerifyForgetPasswordOTPActivity;
+import ww.smartexpress.driver.ui.signup.otp.RegisterOTPActivity;
 
 public class SignupFragmentViewModel extends BaseFragmentViewModel {
 
@@ -48,8 +50,11 @@ public class SignupFragmentViewModel extends BaseFragmentViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
                     if(response.isResult()){
-                        showSuccessMessage(response.getMessage());
-                        Intent intent = new Intent(application.getCurrentActivity(), LoginActivity.class);
+                        showSuccessMessage("Đăng kí tài khoản thành công!");
+//                        Intent intent = new Intent(application.getCurrentActivity(), LoginActivity.class);
+                        Intent intent = new Intent(application.getCurrentActivity(), RegisterOTPActivity.class);
+                        intent.putExtra("USER_ID", response.getData().getUserId());
+                        intent.putExtra("USER_PHONE", phone.get());
                         application.getCurrentActivity().startActivity(intent);
                         application.getCurrentActivity().finish();
                         hideLoading();

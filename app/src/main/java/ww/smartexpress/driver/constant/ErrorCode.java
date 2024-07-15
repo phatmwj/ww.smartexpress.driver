@@ -39,6 +39,7 @@ public class ErrorCode {
     public static final String DRIVER_ERROR_TOTP_INVALID = "ERROR-DRIVER-ERROR-0013";
     public static final String DRIVER_ERROR_ENABLED_2FA = "ERROR-DRIVER-ERROR-0014";
     public static final String DRIVER_ERROR_DEVICE_NAME_NULL_WHEN_ENABLE_2FA = "ERROR-DRIVER-ERROR-0014";
+    public static final String DRIVER_ERROR_ACCOUNT_NOT_VERIFIED = "ERROR-DRIVER-ERROR-0017";
 
     /**
      * Starting error code Driver Service

@@ -162,4 +162,8 @@
     <string name="ship_state_new">Bạn có muốn nhận đơn này!</string>
     <string name="invalid_pw">Mật khẩu không được chứa khoảng trắng</string>
     <string name="network_error">Không thể kết nối, vui lòng kiểm tra kết nối mạng của bạn.</string>
+    <string name="send_otp_title2">Vui lòng kiểm tra điện thoại và nhập mã xác thực vào đây</string>
+    <string name="send_otp_title3">Gửi lại mã xác thực</string>
+    <string name="otp">OTP</string>
+    <string name="send_otp_title1">"Mã xác thực sẽ được gửi đến "</string>
 </resources>

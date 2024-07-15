@@ -39,6 +39,7 @@ import ww.smartexpress.driver.ui.profile.ProfileViewModel;
 import ww.smartexpress.driver.ui.qrcode.QrcodeViewModel;
 import ww.smartexpress.driver.ui.shipping.ShippingViewModel;
 import ww.smartexpress.driver.ui.signup.SignUpViewModel;
+import ww.smartexpress.driver.ui.signup.otp.RegisterOTPViewModel;
 import ww.smartexpress.driver.ui.splash.SplashViewModel;
 import ww.smartexpress.driver.ui.wallet.WalletViewModel;
 import ww.smartexpress.driver.ui.wallet.transaction.TransactionViewModel;
@@ -352,5 +353,13 @@ public class ActivityModule {
         Supplier<PayoutDetailsViewModel> supplier = () -> new PayoutDetailsViewModel(repository, (MVVMApplication) application);
         ViewModelProviderFactory<PayoutDetailsViewModel> factory = new ViewModelProviderFactory<>(PayoutDetailsViewModel.class, supplier);
         return new ViewModelProvider(activity, factory).get(PayoutDetailsViewModel.class);
+    }
+
+    @Provides
+    @ActivityScope
+    RegisterOTPViewModel provideRegisterOTPViewModel(Repository repository, Context application) {
+        Supplier<RegisterOTPViewModel> supplier = () -> new RegisterOTPViewModel(repository, (MVVMApplication) application);
+        ViewModelProviderFactory<RegisterOTPViewModel> factory = new ViewModelProviderFactory<>(RegisterOTPViewModel.class, supplier);
+        return new ViewModelProvider(activity, factory).get(RegisterOTPViewModel.class);
     }
 }

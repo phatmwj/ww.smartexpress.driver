@@ -32,8 +32,10 @@ import ww.smartexpress.driver.data.model.api.request.PositionRequest;
 import ww.smartexpress.driver.data.model.api.request.RegisterRequest;
 import ww.smartexpress.driver.data.model.api.request.ResetPassRequest;
 import ww.smartexpress.driver.data.model.api.request.ResetPasswordRequest;
+import ww.smartexpress.driver.data.model.api.request.RetryOtpRegisterRequest;
 import ww.smartexpress.driver.data.model.api.request.UpdateBookingRequest;
 import ww.smartexpress.driver.data.model.api.request.UpdateProfileRequest;
+import ww.smartexpress.driver.data.model.api.request.VerifyAccountRequest;
 import ww.smartexpress.driver.data.model.api.response.AccountCOD;
 import ww.smartexpress.driver.data.model.api.response.AccountName;
 import ww.smartexpress.driver.data.model.api.response.ActivityRate;
@@ -226,4 +228,10 @@ public interface ApiService {
 
     @GET("/v1/room/read-room/{id}")
     Observable<ResponseGeneric> getReadRoom(@Path("id") Long id);
+    @POST("/v1/driver/verify")
+    @Headers({"IgnoreAuth:1"})
+    Observable<ResponseWrapper<String>> verifyAccount(@Body VerifyAccountRequest request);
+    @POST("/v1/driver/retry-otp-register")
+    @Headers({"IgnoreAuth:1"})
+    Observable<ResponseWrapper<CustomerIdResponse>> retryOTPRegister(@Body RetryOtpRegisterRequest request);
 }

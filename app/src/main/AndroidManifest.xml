@@ -62,6 +62,12 @@
 
         </activity>
         <activity
+            android:name=".ui.signup.otp.RegisterOTPActivity"
+            android:theme="@style/Welcome"
+            android:exported="true">
+
+        </activity>
+        <activity
             android:name=".ui.payout.details.PayoutDetailsActivity"
             android:theme="@style/Welcome"
             android:exported="true">

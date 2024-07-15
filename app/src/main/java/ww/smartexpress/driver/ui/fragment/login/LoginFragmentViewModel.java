@@ -16,6 +16,7 @@ import ww.smartexpress.driver.ui.await.AwaitViewModel;
 import ww.smartexpress.driver.ui.base.fragment.BaseFragmentViewModel;
 import ww.smartexpress.driver.ui.home.HomeActivity;
 import ww.smartexpress.driver.ui.password.forget.ForgetPasswordActivity;
+import ww.smartexpress.driver.ui.signup.otp.RegisterOTPActivity;
 
 public class LoginFragmentViewModel extends BaseFragmentViewModel {
 
@@ -56,6 +57,11 @@ public class LoginFragmentViewModel extends BaseFragmentViewModel {
                             case ErrorCode.DRIVER_ERROR_NOT_ACTIVE:
                                 Intent intent = new Intent(application.getCurrentActivity(), AwaitActivity.class);
                                 application.getCurrentActivity().startActivity(intent);
+                                break;
+                            case ErrorCode.DRIVER_ERROR_ACCOUNT_NOT_VERIFIED:
+                                Intent intent1 = new Intent(application.getCurrentActivity(), RegisterOTPActivity.class);
+                                intent1.putExtra("USER_PHONE", phone.get());
+                                application.getCurrentActivity().startActivity(intent1);
                                 break;
                             default:
                                 showErrorMessage(response.getMessage());
