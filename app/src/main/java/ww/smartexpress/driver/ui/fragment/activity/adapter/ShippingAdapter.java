@@ -36,11 +36,6 @@ public class ShippingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int VT_EMPTY = 0;
     private Context context;
     private OnItemClickListener onItemClickListener;
-
-    @Getter
-    @Setter
-    private int positionSelected;
-
     @Getter
     @Setter
     private Map<Long, Integer> mapIdPos = new HashMap<>();
@@ -158,12 +153,12 @@ public class ShippingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }else {
                 mBinding.badge.setVisibility(View.GONE);
             }
-//            mBinding.badge.setText("0");
-//            mBinding.badge.setText(String.valueOf(application.getRoomMsgCount().get(bookingId)));
 
-                    //
-            if(bookingList.get(position)!= null && bookingList.get(position).getService()!=null && bookingList.get(position).getService().getSize()!= null){
-                mBinding.setSize(getSize(bookingList.get(position).getService().getSize()));
+            if(bookingList.get(position).getState()!= null && bookingList.get(position).getState() == Constants.BOOKING_STATE_BOOKING){
+                startCountdown(position);
+            }else {
+                handler.removeCallbacks(runnable);
+                application.getCountDownTime().remove(bookingList.get(position).getId());
             }
 
             mBinding.sendMessage.setOnClickListener(view -> {
@@ -203,13 +198,6 @@ public class ShippingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
                 this.onItemClickListener.reject_booking(position, bookingId);
             });
-
-            if(bookingList.get(position).getState()!= null && bookingList.get(position).getState() == Constants.BOOKING_STATE_BOOKING){
-                Log.d("TAG", "onBind: sao m chạy");
-                startCountdown(position);
-            }else {
-                handler.removeCallbacks(runnable);
-            }
 
             mBinding.executePendingBindings();
         }
@@ -261,8 +249,8 @@ public class ShippingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.onItemClickListener = onItemClickListener;
     }
 
-    public String getSize(String sizeJson){
-        Size size = ApiModelUtils.fromJson( sizeJson,Size.class);
-        return size.formatSize();
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List<Object> payloads) {
+        super.onBindViewHolder(holder, position, payloads);
     }
 }

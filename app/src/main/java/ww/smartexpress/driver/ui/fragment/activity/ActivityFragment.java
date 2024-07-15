@@ -179,6 +179,9 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
             if(pos!= null){
                 Log.d("GTAG1", "onViewCreated: ");
                 switch (state){
+                    case Constants.BOOKING_STATE_BOOKING:
+                        shippingAdapter.updateItem(currentBooking.getId(), currentBooking);
+                        break;
                     case Constants.BOOKING_STATE_DRIVER_ACCEPT:
                         Log.d("GTAG", "onViewCreated: ");
                         shippingAdapter.updateItem(currentBooking.getId() ,currentBooking);

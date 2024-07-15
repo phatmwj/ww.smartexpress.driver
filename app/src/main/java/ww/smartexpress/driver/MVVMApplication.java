@@ -2,8 +2,15 @@ package ww.smartexpress.driver;
 
 import android.app.Application;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
@@ -14,6 +21,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
@@ -52,6 +61,7 @@ import ww.smartexpress.driver.others.MyTimberReleaseTree;
 import ww.smartexpress.driver.ui.chat.ChatActivity;
 import ww.smartexpress.driver.ui.home.HomeActivity;
 import ww.smartexpress.driver.ui.main.MainActivity;
+import ww.smartexpress.driver.ui.notification.details.NotificationDetailsActivity;
 import ww.smartexpress.driver.ui.qrcode.QrcodeActivity;
 import ww.smartexpress.driver.ui.shipping.ShippingActivity;
 import ww.smartexpress.driver.ui.wallet.WalletActivity;
@@ -233,6 +243,7 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
             intent.putExtra("activityfragment", "activity fragment");
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             currentActivity.startActivity(intent);
+            createNotification("Có đơn hàng mới","Đơn hàng sẽ đóng sau 30s, mau nhanh nhận ngay nào!", intent);
 //        Message message = socketEventModel.getMessage();
 //        currentBookingId = message.getDataObject(BookingId.class).getBookingId();
 //        Intent intent = new Intent(currentActivity,HomeActivity.class);
@@ -251,10 +262,10 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 currentActivity.startActivity(intent);
             }else{
-//                Intent intent = new Intent(currentActivity, ChatActivity.class);
-//                intent.putExtra("codeBooking", chatMessage.getCodeBooking());
-//                intent.putExtra("roomId", Long.valueOf(chatMessage.getRoomId()));
-//                intent.putExtra("bookingId", Long.valueOf(chatMessage.getBookingId()));
+                Intent intent = new Intent(currentActivity, ChatActivity.class);
+                intent.putExtra("codeBooking", chatMessage.getCodeBooking());
+                intent.putExtra("roomId", Long.valueOf(chatMessage.getRoomId()));
+                intent.putExtra("bookingId", Long.valueOf(chatMessage.getBookingId()));
 //                currentActivity.startActivity(intent);
                 ToastMessage toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Bạn có tin nhắn mới!");
                 toastMessage.showMessage(currentActivity);
@@ -273,11 +284,13 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
                     ((HomeActivity) currentActivity).onResume();
                 }
                 if(currentActivity instanceof ShippingActivity && ((ShippingActivity)currentActivity).getBookingId().equals(String.valueOf(chatBookingId))){
-                    Intent intent = new Intent(currentActivity, ShippingActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    Intent intent1 = new Intent(currentActivity, ShippingActivity.class);
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     currentActivity.startActivity(intent);
                 }
                 newMsgBookings.add(chatBookingId);
+
+                createNotification("Tin nhắn từ đơn hàng: "+chatMessage.getCodeBooking(),chatMessage.getMessage(),intent);
             }
         }
 
@@ -294,7 +307,9 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
             intent.putExtra("activityfragment", "activity fragment");
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        currentActivity.startActivity(intent);
+//        currentActivity.startActivity(intent);
+
+        createNotification("Đơn hàng đã hủy","Bạn có 1 đơn hàng đã bị hủy bởi khách hàng.",intent);
     }
 
     public void handleDepositSuccess(SocketEventModel socketEventModel){
@@ -310,91 +325,79 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
         }
         switch (depositSuccess.getKind()){
             case 1:
+                intent = new Intent(currentActivity, WalletActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 if(currentActivity instanceof WalletActivity || currentActivity instanceof QrcodeActivity){
-                    intent = new Intent(currentActivity, WalletActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     currentActivity.startActivity(intent);
                 }
                 //binding.setTitle("Bạn đã nạp thành công "+ NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" vào ví");
-                toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Bạn đã nạp thành công "+ NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" vào ví");
-                toastMessage.showMessage(currentActivity);
+//                toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Bạn đã nạp thành công "+ NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" vào ví");
+//                toastMessage.showMessage(currentActivity);
+                createNotification("Nạp tiền vào ví","Bạn đã nạp thành công "+ NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" vào ví",intent);
                 break;
             case 2:
+                intent = new Intent(currentActivity, WalletActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 if(currentActivity instanceof WalletActivity){
-                    intent = new Intent(currentActivity, WalletActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     currentActivity.startActivity(intent);
                 }
-                toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Yêu cầu rút "+NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" đã được chấp nhận");
-                toastMessage.showMessage(currentActivity);
+//                toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Yêu cầu rút "+NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" đã được chấp nhận");
+//                toastMessage.showMessage(currentActivity);
+                createNotification("Yêu cầu rút tiền","Yêu cầu rút "+NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" đã được chấp nhận",intent);
                 break;
             case 3:
                 toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Yêu cầu rút "+NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" bị từ chối vì: "+depositMessage.getReason());
                 toastMessage.showMessage(currentActivity);
+                createNotification("Yêu cầu rút tiền","Yêu cầu rút "+NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" bị từ chối vì: "+depositMessage.getReason(),null);
                 break;
             case 4: case 5: case 6://NOTIFICATION_KIND_SYSTEM
-                toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Bạn có thông báo mới!");
-                toastMessage.showMessage(currentActivity);
-//                showMarqueeDialog(message);
+//                toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Bạn có thông báo mới!");
+//                toastMessage.showMessage(currentActivity);
+                createNotification("Smart Express","Bạn có thông báo mới!",null);
                 break;
             default:
                 break;
         }
-
-
-
     }
 
+    public void createNotification(String title,String content, Intent notificationIntent){
+        String id = "SmartExpress";
 
-    public void showMarqueeDialog(Message message) {
-        Dialog marqueeDialog = new Dialog(getCurrentActivity(), R.style.FullScreenDialog);
-        TransactionMessage tm = message.getDataObject(TransactionMessage.class);
-        NewsNotification newsNotification = ApiModelUtils.fromJson(tm.getMessage(), NewsNotification.class);
-        ItemMarqueeNewsBinding binding = DataBindingUtil.inflate(
-                LayoutInflater.from(this), R.layout.item_marquee_news, null, false);
-        marqueeDialog.setContentView(binding.getRoot());
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = manager.getNotificationChannel(id);
+            if(channel == null){
+                channel = new NotificationChannel(id, "Channel Title", NotificationManager.IMPORTANCE_HIGH);
 
-        binding.setIvm(newsNotification);
-        String title = "";
-        switch (newsNotification.getKind()){
-            case 4:
-                title = "Thông báo hệ thống: " + newsNotification.getDescription();
-                binding.marqueeText.setText(title);
-                break;
-            case 5:
-                title = "Khuyến mãi: " + newsNotification.getDescription();
-                binding.marqueeText.setText(title);
-                break;
-            case 6:
-                title = "Cảnh báo: " + newsNotification.getDescription();
-                binding.marqueeText.setText(title);
-                break;
-            default:
-                break;
+                channel.setDescription("[Channel Description]");
+                channel.enableVibration(true);
+                channel.setVibrationPattern(new long[]{100,1000,200,340});
+                channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+                manager.createNotificationChannel(channel);
+            }
+        }
+        if (notificationIntent == null) {
+            notificationIntent = new Intent(this, HomeActivity.class);
         }
 
-        binding.marqueeText.setSelected(true);
+        PendingIntent contentIntent = PendingIntent.getActivity(getCurrentActivity(), 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, id)
+                .setSmallIcon(R.mipmap.ic_launcher)
+//                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.allwin_logo))
+//                .setStyle(new NotificationCompat.BigPictureStyle()
+//                        .bigLargeIcon(null)
+//                )
+                .setContentTitle(title)
+                .setContentText(content)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setVibrate(new long[]{100,1000,200,340})
+                .setAutoCancel(false)
+                .setTicker("Notification");
 
-        Window window = marqueeDialog.getWindow();
-        WindowManager.LayoutParams layoutParams = window.getAttributes();
-        layoutParams.gravity = Gravity.TOP;
-        layoutParams.y = 0;
-        layoutParams.dimAmount = 0.0f;
-        window.setAttributes(layoutParams);
-        marqueeDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        marqueeDialog.getWindow().setGravity(Gravity.TOP);
-        marqueeDialog.setCanceledOnTouchOutside(false);
-        marqueeDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
-        marqueeDialog.show();
+        builder.setContentIntent(contentIntent);
 
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                marqueeDialog.dismiss();
-            }
-        }, 20000); // Thời gian tính bằng mili giây (ở đây là 20 giây)
+        NotificationManagerCompat m = NotificationManagerCompat.from(getApplicationContext());
+        m.notify(0, builder.build());
 
     }
 

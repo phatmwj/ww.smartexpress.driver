@@ -7,9 +7,6 @@
         <variable
             name="booking"
             type="ww.smartexpress.driver.data.model.api.response.CurrentBooking" />
-        <variable
-            name="size"
-            type="java.lang.String" />
         <import type="ww.smartexpress.driver.constant.Constants"/>
         <import type="android.view.View" />
         <import type="android.text.TextUtils" />
