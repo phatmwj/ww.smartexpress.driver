@@ -147,7 +147,7 @@
                     android:enabled="@{!TextUtils.isEmpty(vm.fullName)  &amp;&amp; !TextUtils.isEmpty(vm.phone) &amp;&amp; !TextUtils.isEmpty(vm.password)}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Đăng kí"
+                    android:text="Đăng ký"
                     android:onClick="@{(v) -> vm.signup()}">
 
                 </Button>

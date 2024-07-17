@@ -55,7 +55,7 @@ public class AuthActivity extends BaseActivity<ActivityAuthBinding, AuthViewMode
                     }
                     else if (position == 1)
                     {
-                        tab.setText("Đăng kí");
+                        tab.setText("Đăng ký");
                     }
                 }
         ).attach();

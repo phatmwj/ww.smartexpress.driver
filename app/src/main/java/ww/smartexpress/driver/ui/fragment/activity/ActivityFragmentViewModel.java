@@ -84,8 +84,9 @@ public class ActivityFragmentViewModel extends BaseFragmentViewModel {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(response -> {
                             if(response.isResult()){
-                                showSuccessMessage(response.getMessage());
+//                                showSuccessMessage(response.getMessage());
                             }else {
+
                                 showErrorMessage(response.getMessage());
                             }
                         },error->{

@@ -95,7 +95,7 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
     private final ActivityResultLauncher<IntentSenderRequest> locationSettingsLauncher =
             registerForActivityResult(new ActivityResultContracts.StartIntentSenderForResult(), result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
-                    Toast.makeText(getContext(), "Vị trí thiết bị của bạn đã bật", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "Vị trí thiết bị của bạn đã bật", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), R.string.notify_disabled_gps, Toast.LENGTH_SHORT).show();
                 }
@@ -380,8 +380,10 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
 
             @Override
             public void countdown_end(int position, Long bookingId) {
-                viewModel.rejectBooking(bookingId);
-                deleteBooking(bookingId);
+                if(shippingAdapter.getMapIdPos().get(position)!=null){
+                    viewModel.rejectBooking(bookingId);
+                    deleteBooking(bookingId);
+                }
             }
         });
     }
@@ -729,37 +731,13 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
         if (mvvmApplication.getCurrentBookingId() != null) {
             viewModel.loadNewBooking(Long.parseLong(mvvmApplication.getCurrentBookingId()));
             mvvmApplication.setCurrentBookingId(null);
-            binding.switchState.setClickable(false);
         }
         if (mvvmApplication.getCancelBookingId() != null) {
             viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(Long.parseLong(mvvmApplication.getCancelBookingId())));
             viewModel.loadCancelBooking(Long.parseLong(mvvmApplication.getCancelBookingId()));
             mvvmApplication.setCancelBookingId(null);
-            binding.switchState.setClickable(true);
         }
         if(mvvmApplication.getDetailsBookingId()!= null){
-//            if(viewModel.stateBooking.getValue() == null){
-//                Log.d("RTAG1", "onResume: ");
-//                viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(mvvmApplication.getDetailsBookingId()));
-//                viewModel.loadBooking(mvvmApplication.getDetailsBookingId());
-//                mvvmApplication.setDetailsBookingId(null);
-//                return;
-//            }
-//            switch (viewModel.stateBooking.getValue()){
-//                case 100:
-//                    Log.d("RTAG2", "onResume: ");
-//                    viewModel.positionUpdate.set(shippingAdapter1.getMapIdPos().get(mvvmApplication.getDetailsBookingId()));
-//                    break;
-//                case 200:
-//                    Log.d("RTAG3", "onResume: ");
-//                    viewModel.positionUpdate.set(shippingAdapter2.getMapIdPos().get(mvvmApplication.getDetailsBookingId()));
-//                    break;
-//                default:
-//                    Log.d("RTAG4", "onResume: ");
-//                    viewModel.positionUpdate.set(shippingAdapter.getMapIdPos().get(mvvmApplication.getDetailsBookingId()));
-//                    break;
-//            }
-//            Log.d("RTAG5", "onResume: ");
             viewModel.loadBooking(mvvmApplication.getDetailsBookingId());
             mvvmApplication.setDetailsBookingId(null);
         }
@@ -805,12 +783,12 @@ public class ActivityFragment extends BaseFragment<FragmentShippingBinding, Acti
         if(shippingAdapter1.getMapIdPos().get(bookingId) != null){
             shippingAdapter1.removeItem(bookingId);
         }
-        if(shippingAdapter.getBookingList().size() !=0){
-//            binding.rcShipping.smoothScrollToPosition(shippingAdapter.getMapIdPos().get(bookingId)-1);
-        }
-        if(shippingAdapter1.getBookingList().size() != 0){
-//            binding.rcShippingStateAccepted.smoothScrollToPosition(shippingAdapter1.getMapIdPos().get(bookingId)-1);
-        }
+//        if(shippingAdapter.getBookingList().size() !=0){
+////            binding.rcShipping.smoothScrollToPosition(shippingAdapter.getMapIdPos().get(bookingId)-1);
+//        }
+//        if(shippingAdapter1.getBookingList().size() != 0){
+////            binding.rcShippingStateAccepted.smoothScrollToPosition(shippingAdapter1.getMapIdPos().get(bookingId)-1);
+//        }
         viewModel.positionUpdate.set(null);
         updateShippingChanged();
     }

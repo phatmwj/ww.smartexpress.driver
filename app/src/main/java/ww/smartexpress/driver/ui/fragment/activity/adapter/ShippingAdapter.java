@@ -18,6 +18,7 @@ import java.util.Map;
 
 import lombok.Getter;
 import lombok.Setter;
+import timber.log.Timber;
 import ww.smartexpress.driver.MVVMApplication;
 import ww.smartexpress.driver.constant.Constants;
 import ww.smartexpress.driver.data.model.api.ApiModelUtils;
@@ -155,10 +156,12 @@ public class ShippingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
 
             if(bookingList.get(position).getState()!= null && bookingList.get(position).getState() == Constants.BOOKING_STATE_BOOKING){
+                Timber.d("start countdown");
                 startCountdown(position);
             }else {
+                Timber.d("end countdown");
                 handler.removeCallbacks(runnable);
-                application.getCountDownTime().remove(bookingList.get(position).getId());
+//                application.getCountDownTime().remove(bookingList.get(position).getId());
             }
 
             mBinding.sendMessage.setOnClickListener(view -> {
@@ -214,9 +217,11 @@ public class ShippingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         application.getCountDownTime().put(bookingId, remainingTime);
                         handler.postDelayed(runnable, updateInterval);
                     } else {
-                        onItemClickListener.countdown_end(position, bookingId);
+                        Timber.d("end countdown ---> đếm hết 20s");
                         mBinding.progressText.setText(String.valueOf(durationInSeconds));
                         mBinding.progressBar.setProgress(0);
+                        onItemClickListener.countdown_end(position, bookingId);
+
                     }
                 }
             };
@@ -226,6 +231,7 @@ public class ShippingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         @Override
         public void onClick(View view) {
             if(bookingList.get(position).getState() == Constants.BOOKING_STATE_BOOKING){
+                Timber.d("remove countdown");
                 handler.removeCallbacks(runnable);
             }
             this.onItemClickListener.itemClick(position, bookingId);

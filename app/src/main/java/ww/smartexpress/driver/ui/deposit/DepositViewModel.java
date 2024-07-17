@@ -58,6 +58,7 @@ public class DepositViewModel extends BaseViewModel {
                             Intent intent = new Intent(application.getCurrentActivity(), QrcodeActivity.class);
                             intent.putExtra("momoPaymentInfo", response.getData().getPaymentInfo());
                             MomoPaymentResponse data = ApiModelUtils.fromJson(response.getData().getPaymentInfo(), MomoPaymentResponse.class);
+                            getApplication().getCurrentActivity().finish();
                             intent.putExtra("qrString", data.getQrCodeUrl());
                             intent.putExtra("payUrl", data.getPayUrl());
                             application.getCurrentActivity().startActivity(intent);
@@ -85,6 +86,7 @@ public class DepositViewModel extends BaseViewModel {
                             Intent intent = new Intent(application.getCurrentActivity(), QrcodeActivity.class);
                             intent.putExtra("paymentInfo", response.getData().getPaymentInfo());
                             application.getCurrentActivity().startActivity(intent);
+                            getApplication().getCurrentActivity().finish();
 //                            openMoMoDeeplink("https://dl.vietqr.io/pay?app=bidv&ba=CAS0585858714@vcb&am=790000");
                             showSuccessMessage(response.getMessage());
                         }else {

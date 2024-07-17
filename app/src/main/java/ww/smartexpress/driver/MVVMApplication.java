@@ -307,7 +307,7 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
             intent.putExtra("activityfragment", "activity fragment");
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//        currentActivity.startActivity(intent);
+        currentActivity.startActivity(intent);
 
         createNotification("Đơn hàng đã hủy","Bạn có 1 đơn hàng đã bị hủy bởi khách hàng.",intent);
     }
@@ -327,6 +327,7 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
             case 1:
                 intent = new Intent(currentActivity, WalletActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 if(currentActivity instanceof WalletActivity || currentActivity instanceof QrcodeActivity){
                     currentActivity.startActivity(intent);
                 }

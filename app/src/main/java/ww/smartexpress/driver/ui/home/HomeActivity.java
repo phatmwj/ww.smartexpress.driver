@@ -131,6 +131,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
         else{
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.hide(activeFragment).show(profileFragment).commit();
+            profileFragment.onResume();
         }
         activeFragment = profileFragment;
     }

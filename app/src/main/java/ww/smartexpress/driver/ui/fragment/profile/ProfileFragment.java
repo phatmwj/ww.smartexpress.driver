@@ -50,4 +50,9 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.getMyWallet();
+    }
 }
