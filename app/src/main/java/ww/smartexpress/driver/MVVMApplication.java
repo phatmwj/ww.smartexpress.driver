@@ -267,8 +267,8 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
                 intent.putExtra("roomId", Long.valueOf(chatMessage.getRoomId()));
                 intent.putExtra("bookingId", Long.valueOf(chatMessage.getBookingId()));
 //                currentActivity.startActivity(intent);
-                ToastMessage toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Bạn có tin nhắn mới!");
-                toastMessage.showMessage(currentActivity);
+//                ToastMessage toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Bạn có tin nhắn mới!");
+//                toastMessage.showMessage(currentActivity);
                 //
 
 
@@ -278,6 +278,7 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
                 }else {
                     roomMsgCount.put(chatBookingId, 1);
                 }
+                newMsgBookings.add(chatBookingId);
 //                detailsBookingId = chatBookingId;
                 if(currentActivity instanceof HomeActivity){
                     Log.d("TAG", "navigateToChat: ");
@@ -288,7 +289,6 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
                     intent1.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     currentActivity.startActivity(intent);
                 }
-                newMsgBookings.add(chatBookingId);
 
                 createNotification("Tin nhắn từ đơn hàng: "+chatMessage.getCodeBooking(),chatMessage.getMessage(),intent);
             }
@@ -342,8 +342,6 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
                 if(currentActivity instanceof WalletActivity){
                     currentActivity.startActivity(intent);
                 }
-//                toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Yêu cầu rút "+NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" đã được chấp nhận");
-//                toastMessage.showMessage(currentActivity);
                 createNotification("Yêu cầu rút tiền","Yêu cầu rút "+NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" đã được chấp nhận",intent);
                 break;
             case 3:
@@ -352,8 +350,6 @@ public class MVVMApplication extends Application implements LifecycleObserver, S
                 createNotification("Yêu cầu rút tiền","Yêu cầu rút "+NumberUtils.formatCurrency(Double.valueOf(depositMessage.getMoney()))+" bị từ chối vì: "+depositMessage.getReason(),null);
                 break;
             case 4: case 5: case 6://NOTIFICATION_KIND_SYSTEM
-//                toastMessage = new ToastMessage(ToastMessage.TYPE_SUCCESS, "Bạn có thông báo mới!");
-//                toastMessage.showMessage(currentActivity);
                 createNotification("Smart Express","Bạn có thông báo mới!",null);
                 break;
             default:

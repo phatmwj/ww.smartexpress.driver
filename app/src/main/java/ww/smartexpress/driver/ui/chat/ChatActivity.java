@@ -251,6 +251,7 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewMode
                         viewModel.getRoomRead(response.getData().getId());
                         loadMessages();
 //                        viewModel.showSuccessMessage(response.getMessage());
+                        ((MVVMApplication) getApplication()).getWebSocketLiveData().sendPing();
                     }else {
                         viewModel.showErrorMessage(response.getMessage());
                     }

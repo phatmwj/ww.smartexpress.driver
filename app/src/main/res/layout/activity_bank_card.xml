@@ -163,6 +163,7 @@
                         android:focusable="false"
                         android:importantForAccessibility="yes"
                         android:inputType="none"
+                        android:enabled="false"
                         android:maxLines="1"
                         android:text="@{vm.accountName.accountName}" />
                 </com.google.android.material.textfield.TextInputLayout>

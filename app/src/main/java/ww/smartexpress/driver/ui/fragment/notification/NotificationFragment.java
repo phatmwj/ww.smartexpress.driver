@@ -139,6 +139,7 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
                     viewModel.mFlexibleAdapter.get().updateItem(notificationResponse);
                     viewModel.totalUnread.set(viewModel.totalUnread.get()-1);
                 }
+                viewModel.readNotification(notificationResponse.getId());
                 break;
             case Constants.NOTIFICATION_KIND_APPROVE_PAYOUT:
             case Constants.NOTIFICATION_KIND_REJECT_PAYOUT:
@@ -150,6 +151,7 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
                     viewModel.mFlexibleAdapter.get().updateItem(notificationResponse);
                     viewModel.totalUnread.set(viewModel.totalUnread.get()-1);
                 }
+                viewModel.readNotification(notificationResponse.getId());
                 break;
             default:
                 break;
